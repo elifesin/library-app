@@ -1,29 +1,52 @@
+using Microsoft.EntityFrameworkCore;
+using LibaryApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// --- TÜM SERVİSLER BURADA EKLENMELİ (BUILD'DEN ÖNCE) ---
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+builder.Services.AddDbContext<LibraryDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// -----------------------------------------------------
 
-// Configure the HTTP request pipeline.
+// Servis kayıtları bittikten sonra uygulama inşa edilir:
+var app = builder.Build(); 
+
+// --- BUILD İŞLEMİNDEN SONRA SADECE MIDDLEWARE'LER YAZILIR ---
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
 }
-
-app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<LibraryDbContext>();
+        bool canConnect = context.Database.CanConnect();
+        
+        if (canConnect)
+        {
+            Console.WriteLine("--> HARİKA! Veritabanına başarıyla bağlanıldı.");
+        }
+        else
+        {
+            Console.WriteLine("--> HATA: Veritabanına ulaşılamıyor. Bilgileri kontrol et.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"--> BAĞLANTI HATASI DETAYI: {ex.Message}");
+    }
+}
 
-app.Run();
+app.Run(); 
