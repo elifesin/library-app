@@ -1,0 +1,35 @@
+﻿@model IEnumerable<LibraryApp.Models.Authors>?
+
+<div class="container mt-4">
+    <h2>Yazar Listesi</h2>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Yazar Ekle</a>
+
+    <!-- Model null değilse VE içinde en az 1 eleman (Any) varsa tabloyu çiz -->
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Yazar Adı Soyadı</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.FirstName @item.LastName</td> 
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <!-- Eğer veritabanı boşsa veya model null geldiyse bu şık uyarı mesajı görünür -->
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

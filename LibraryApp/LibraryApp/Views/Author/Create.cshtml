@@ -1,0 +1,25 @@
+﻿@model LibraryApp.Models.Authors
+
+<div class="container mt-4">
+    <h2>Yeni Yazar Ekle</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label">Yazar Adı</label>
+                    <input asp-for="FirstName" class="form-control" autocomplete="off" required />
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label">Yazar Soyadı</label>
+                    <input asp-for="LastName" class="form-control" autocomplete="off" required />
+                </div>
+                
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-controller = "Home" asp-action="Index" class="btn btn-outline-secondary ms-2">Listeye Dön</a>
+            </form>
+        </div>
+    </div>
+</div>
