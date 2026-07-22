@@ -4,7 +4,6 @@
     <h2>Yazar Listesi</h2>
     <a asp-action="Create" class="btn btn-primary mb-3">Yeni Yazar Ekle</a>
 
-    <!-- Model null değilse VE içinde en az 1 eleman (Any) varsa tabloyu çiz -->
     @if (Model != null && Model.Any())
     {
         <table class="table table-bordered table-striped">
@@ -14,16 +13,21 @@
                 <th>Yazar Adı Soyadı</th>
             </tr>
             </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.FirstName @item.LastName</td> 
-                </tr>
-            }
-            </tbody>
-        </table>
+        <tbody>
+        -        @foreach (var item in Model)
+                 {
+                     <tr>
+                         <td>@item.Id</td>
+                         <td>@item.FirstName @item.LastName</td> 
+                         <!-- Her yazarın yanına ID'sini taşıyan bir Güncelle butonu ekliyoruz -->
+                         <td>
+                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">Güncelle</a>
+                         </td>
+                     </tr>
+                 }
+        </tbody>
+            </table>
+
     }
     else
     {
@@ -31,5 +35,5 @@
         <div class="alert alert-warning" role="alert">
             Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
         </div>
-    }
-</div>
+        }
+    </div>

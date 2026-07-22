@@ -130,6 +130,32 @@ public class AuthorController : Controller
         }
         return View(author);
     }
-    
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        Authors author = new Authors();
+
+        using (SqlConnection connection = new SqlConnection())
+        {
+            string sqlQuery = "SELECT * FROM Authors WHERE Id = @Id";
+
+            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+            {
+                command .Parameters.AddWithValue("@Id", id);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        author.Id = Convert.ToInt32(reader["Id"]);
+                        author.FirstName = reader["FirstName"].ToString();
+                        author.LastName = reader["LastName"].ToString();
+                    }
+                }
+            }
+        }
+    }
     
 }
