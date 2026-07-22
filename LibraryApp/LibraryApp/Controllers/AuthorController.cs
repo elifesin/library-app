@@ -7,18 +7,16 @@ namespace LibraryApp.Controllers;
 public class AuthorController : Controller
 {
     private readonly string _connectionString;
-
     public AuthorController(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection")!;
     }
     
-    // 
     [HttpGet]
     public IActionResult Index()
     {
-        
         List<AuthorVm> vmList = new List<AuthorVm>();
+     
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sqlQuery = "SELECT * FROM Authors WHERE Isactive = 1";
@@ -70,7 +68,6 @@ public class AuthorController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        
         return View(vm);
     }
 
