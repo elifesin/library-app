@@ -26,7 +26,7 @@ public class BookController : Controller
             SELECT b.Id, b.Title, b.PublishYear, 
                    a.FirstName + ' ' + a.LastName AS FullName
             FROM Books b
-            INNER JOIN Authors a ON b.AuthorID = a.Id";
+            INNER JOIN Authors a ON b.AuthorID = a.Id WHERE b.IsActive = 1";
 
             using (SqlCommand command = new SqlCommand(sqlQuery, connection))
             {
