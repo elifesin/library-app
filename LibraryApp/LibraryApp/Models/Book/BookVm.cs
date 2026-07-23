@@ -7,5 +7,8 @@
         public int PublishYear { get; set; }
         public int AuthorID { get; set; }
         public bool IsActive { get; set; } = true;
+        
+        public string FullName { get; set; } = string.Empty;
+        
     }
 }

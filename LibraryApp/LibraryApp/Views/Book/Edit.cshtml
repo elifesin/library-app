@@ -1,0 +1,39 @@
+﻿@model LibraryApp.Models.Book.BookEditVm
+
+<div class="Güncelle">
+    <h2>Kitap Güncelle</h2>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Kitap Adı</label>
+                    <input asp-for="Title" class="form-control" autocomplete="off" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PublishYear" class="form-label">Yayınlanma Yılı</label>
+                    <input asp-for="PublishYear" class="form-control" autocomplete="off" required/>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="AuthorID" class="form-label">Yazar</label>
+                    <select asp-for="AuthorID" class="form-control" required>
+                        <option value="">Yazar Seçiniz</option>
+                        @foreach (var author in ViewBag.Authors)
+                        {
+                            <option value="@author.Id">
+                                @author.FullName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">Listeye Dön</a>
+            </form>
+
+        </div>
+    </div>
+    
+</div>

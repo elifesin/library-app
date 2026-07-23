@@ -38,7 +38,6 @@ public class AuthorController : Controller
                 }
             }
         }
-        
         return View(vmList);
     }
 
