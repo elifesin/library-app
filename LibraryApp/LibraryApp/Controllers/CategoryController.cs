@@ -1,43 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using LibraryApp.Data;
+using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Category;
 
-
 namespace LibraryApp.Controllers;
+
 public class CategoryController : Controller
 {
-    public readonly string _connectionString;
+    // Artık connection string'e ihtiyacımız yok, sadece Repository'yi kullanacağız.
+    private readonly CategoryRepository _categoryRepository;
 
-    public CategoryController(IConfiguration configuration)
+    public CategoryController(CategoryRepository categoryRepository)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _categoryRepository = categoryRepository;
     }
-    
+
     [HttpGet]
     public IActionResult Index()
     {
-        List<CategoryVm> vmList = new List<CategoryVm>();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "SELECT * FROM Categories WHERE IsActive = 1";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        CategoryVm vm = new CategoryVm();
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.CategoryName = reader["CategoryName"].ToString()!;
-                        vm.IsActive = Convert.ToBoolean(reader["IsActive"]);
-
-                        vmList.Add(vm);
-                    }
-                }
-            } 
-        }
+        List<CategoryVm> vmList = _categoryRepository.GetAll();
         return View(vmList);
     }
 
@@ -49,24 +29,12 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-
     public IActionResult Create(CategoryVm vm)
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "INSERT INTO Categories(CategoryName) VALUES (@CategoryName) ";
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue(@"Id", vm.Id);
-                    command.Parameters.AddWithValue(@"CategoryName", vm.CategoryName);
-                    
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-            return RedirectToAction("Index");
+            _categoryRepository.Insert(vm);
+            return RedirectToAction(nameof(Index));
         }
         return View(vm);
     }
@@ -74,28 +42,13 @@ public class CategoryController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = new CategoryVm();
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var vm = _categoryRepository.GetById(id);
+        
+        if (vm == null) 
         {
-            connection.Open();
-            string sqlQuery = "SELECT * FROM Categories WHERE Id = @Id";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue(@"Id", id);
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.CategoryName = reader["CategoryName"].ToString()!;
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
+        
         return View(vm);
     }
 
@@ -105,18 +58,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "UPDATE Categories SET CategoryName = @CategoryName WHERE Id = @Id";
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue(@"Id", vm.Id);
-                    command.Parameters.AddWithValue(@"CategoryName", vm.CategoryName);
-                    
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            _categoryRepository.Update(vm);
             return RedirectToAction(nameof(Index));
         }
         return View(vm);
@@ -124,31 +66,14 @@ public class CategoryController : Controller
 
     [HttpGet]
     public IActionResult Delete(int id)
-    {
-        var vm = new CategoryVm();
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+    { 
+        var vm = _categoryRepository.GetById(id);
+        
+        if (vm == null) 
         {
-            string sqlQuery = "SELECT * FROM Categories WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue(@"Id", id);
-                connection.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.CategoryName = reader["CategoryName"].ToString()!;
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
+        
         return View(vm);
     }
 
@@ -156,17 +81,8 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "UPDATE Categories SET IsActive = 0 WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
+        _categoryRepository.Delete(id);
+        
         return RedirectToAction(nameof(Index));
     }
 }
