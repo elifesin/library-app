@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using LibraryApp.Models.Book;
 using LibraryApp.Models.Author;
+using LibraryApp.Models.Category;
 
 
 namespace LibraryApp.Controllers;
@@ -22,17 +23,14 @@ public class BookController : Controller
 
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string sqlQuery = @"
-    SELECT 
-        b.Id AS BookId, 
+                string sqlQuery = @" SELECT b.Id AS BookId, 
         b.Title AS BookName, 
         a.Firstname + ' ' + a.LastName AS FullName,
-        CASE 
-            WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id) THEN 1 
-            ELSE 0 
-        END AS IsBorrowed
+        c.CategoryName,
+        CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed
     FROM Books b
-    INNER JOIN Authors a ON b.AuthorID = a.Id";
+    INNER JOIN Authors a ON b.AuthorID = a.Id
+    LEFT JOIN Categories c ON b.CategoryID = c.Id";
 
             using (SqlCommand command = new SqlCommand(sqlQuery, connection))
             {
@@ -45,7 +43,9 @@ public class BookController : Controller
                         bookVm.Id = Convert.ToInt32(reader["BookId"]);
                         bookVm.Title = reader["BookName"].ToString()!;
                         bookVm.FullName = reader["FullName"].ToString()!;
+                        bookVm.CategoryName = reader["CategoryName"].ToString()!;
                         bookVm.IsBorrowed = Convert.ToBoolean(reader["IsBorrowed"]);
+                        
                         vmList.Add(bookVm);
                     }
                 }
@@ -58,7 +58,8 @@ public class BookController : Controller
     public IActionResult Create()
     {
         List<AuthorVm> authors = new List<AuthorVm>();
-
+        List<CategoryVm> category = new List<CategoryVm>();
+        
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Authors";
@@ -75,7 +76,26 @@ public class BookController : Controller
                     LastName = (string)reader["LastName"]
                 });
             }
+            
+            string sqlQuery = "SELECT * FROM Categories WHERE IsActive = 1";
+            using (SqlCommand command2 = new SqlCommand(sqlQuery, connection))
+            {
+                using (SqlDataReader reader2 = command2.ExecuteReader())
+                {
+                    while (reader2.Read())
+                    {
+                        
+                        category.Add(new CategoryVm
+                        {
+                            Id = (int)reader2["Id"],
+                            CategoryName = reader2["CategoryName"].ToString()!
+                        });
+                    }
+                }
+            }
         }
+        ViewBag.Categories = category;
+        
         ViewBag.Authors = authors;
         return View();
     }
@@ -89,13 +109,14 @@ public class BookController : Controller
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string sqlQuery =
-                    "INSERT INTO Books(Title, PublishYear, AuthorID) VALUES (@Title, @PublishYear, @AuthorID)";
+                    "INSERT INTO Books(Title, PublishYear, AuthorID, CategoryID) VALUES (@Title, @PublishYear, @AuthorID, @CategoryID)";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@Title", vm.Title);
                     command.Parameters.AddWithValue("@PublishYear", vm.PublishYear);
                     command.Parameters.AddWithValue("@AuthorID", vm.AuthorID);
+                    command.Parameters.AddWithValue("@CategoryID", vm.CategoryID);
 
                     connection.Open();
                     command.ExecuteNonQuery();

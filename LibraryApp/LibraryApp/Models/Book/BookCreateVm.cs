@@ -5,5 +5,6 @@
         public int AuthorID { get; set; }
         public string Title { get; set; }
         public int PublishYear { get; set; }
+        public int CategoryID { get; set; } 
     }
 }

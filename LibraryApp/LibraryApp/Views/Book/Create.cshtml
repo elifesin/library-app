@@ -1,5 +1,6 @@
 ﻿@model LibraryApp.Models.Book.BookCreateVm
 
+
 <div class="container mt-4">
     <h2>Yeni Kitap Ekle</h2>
     <hr />
@@ -17,7 +18,6 @@
                     <input asp-for="PublishYear" class="form-control" autocomplete="off" required />
                 </div>
                 
-                <!-- Moved the dropdown inside the form -->
                 <div class="mb-3">
                     <label asp-for="AuthorID" class="form-label">Yazar</label>
                     <select asp-for="AuthorID" class="form-control" required>
@@ -30,6 +30,21 @@
                         }
                     </select>
                 </div>
+                
+                <div class="mb-3">
+                    <label asp-for="CategoryID" class="form-label">Kategori</label>
+                    <select asp-for="CategoryID" class="form-select">
+                        <option value="">-- Kategori Seçiniz --</option>
+                        @if(ViewBag.Categories != null)
+                        {
+                            foreach (var category in ViewBag.Categories)
+                            {
+                                <option value="@category.Id">@category.CategoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                
                 
                 <button type="submit" class="btn btn-success">Kaydet</button>
                 <a asp-controller="Book" asp-action="Index" class="btn btn-outline-secondary ms-2">Listeye Dön</a>
