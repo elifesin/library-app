@@ -1,0 +1,35 @@
+﻿@model IEnumerable<LibraryApp.Models.Category.CategoryVm>?
+
+<div class="container mt-4">
+    <h2>Kategori Listesi</h2>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Kategori Ekle</a>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Kategori</th>
+            </tr>
+            </thead>
+            <tbody>
+            -        @foreach (var item in Model)
+                     {
+                         <tr>
+                             <td>@item.Id</td>
+                             <td>@item.CategoryName</td> 
+                             
+                         </tr>
+                     }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir kategori bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>
