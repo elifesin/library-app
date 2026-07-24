@@ -19,7 +19,8 @@
                          <tr>
                              <td>@item.Id</td>
                              <td>@item.CategoryName</td> 
-                             
+                             <td><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">Güncelle</a></td>
+                             <td><a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-info">Sil</a></td>
                          </tr>
                      }
             </tbody>
