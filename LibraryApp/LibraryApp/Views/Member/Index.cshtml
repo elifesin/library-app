@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LibraryApp.Models.Members.MemberVm>
+
+<div class="container mt-4">
+    <h2>Üye Sayfası</h2>
+    <a asp-action="Create" class="btn btn-primary mb-3">Üye Ol</a>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Üye Adı Soyadı</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+            </thead>
+            <tbody>
+            -        @foreach (var item in Model)
+                     {
+                         <tr>
+                             <td>@item.ID</td>
+                             <td>@item.FirstName @item.LastName</td>
+                             <td>
+                                 <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-info">Güncelle</a>
+                             </td>
+                             <td>
+                                 <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-danger ms-1">Sil</a>
+                             </td>
+                         </tr>
+                     }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir üye bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>
+
+
+
+

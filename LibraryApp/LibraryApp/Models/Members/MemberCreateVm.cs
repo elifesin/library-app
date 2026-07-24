@@ -1,8 +1,7 @@
-﻿namespace LibraryApp.Models
+﻿namespace LibraryApp.Models.Members
 {
-    public class Member
+    public class MemberCreateVm
     {
-        public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

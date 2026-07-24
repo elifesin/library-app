@@ -1,0 +1,43 @@
+﻿@model LibraryApp.Models.Loan.LoanCreateVm
+
+<div class="container mt-4">
+    <h2>Yeni Ödünç Ver</h2>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                
+                <!-- Üye Seçimi -->
+                <div class="mb-3">
+                    <label asp-for="MemberID" class="form-label">Üye Seçiniz</label>
+                    <select asp-for="MemberID" asp-items="ViewBag.Members" class="form-select" required>
+                        <option value="">Lütfen listeden üye seçin...</option>
+                    </select>
+                </div>
+
+                <!-- Kitap Seçimi -->
+                <div class="mb-3">
+                    <label asp-for="BookID" class="form-label">Ödünç Verilecek Kitap</label>
+                    <select asp-for="BookID" asp-items="ViewBag.Books" class="form-select" required>
+                        <option value="">Lütfen kütüphanedeki kitaplardan seçin...</option>
+                    </select>
+                </div>
+
+                <!-- Veriliş Tarihi -->
+                <div class="mb-3">
+                    <label asp-for="LoanDate" class="form-label">Veriliş Tarihi</label>
+                    <input asp-for="LoanDate" type="date" class="form-control" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DueDate" class="form-label">Son Teslim Tarihi</label>
+                    <input asp-for="DueDate" type="date" class="form-control" required/>
+                </div>
+
+                <button type="submit" class="btn btn-success">Ödünç Ver</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>

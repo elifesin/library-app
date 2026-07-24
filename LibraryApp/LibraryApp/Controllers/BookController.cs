@@ -23,10 +23,16 @@ public class BookController : Controller
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sqlQuery = @"
-            SELECT b.Id, b.Title, b.PublishYear, 
-                   a.FirstName + ' ' + a.LastName AS FullName
-            FROM Books b
-            INNER JOIN Authors a ON b.AuthorID = a.Id WHERE b.IsActive = 1";
+    SELECT 
+        b.Id AS BookId, 
+        b.Title AS BookName, 
+        a.Firstname + ' ' + a.LastName AS FullName,
+        CASE 
+            WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id) THEN 1 
+            ELSE 0 
+        END AS IsBorrowed
+    FROM Books b
+    INNER JOIN Authors a ON b.AuthorID = a.Id";
 
             using (SqlCommand command = new SqlCommand(sqlQuery, connection))
             {
@@ -36,13 +42,10 @@ public class BookController : Controller
                     while (reader.Read())
                     {
                         BookVm bookVm = new BookVm();
-                        bookVm.Id = Convert.ToInt32(reader["Id"]);
-                        bookVm.Title = reader["Title"].ToString()!;
-                        bookVm.PublishYear = Convert.ToInt32(reader["PublishYear"]);
-                    
-                        // JOIN sorgusu sayesinde AuthorFullName artık hata vermeden okunacak
+                        bookVm.Id = Convert.ToInt32(reader["BookId"]);
+                        bookVm.Title = reader["BookName"].ToString()!;
                         bookVm.FullName = reader["FullName"].ToString()!;
-                    
+                        bookVm.IsBorrowed = Convert.ToBoolean(reader["IsBorrowed"]);
                         vmList.Add(bookVm);
                     }
                 }
@@ -124,7 +127,7 @@ public class BookController : Controller
                         vm.Id = Convert.ToInt32(reader["Id"]);
                         vm.Title = reader["Title"].ToString()!;
                         vm.PublishYear = Convert.ToInt32(reader["PublishYear"]);
-                        vm.AuthorID = Convert.ToInt32(reader["AuthorID"]); 
+                        vm.AuthorID = Convert.ToInt32(reader["AuthorID"]);
                     }
                     else
                     {
@@ -132,9 +135,7 @@ public class BookController : Controller
                     }
                 }
             }
-
-            // BookController.cs -> Edit(GET) metodu içindeki 2. SQL sorgusu (Yazarları çeken kısım)
-
+            
             string sql = "SELECT * FROM Authors";
             using (SqlCommand command2 = new SqlCommand(sql, connection))
             {
@@ -165,14 +166,13 @@ public class BookController : Controller
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE Books SET Title = @Title, PublishYear = @PublishYear WHERE Id = @Id";
+                string sqlQuery = "UPDATE Books SET Title = @Title, PublishYear = @PublishYear, IsBorrowed = @IsBorrowed WHERE Id = @Id";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@Title", vm.Title);
                     command.Parameters.AddWithValue("@PublishYear", vm.PublishYear);
                     command.Parameters.AddWithValue("@Id", vm.Id);
-                    
                     connection.Open();
                     command.ExecuteNonQuery();
                 }

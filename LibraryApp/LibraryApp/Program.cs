@@ -2,7 +2,8 @@ using Microsoft.Data.SqlClient; // Raw SQL için gerekli kütüphane
 
 var builder = WebApplication.CreateBuilder(args); 
 
-builder.Services.AddControllersWithViews(); // MVC sistemi aktif edilir.
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.
 
 var app = builder.Build(); // Uygulamayı oluştur.
     
