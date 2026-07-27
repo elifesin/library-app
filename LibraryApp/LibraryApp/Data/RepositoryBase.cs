@@ -79,5 +79,29 @@ public class RepositoryBase
             }
         }
     }
+    
+    public List<T> ExecuteReadQuery<T>(string sqlQuery, Func<SqlDataReader, T> mapper, params SqlParameter[] parameters)
+    {
+        List<T> resultList = new List<T>();
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+            {
+                if (parameters != null && parameters.Length > 0)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        resultList.Add(mapper(reader));
+                    }
+                }
+            } 
+        }
+        return resultList;
+    }
 
 }

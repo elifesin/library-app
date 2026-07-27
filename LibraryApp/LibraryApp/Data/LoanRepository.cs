@@ -104,5 +104,31 @@ public class LoanRepository : RepositoryBase
             Text = reader["Title"].ToString()
         });
     }
+    
+    public List<LoanVm> GetLoansByMemberId(int memberId)
+    {
+        string sql = @"
+        SELECT 
+            l.Id, 
+            b.Title AS BookName, 
+            a.FirstName + ' ' + a.LastName AS AuthorName, 
+            l.LoanDate, 
+            l.DueDate, 
+            l.ReturnDate
+        FROM Loans l
+        INNER JOIN Books b ON l.BookID = b.Id
+        INNER JOIN Authors a ON b.AuthorID = a.Id
+        WHERE l.MemberID = @MemberID";
+    
+        return ExecuteReadQuery<LoanVm>(sql, reader => new LoanVm
+        {
+            Id = Convert.ToInt32(reader["Id"]),
+            LoanDate = Convert.ToDateTime(reader["LoanDate"]),
+            DueDate = Convert.ToDateTime(reader["DueDate"]),
+            ReturnDate = reader["ReturnDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReturnDate"]) : default,
+            BookName = reader["BookName"].ToString()!,
+            BookAuthor = reader["AuthorName"].ToString()!
+        }, new SqlParameter("@MemberID", memberId));
+    }
     }
     

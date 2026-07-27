@@ -8,10 +8,12 @@ namespace LibraryApp.Controllers;
 public class MemberController : Controller
 {
     private readonly MemberRepository _memberRepository;
+    private readonly LoanRepository _loanRepository;
 
-    public MemberController(MemberRepository memberRepository)
+    public MemberController(MemberRepository memberRepository, LoanRepository loanRepository)
     {
         _memberRepository = memberRepository;
+        _loanRepository = loanRepository;
     }
     
     [HttpGet]
@@ -81,6 +83,24 @@ public class MemberController : Controller
     {
         _memberRepository.Delete(id);
         return RedirectToAction(nameof(Index));
+    }
+    
+    [HttpGet]
+    public IActionResult BorrowedBooks(int id) // id = MemberId
+    {
+        // Önce üyenin adını sayfada göstermek için üye bilgilerini çekiyoruz
+        var member = _memberRepository.GetMemberById(id);
+        if (member == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.MemberName = $"{member.FirstName} {member.LastName}";
+    
+        // Sonra bu üyenin ödünç aldığı kitapların listesini çekiyoruz
+        var loans = _loanRepository.GetLoansByMemberId(id);
+    
+        return View(loans);
     }
    
 }
