@@ -1,6 +1,14 @@
-using Microsoft.Data.SqlClient; // Raw SQL için gerekli kütüphane
+using LibraryApp.Data;
 
-var builder = WebApplication.CreateBuilder(args); 
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<LoanRepository>();
+builder.Services.AddScoped<AuthorRepository>();
+builder.Services.AddScoped<BookRepository>();
+builder.Services.AddScoped<MemberRepository>();
+builder.Services.AddScoped<PublisherRepository>();
+
 
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.

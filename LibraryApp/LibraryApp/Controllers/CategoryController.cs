@@ -1,25 +1,27 @@
 ﻿using LibraryApp.Data;
 using Microsoft.AspNetCore.Mvc;
-using LibraryApp.Models.Author;
+using LibraryApp.Models.Category;
 
 namespace LibraryApp.Controllers;
 
-public class AuthorController : Controller
+public class CategoryController : Controller
 {
-    private readonly AuthorRepository _authorRepository;
+    // Artık connection string'e ihtiyacımız yok, sadece Repository'yi kullanacağız.
+    private readonly CategoryRepository _categoryRepository;
 
-    public AuthorController(AuthorRepository authorRepository)
+    public CategoryController(CategoryRepository categoryRepository)
     {
-        _authorRepository = authorRepository;
+        _categoryRepository = categoryRepository;
     }
-    
+
     [HttpGet]
     public IActionResult Index()
     {
-        List<AuthorVm> vmList = _authorRepository.GetAllAuthors();
+        List<CategoryVm> vmList = _categoryRepository.GetAll();
         return View(vmList);
     }
 
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -27,11 +29,11 @@ public class AuthorController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(AuthorCreateVm vm)
+    public IActionResult Create(CategoryVm vm)
     {
         if (ModelState.IsValid)
         {
-            _authorRepository.Insert(vm);
+            _categoryRepository.Insert(vm);
             return RedirectToAction(nameof(Index));
         }
         return View(vm);
@@ -40,54 +42,47 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var author = _authorRepository.GetAuthorById(id);
-        if (author == null)
+        var vm = _categoryRepository.GetById(id);
+        
+        if (vm == null) 
         {
             return NotFound();
         }
         
-        var vm = new AuthorEditVm
-        {
-            Id = author.Id,
-            FirstName = author.FirstName,
-            LastName = author.LastName
-        };
         return View(vm);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(AuthorEditVm vm)
+    public IActionResult Edit(CategoryVm vm)
     {
         if (ModelState.IsValid)
         {
-            _authorRepository.Update(vm);
+            _categoryRepository.Update(vm);
             return RedirectToAction(nameof(Index));
         }
-
         return View(vm);
     }
 
     [HttpGet]
     public IActionResult Delete(int id)
-    {
-        var vm = _authorRepository.GetAuthorById(id);
-        if (vm == null)
+    { 
+        var vm = _categoryRepository.GetById(id);
+        
+        if (vm == null) 
         {
             return NotFound();
         }
-            
+        
         return View(vm);
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        _authorRepository.Delete(id);
+        _categoryRepository.Delete(id);
         
         return RedirectToAction(nameof(Index));
     }
-    
-    
 }
