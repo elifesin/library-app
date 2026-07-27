@@ -130,5 +130,16 @@ public class LoanRepository : RepositoryBase
             BookAuthor = reader["AuthorName"].ToString()!
         }, new SqlParameter("@MemberID", memberId));
     }
+    
+    public void ReturnBook(int loanId)
+    {
+        // Sadece iade tarihini şu anki zaman olarak güncelliyoruz
+        string sql = "UPDATE Loans SET ReturnDate = @ReturnDate WHERE Id = @Id";
+    
+        ExecuteCommand(sql, 
+            new SqlParameter("@ReturnDate", DateTime.Now),
+            new SqlParameter("@Id", loanId)
+        );
+    }
     }
     

@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<LibraryApp.Models.Loan.LoanVm>
-
 @{
     ViewData["Title"] = "Ödünç İşlemleri";
 }
@@ -30,6 +29,18 @@
                 <td>@item.DueDate.ToShortDateString()</td>
                 <td>
                     @(item.ReturnDate == default(DateTime) ? "İade Edilmedi" : item.ReturnDate.ToShortDateString())
+                </td>
+                <td>
+                    @if(item.ReturnDate == default(DateTime) || item.ReturnDate == null)
+                    {
+                        <a asp-action="ReturnBook" asp-controller="Loan" asp-route-id="@item.Id" class="btn btn-success btn-sm">
+                            <i class="bi bi-check-circle"></i> İade Al
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">İade Edildi (@item.ReturnDate.ToShortDateString())</span>
+                    }
                 </td>
             </tr>
         }
