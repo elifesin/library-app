@@ -1,43 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using LibraryApp.Data;
+using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Author;
 
 namespace LibraryApp.Controllers;
 
 public class AuthorController : Controller
 {
-    private readonly string _connectionString;
-    public AuthorController(IConfiguration configuration)
+    private readonly AuthorRepository _authorRepository;
+
+    public AuthorController(AuthorRepository authorRepository)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        _authorRepository = authorRepository;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        List<AuthorVm> vmList = new List<AuthorVm>();
-     
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "SELECT * FROM Authors WHERE Isactive = 1";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        AuthorVm authorVm = new AuthorVm();
-                        authorVm.Id = Convert.ToInt32(reader["Id"]);
-                        authorVm.FirstName = reader["FirstName"].ToString()!;
-                        authorVm.LastName = reader["LastName"].ToString()!;
-                        
-                        vmList.Add(authorVm);
-                    }
-                }
-            }
-        }
+        List<AuthorVm> vmList = _authorRepository.GetAllAuthors();
         return View(vmList);
     }
 
@@ -52,19 +31,7 @@ public class AuthorController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "INSERT INTO Authors(FirstName, LastName) VALUES (@FirstName, @LastName)";
-                
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@FirstName", vm.FirstName);
-                    command.Parameters.AddWithValue("@LastName", vm.LastName);
-
-                    connection.Open();
-                    command.ExecuteNonQuery(); 
-                }
-            }
+            _authorRepository.Insert(vm);
             return RedirectToAction(nameof(Index));
         }
         return View(vm);
@@ -73,32 +40,18 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = new AuthorEditVm();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var author = _authorRepository.GetAuthorById(id);
+        if (author == null)
         {
-            string sqlQuery = "SELECT * FROM Authors WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.FirstName = reader["FirstName"].ToString()!;
-                        vm.LastName = reader["LastName"].ToString()!;
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
+        
+        var vm = new AuthorEditVm
+        {
+            Id = author.Id,
+            FirstName = author.FirstName,
+            LastName = author.LastName
+        };
         return View(vm);
     }
 
@@ -108,54 +61,22 @@ public class AuthorController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "UPDATE Authors SET FirstName = @FirstName, LastName = @Lastname WHERE Id = @Id";
-
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Id", vm.Id);
-                    command.Parameters.AddWithValue("@FirstName", vm.FirstName);
-                    command.Parameters.AddWithValue("@LastName", vm.LastName);
-                    
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            _authorRepository.Update(vm);
             return RedirectToAction(nameof(Index));
         }
+
         return View(vm);
     }
 
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var vm = new AuthorVm();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var vm = _authorRepository.GetAuthorById(id);
+        if (vm == null)
         {
-            string sqlQuery = "SELECT * FROM Authors WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command .Parameters.AddWithValue("@Id", id);
-                connection.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.FirstName = reader["FirstName"].ToString();
-                        vm.LastName = reader["LastName"].ToString();
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
+            
         return View(vm);
     }
 
@@ -163,17 +84,8 @@ public class AuthorController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "UPDATE Authors SET IsActive = 0 WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
+        _authorRepository.Delete(id);
+        
         return RedirectToAction(nameof(Index));
     }
     

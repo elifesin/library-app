@@ -1,0 +1,30 @@
+﻿@model LibraryApp.Models.Members.MemberVm
+
+@{
+    ViewData["Title"] = "Üye Sil";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Üye Silme Onayı</h2>
+    <hr />
+    
+    <div class="alert alert-warning">
+        <h4><i class="bi bi-exclamation-triangle"></i> Dikkat!</h4>
+        <strong>@Model.FirstName @Model.LastName</strong> isimli üyeyi sistemden silmek istediğinize emin misiniz?
+    </div>
+    
+    </div>
+
+    <div class="mt-4">
+        <!-- Form doğrudan MemberController içindeki [HttpPost] Delete veya DeleteConfirmed metoduna tetiklenir -->
+        <form asp-action="Delete" method="post">
+            
+            <!-- Silinecek kaydın ID'sini POST tarafına gizlice taşıyoruz -->
+            <input type="hidden" asp-for="ID" />
+            
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Evet, Sil
+            </button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">İptal ve Listeye Dön</a>
+        </form>
+    </div>

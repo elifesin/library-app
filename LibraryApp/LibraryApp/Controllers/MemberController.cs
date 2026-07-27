@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LibraryApp.Data;
+using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Members;
 using Microsoft.Data.SqlClient;
 
@@ -6,38 +7,17 @@ namespace LibraryApp.Controllers;
 
 public class MemberController : Controller
 {
-    private readonly string _connectionString;
+    private readonly MemberRepository _memberRepository;
 
-    public MemberController(IConfiguration configuration)
+    public MemberController(MemberRepository memberRepository)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _memberRepository = memberRepository;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        List<MemberVm> vmList = new List<MemberVm>();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "SELECT * FROM Members WHERE IsActive = 1";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        MemberVm vm = new MemberVm();
-                        vm.ID = Convert.ToInt32(reader["ID"]);
-                        vm.FirstName = reader["FirstName"].ToString()!;
-                        vm.LastName = reader["LastName"].ToString()!;
-                        
-                        vmList.Add(vm);
-                    }
-                }
-            }
-        }
+        List<MemberVm> vmList = _memberRepository.GetAllMembers();
         return View(vmList);
     }
 
@@ -54,19 +34,9 @@ public class MemberController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "INSERT INTO Members(FirstName, LastName) VALUES(@FirstName, @LastName)";
+            _memberRepository.Insert(vm);
+            return RedirectToAction(nameof(Index));
 
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@FirstName", vm.FirstName);
-                    command.Parameters.AddWithValue("@LastName", vm.LastName);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-                return RedirectToAction(nameof(Index));
-            }
         }
         return View(vm);
     }
@@ -74,29 +44,10 @@ public class MemberController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = new MemberVm();
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var vm =  _memberRepository.GetMemberById(id);
+        if (vm == null)
         {
-            string sqlQuery = "SELECT * FROM Members  WHERE ID = @ID";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@ID", id);
-                connection.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.ID = Convert.ToInt32(reader["ID"]);
-                        vm.FirstName = reader["FirstName"].ToString()!;
-                        vm.LastName = reader["LastName"].ToString()!;
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
         return View(vm);
     }
@@ -107,24 +58,29 @@ public class MemberController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "UPDATE Members SET FirstName = @FirstName, LastName = @LastName WHERE ID = @ID";
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@ID", vm.ID);
-                    command.Parameters.AddWithValue("@FirstName", vm.FirstName);
-                    command.Parameters.AddWithValue("@LastName", vm.LastName);
-                    
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            _memberRepository.Update(vm);
             return RedirectToAction(nameof(Index));
         }
         return View(vm);
     }
-    
-    
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var vm = _memberRepository.GetMemberById(id);
+        if (vm == null)
+        {
+            return NotFound();
+        }
+        return View(vm);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        _memberRepository.Delete(id);
+        return RedirectToAction(nameof(Index));
+    }
    
 }

@@ -1,102 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using LibraryApp.Data;
+using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Book;
-using LibraryApp.Models.Author;
-using LibraryApp.Models.Category;
-
 
 namespace LibraryApp.Controllers;
 
 public class BookController : Controller
 {
-    private readonly string _connectionString;
+    private readonly BookRepository _bookRepository;
+    private readonly AuthorRepository _authorRepository;
+    private readonly CategoryRepository _categoryRepository;
 
-    public BookController(IConfiguration configuration)
+    public BookController(AuthorRepository authorRepository, CategoryRepository categoryRepository, BookRepository bookRepository)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        _authorRepository = authorRepository;
+        _categoryRepository = categoryRepository;
+        _bookRepository = bookRepository;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        List<BookVm> vmList = new List<BookVm>();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-                string sqlQuery = @" SELECT b.Id AS BookId, 
-        b.Title AS BookName, 
-        a.Firstname + ' ' + a.LastName AS FullName,
-        c.CategoryName,
-        CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed
-    FROM Books b
-    INNER JOIN Authors a ON b.AuthorID = a.Id
-    LEFT JOIN Categories c ON b.CategoryID = c.Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        BookVm bookVm = new BookVm();
-                        bookVm.Id = Convert.ToInt32(reader["BookId"]);
-                        bookVm.Title = reader["BookName"].ToString()!;
-                        bookVm.FullName = reader["FullName"].ToString()!;
-                        bookVm.CategoryName = reader["CategoryName"].ToString()!;
-                        bookVm.IsBorrowed = Convert.ToBoolean(reader["IsBorrowed"]);
-                        
-                        vmList.Add(bookVm);
-                    }
-                }
-            }
-        }
+        List<BookVm> vmList = _bookRepository.GetAllBooks();
+        
+        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Categories = _categoryRepository.GetAll();
+        
         return View(vmList);
     }
 
     [HttpGet]
     public IActionResult Create()
     {
-        List<AuthorVm> authors = new List<AuthorVm>();
-        List<CategoryVm> category = new List<CategoryVm>();
-        
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sql = "SELECT * FROM Authors";
-
-            SqlCommand command = new SqlCommand(sql, connection);
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                authors.Add(new AuthorVm
-                {
-                    Id = (int)reader["Id"],
-                    FirstName = (string)reader["FirstName"],
-                    LastName = (string)reader["LastName"]
-                });
-            }
-            
-            string sqlQuery = "SELECT * FROM Categories WHERE IsActive = 1";
-            using (SqlCommand command2 = new SqlCommand(sqlQuery, connection))
-            {
-                using (SqlDataReader reader2 = command2.ExecuteReader())
-                {
-                    while (reader2.Read())
-                    {
-                        
-                        category.Add(new CategoryVm
-                        {
-                            Id = (int)reader2["Id"],
-                            CategoryName = reader2["CategoryName"].ToString()!
-                        });
-                    }
-                }
-            }
-        }
-        ViewBag.Categories = category;
-        
-        ViewBag.Authors = authors;
+        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Categories = _categoryRepository.GetAll();
+       
         return View();
     }
 
@@ -106,77 +43,35 @@ public class BookController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery =
-                    "INSERT INTO Books(Title, PublishYear, AuthorID, CategoryID) VALUES (@Title, @PublishYear, @AuthorID, @CategoryID)";
-
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Title", vm.Title);
-                    command.Parameters.AddWithValue("@PublishYear", vm.PublishYear);
-                    command.Parameters.AddWithValue("@AuthorID", vm.AuthorID);
-                    command.Parameters.AddWithValue("@CategoryID", vm.CategoryID);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            _bookRepository.Insert(vm);
             return RedirectToAction(nameof(Index));
         }
+        
+        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Categories = _categoryRepository.GetAll();
         return View(vm);
     }
 
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = new BookEditVm();
-        List<AuthorVm> authors = new List<AuthorVm>();
-
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var book = _bookRepository.GetBookById(id);
+        
+        if (book == null)
         {
-            connection.Open();
-
-            string sqlQuery = "SELECT * FROM Books WHERE Id = @Id";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.Title = reader["Title"].ToString()!;
-                        vm.PublishYear = Convert.ToInt32(reader["PublishYear"]);
-                        vm.AuthorID = Convert.ToInt32(reader["AuthorID"]);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
-            
-            string sql = "SELECT * FROM Authors";
-            using (SqlCommand command2 = new SqlCommand(sql, connection))
-            {
-                using (SqlDataReader reader2 = command2.ExecuteReader())
-                {
-                    while (reader2.Read())
-                    {
-                        authors.Add(new AuthorVm
-                        {
-                            Id = (int)reader2["Id"],
-                            FirstName = reader2["FirstName"].ToString(),
-                            LastName = reader2["LastName"].ToString()
-                        });
-                    }
-                }
-            }
-            
-            ViewBag.Authors = authors;
-            return View(vm);
+            return NotFound();
         }
+
+        var vm = new BookEditVm
+        {
+            Id = book.Id,
+            Title = book.Title,
+            IsBorrowed =book.IsBorrowed
+        };
+        
+        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        
+        return View(vm);
     }
     
     [HttpPost]
@@ -185,50 +80,28 @@ public class BookController : Controller
     {
         if (ModelState.IsValid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sqlQuery = "UPDATE Books SET Title = @Title, PublishYear = @PublishYear, IsBorrowed = @IsBorrowed WHERE Id = @Id";
-
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Title", vm.Title);
-                    command.Parameters.AddWithValue("@PublishYear", vm.PublishYear);
-                    command.Parameters.AddWithValue("@Id", vm.Id);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            _bookRepository.Update(vm);
             return RedirectToAction(nameof(Index));
         }
+        
+        ViewBag.Authors = _authorRepository.GetAllAuthors();
         return View(vm);
     }
 
     [HttpGet]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(int id) 
     {
-        var vm = new BookDeleteVm();
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        var book = _bookRepository.GetBookById(id);
+        
+        if (book == null)
         {
-            string sqlQuery = "SELECT * FROM Books WHERE Id = @Id";
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        vm.Id = Convert.ToInt32(reader["Id"]);
-                        vm.Title = reader["Title"].ToString()!;
-                        
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
+            return NotFound();
         }
+        var vm = new BookDeleteVm
+        {
+            Id = book.Id
+        };
+        
         return View(vm);
     }
 
@@ -236,17 +109,9 @@ public class BookController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string sqlQuery = "UPDATE Books SET IsActive = 0 WHERE Id = @Id";
-
-            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
+        var vm = new BookDeleteVm { Id = id };
+        
+        _bookRepository.Delete(vm);
         return RedirectToAction(nameof(Index));
     }
 }

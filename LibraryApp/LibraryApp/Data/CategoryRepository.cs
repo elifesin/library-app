@@ -38,7 +38,6 @@ public class CategoryRepository : RepositoryBase
         return category;
     }
     
-    // YENİDEN YAZILAN INSERT METODU
     public void Insert(CategoryVm categoryVm)
     {
         string sql = "INSERT INTO Categories(CategoryName) VALUES (@CategoryName)";
@@ -46,8 +45,7 @@ public class CategoryRepository : RepositoryBase
         // Sadece ExecuteCommand çağrılır ve parametre gönderilir
         ExecuteCommand(sql, new SqlParameter("@CategoryName", categoryVm.CategoryName));
     }
-
-    // EKLENEN UPDATE METODU
+    
     public void Update(CategoryVm categoryVm)
     {
         string sql = "UPDATE Categories SET CategoryName = @CategoryName WHERE Id = @Id";
