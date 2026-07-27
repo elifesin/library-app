@@ -7,6 +7,7 @@ builder.Services.AddScoped<LoanRepository>();
 builder.Services.AddScoped<AuthorRepository>();
 builder.Services.AddScoped<BookRepository>();
 builder.Services.AddScoped<MemberRepository>();
+builder.Services.AddScoped<PublisherRepository>();
 
 
 builder.Services.AddControllersWithViews()

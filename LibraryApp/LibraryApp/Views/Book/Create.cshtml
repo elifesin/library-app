@@ -17,7 +17,13 @@
                     <label asp-for="PublishYear" class="form-label">Yayınlanma Yılı </label>
                     <input asp-for="PublishYear" class="form-control" autocomplete="off" required />
                 </div>
-                
+                <div class="mb-3">
+                    <label asp-for="PublisherId" class="form-label">Yayınevi</label>
+                    <select asp-for="PublisherId" class="form-select" asp-items="@(new SelectList(ViewBag.Publishers, "Id", "Name"))">
+                        <option value="">-- Yayınevi Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="PublisherId" class="text-danger"></span>
+                </div>
                 <div class="mb-3">
                     <label asp-for="AuthorID" class="form-label">Yazar</label>
                     <select asp-for="AuthorID" class="form-control" required>

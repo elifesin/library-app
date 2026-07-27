@@ -8,5 +8,6 @@
         public string FullName { get; set; } = string.Empty;
         public bool IsBorrowed { get; set; }
         public string CategoryName { get; set; } = string.Empty;
+        public string PublisherName { get; set; } = string.Empty;
     }
 }

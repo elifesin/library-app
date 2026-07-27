@@ -12,10 +12,12 @@ public class BookRepository : RepositoryBase
         b.Title AS BookName, 
         a.Firstname + ' ' + a.LastName AS FullName,
         c.CategoryName,
+        p.Name AS PublisherName,
         CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed
     FROM Books b
     INNER JOIN Authors a ON b.AuthorID = a.Id
-    LEFT JOIN Categories c ON b.CategoryID = c.Id";
+    LEFT JOIN Categories c ON b.CategoryID = c.Id
+    LEFT JOIN Publishers p ON b.PublisherID = p.Id";
 
         List<BookVm> vmList = ExecuteReadQuery<BookVm>(sql, reader => new BookVm
         {
@@ -23,7 +25,8 @@ public class BookRepository : RepositoryBase
             Title = reader["BookName"].ToString()!,
             FullName = reader["FullName"].ToString()!,
             CategoryName = reader["CategoryName"].ToString()!,
-            IsBorrowed = Convert.ToBoolean(reader["IsBorrowed"])
+            IsBorrowed = Convert.ToBoolean(reader["IsBorrowed"]),
+            PublisherName = reader["PublisherName"] != DBNull.Value ? reader["PublisherName"].ToString()! : "Belirtilmemiş",
         });
         return vmList;
     }
@@ -58,23 +61,27 @@ public class BookRepository : RepositoryBase
     public void Insert(BookCreateVm bookVm)
     {
         string sql =
-            "INSERT INTO Books(Title, PublishYear, AuthorID, CategoryID) VALUES (@Title, @PublishYear, @AuthorID, @CategoryID)";
+            "INSERT INTO Books(Title, PublishYear, AuthorID, CategoryID, PublisherId) VALUES (@Title, @PublishYear, @AuthorID, @CategoryID, @PublisherId)";
 
         ExecuteCommand(sql, new SqlParameter("@Title", bookVm.Title),
             new SqlParameter("@PublishYear", bookVm.PublishYear),
             new SqlParameter("@AuthorID", bookVm.AuthorID),
-            new SqlParameter("@CategoryID", bookVm.CategoryID)
+            new SqlParameter("@CategoryID", bookVm.CategoryID),
+            new SqlParameter("@PublisherId", bookVm.PublisherId)
         );
     }
 
     public void Update(BookEditVm bookVm)
     {
         string sql =
-            "UPDATE Books SET Title = @Title, PublishYear = @PublishYear WHERE Id = @Id";
+            "UPDATE Books SET Title = @Title, PublishYear = @PublishYear, PublisherId = @PublisherId, CategoryID = @CategoryID WHERE Id = @Id";
 
         ExecuteCommand(sql, new SqlParameter("@Title", bookVm.Title),
             new SqlParameter("@PublishYear", bookVm.PublishYear),
+            new SqlParameter("@PublisherId", bookVm.PublisherId),
+            new SqlParameter("@CategoryID", bookVm.CategoryID),
             new SqlParameter("@Id", bookVm.Id)
+
         );
     }
 

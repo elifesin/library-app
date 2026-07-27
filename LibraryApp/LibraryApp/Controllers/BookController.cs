@@ -9,12 +9,14 @@ public class BookController : Controller
     private readonly BookRepository _bookRepository;
     private readonly AuthorRepository _authorRepository;
     private readonly CategoryRepository _categoryRepository;
+    private readonly PublisherRepository _publisherRepository; 
 
-    public BookController(AuthorRepository authorRepository, CategoryRepository categoryRepository, BookRepository bookRepository)
+    public BookController(AuthorRepository authorRepository, CategoryRepository categoryRepository, BookRepository bookRepository, PublisherRepository publisherRepository)
     {
         _authorRepository = authorRepository;
         _categoryRepository = categoryRepository;
         _bookRepository = bookRepository;
+        _publisherRepository = publisherRepository;
     }
 
     [HttpGet]
@@ -33,6 +35,7 @@ public class BookController : Controller
     {
         ViewBag.Authors = _authorRepository.GetAllAuthors();
         ViewBag.Categories = _categoryRepository.GetAll();
+        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
        
         return View();
     }
@@ -49,6 +52,7 @@ public class BookController : Controller
         
         ViewBag.Authors = _authorRepository.GetAllAuthors();
         ViewBag.Categories = _categoryRepository.GetAll();
+        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
         return View(vm);
     }
 
@@ -70,6 +74,9 @@ public class BookController : Controller
         };
         
         ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+        ViewBag.Categories = _categoryRepository.GetAll();
+
         
         return View(vm);
     }
@@ -85,6 +92,8 @@ public class BookController : Controller
         }
         
         ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+        ViewBag.Categories = _categoryRepository.GetAll();
         return View(vm);
     }
 
