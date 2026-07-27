@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LibraryApp.Models.Loan.LoanVm>
+
+@{
+    ViewData["Title"] = "Üye Geçmişi";
+}
+
+<div class="container mt-4">
+    <h2><span class="text-primary">@ViewBag.MemberName</span> - Ödünç Alma Geçmişi</h2>
+    <a asp-action="Index" class="btn btn-secondary mb-3">Üye Listesine Dön</a>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Bu üye henüz hiç kitap ödünç almamış.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Kitap Adı</th>
+                <th>Yazar</th>
+                <th>Alış Tarihi</th>
+                <th>Teslim Tarihi</th>
+                <th>İade Durumu</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.BookName</td>
+                    <td>@item.BookAuthor</td>
+                    <td>@item.LoanDate.ToShortDateString()</td>
+                    <td>@item.DueDate.ToShortDateString()</td>
+                    <td>
+                        @if(item.ReturnDate == default(DateTime))
+                        {
+                            <span class="badge bg-warning text-dark">İade Edilmedi</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">@item.ReturnDate.ToShortDateString()</span>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
