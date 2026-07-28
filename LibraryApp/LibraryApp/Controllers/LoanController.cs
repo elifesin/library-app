@@ -47,4 +47,14 @@ namespace LibraryApp.Controllers;
             }
             return View(vm);
         }
+        
+        [HttpGet]
+        public IActionResult ReturnBook(int id)
+        {
+            // Repository'deki iade metodunu çalıştır
+            _loanRepository.ReturnBook(id);
+    
+            // İşlem bitince ödünç listesine (veya geldiği sayfaya) geri gönder
+            return RedirectToAction(nameof(Index));
+        }
     }

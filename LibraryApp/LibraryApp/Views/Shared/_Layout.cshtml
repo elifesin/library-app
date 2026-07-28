@@ -29,8 +29,22 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Index">Members</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark fw-bold" asp-controller="Loan" asp-action="Create">Ödünç Alma İşlemleri</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" id="loanDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ödünç Alma İşlemleri
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="loanDropdown">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Loan" asp-action="Create">
+                                    <i class="bi bi-plus-circle text-success"></i> Yeni Kitap Ödünç Al
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Loan" asp-action="Index">
+                                    <i class="bi bi-arrow-return-left text-primary"></i> Kitap İade Et / Listele
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark fw-bold" asp-controller="Category" asp-action="Index">Kategori İşlemleri</a>
