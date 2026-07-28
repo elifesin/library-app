@@ -11,7 +11,6 @@ public class LoanRepository : RepositoryBase
 
     public List<LoanVm> GetAll()
     {
-        // SQL sorgusundaki virgüller ve boşluklar tamamen düzeltildi
         string sql = @"
         SELECT 
             l.Id, 
@@ -43,6 +42,7 @@ public class LoanRepository : RepositoryBase
             INNER JOIN Authors a ON b.AuthorID = a.Id
             INNER JOIN Members m ON l.MemberID = m.Id
             WHERE l.Id = @Id";
+        
         return ExecuteReadSingle<LoanVm>(sql, new { Id = id });
 
     }
@@ -54,17 +54,15 @@ public class LoanRepository : RepositoryBase
         ExecuteCommand(sql, vm);
     }
 
-    // YENİ: Üyeleri Dropdown için getiren jenerik metot
     public List<SelectListItem> GetActiveMembers()
     {
-        string sql = "SELECT ID, FirstName, LastName FROM Members WHERE IsActive = 1";
+        string sql = "SELECT CAST(ID AS VARCHAR) AS Value, FirstName + ' ' + LastName AS Text FROM Members WHERE IsActive = 1";
         return ExecuteReadQuery<SelectListItem>(sql);
     }
 
-    // YENİ: Müsait Kitapları Dropdown için getiren jenerik metot
     public List<SelectListItem> GetAvailableBooks()
     {
-        string sql = "SELECT Id, Title FROM Books WHERE IsActive = 1 AND Id NOT IN (SELECT BookID FROM Loans WHERE ReturnDate IS NULL)";
+        string sql = "SELECT CAST(Id AS VARCHAR) AS Value, Title AS Text  FROM Books WHERE IsActive = 1 AND Id NOT IN (SELECT BookID FROM Loans WHERE ReturnDate IS NULL)";
         return ExecuteReadQuery<SelectListItem>(sql);
     }
     
@@ -74,7 +72,7 @@ public class LoanRepository : RepositoryBase
         SELECT 
             l.Id, 
             b.Title AS BookName, 
-            a.FirstName + ' ' + a.LastName AS AuthorName, 
+            a.FirstName + ' ' + a.LastName, 
             l.LoanDate, 
             l.DueDate, 
             l.ReturnDate
@@ -88,7 +86,6 @@ public class LoanRepository : RepositoryBase
     
     public void ReturnBook(int loanId)
     {
-        // Sadece iade tarihini şu anki zaman olarak güncelliyoruz
         string sql = "UPDATE Loans SET ReturnDate = GETDATE() WHERE Id = @Id";
     
         ExecuteCommand(sql, new{Id = loanId});

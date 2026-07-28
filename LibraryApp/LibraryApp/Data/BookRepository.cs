@@ -17,7 +17,7 @@ public class BookRepository : RepositoryBase
             c.CategoryName,
             p.Name AS PublisherName,
             CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed
-        FROM Books b
+        FROM Books b   
         INNER JOIN Authors a ON b.AuthorID = a.Id
         LEFT JOIN Categories c ON b.CategoryID = c.Id
         LEFT JOIN Publishers p ON b.PublisherID = p.Id";

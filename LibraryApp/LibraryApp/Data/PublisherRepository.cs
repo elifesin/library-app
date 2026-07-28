@@ -1,5 +1,4 @@
 ﻿using LibraryApp.Models.Publisher;
-using Microsoft.Data.SqlClient;
 
 namespace LibraryApp.Data;
 

@@ -24,7 +24,7 @@ public class RepositoryBase
     {
         using (var connection = new SqlConnection(_connectionString))
         {
-            return connection.QueryFirstOrDefault<T>(sqlQuery, parameters); // Tek bir satır dönmesi beklenen sorgular
+            return connection.QueryFirstOrDefault<T>(sqlQuery, parameters); // Tek bir satır dönmesi beklenen sorgular için
         }
     }
     
@@ -32,7 +32,7 @@ public class RepositoryBase
     {
         using (var connection = new SqlConnection(_connectionString))
         {
-            return connection.Execute(sqlQuery, parameters); // Veri değiştiren sorgular için
+            return connection.Execute(sqlQuery, parameters); // Veri değiştiren sorgular için (INSERT / UPDATE / DELETE)
         }
     }
 }

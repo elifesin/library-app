@@ -11,6 +11,7 @@ namespace LibraryApp.Controllers;
         public LoanController(LoanRepository loanRepository)
         {
             _loanRepository = loanRepository;
+            
         }
 
         [HttpGet]
@@ -29,7 +30,7 @@ namespace LibraryApp.Controllers;
                 LoanDate = DateTime.Today, 
                 DueDate = DateTime.Today.AddDays(15) 
             };
-        
+            
             ViewBag.Members = _loanRepository.GetActiveMembers();
             ViewBag.Books = _loanRepository.GetAvailableBooks();
 
