@@ -1,13 +1,12 @@
-﻿using LibraryApp.Models.Loan;
+﻿using Dapper;
+using LibraryApp.Models.Loan;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LibraryApp.Data;
 
 public class LoanRepository : RepositoryBase
 {
-    public LoanRepository(IConfiguration configuration) : base(configuration)
-    {
-    }
+    public LoanRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
 
     public List<LoanVm> GetAll()
     {
@@ -24,7 +23,7 @@ public class LoanRepository : RepositoryBase
         INNER JOIN Authors a ON b.AuthorID = a.Id
         INNER JOIN Members m ON l.MemberID = m.Id";
 
-        return ExecuteReadQuery<LoanVm>(sql);
+        return Connection.Query<LoanVm>(sql).ToList();
     }
 
     public LoanVm GetById(int id)
@@ -33,7 +32,7 @@ public class LoanRepository : RepositoryBase
             SELECT 
                 l.Id, 
                 b.Title AS BookName, 
-                a.FirstName + ' ' + a.LastName AS AuthorName, 
+                a.FirstName + ' ' + a.LastName AS AuthorFullName, 
                 l.LoanDate, 
                 l.DueDate, 
                 l.ReturnDate
@@ -43,7 +42,7 @@ public class LoanRepository : RepositoryBase
             INNER JOIN Members m ON l.MemberID = m.Id
             WHERE l.Id = @Id";
         
-        return ExecuteReadSingle<LoanVm>(sql, new { Id = id });
+        return Connection.QueryFirstOrDefault<LoanVm>(sql, new { Id = id });
 
     }
 
@@ -51,19 +50,19 @@ public class LoanRepository : RepositoryBase
     {
         string sql = "INSERT INTO Loans (BookID, MemberID, LoanDate, DueDate) VALUES (@BookID, @MemberID, @LoanDate, @DueDate)";
         
-        ExecuteCommand(sql, vm);
+        Connection.Execute(sql, vm);
     }
 
     public List<SelectListItem> GetActiveMembers()
     {
         string sql = "SELECT CAST(ID AS VARCHAR) AS Value, FirstName + ' ' + LastName AS Text FROM Members WHERE IsActive = 1";
-        return ExecuteReadQuery<SelectListItem>(sql);
+        return Connection.Query<SelectListItem>(sql).ToList();
     }
 
     public List<SelectListItem> GetAvailableBooks()
     {
         string sql = "SELECT CAST(Id AS VARCHAR) AS Value, Title AS Text  FROM Books WHERE IsActive = 1 AND Id NOT IN (SELECT BookID FROM Loans WHERE ReturnDate IS NULL)";
-        return ExecuteReadQuery<SelectListItem>(sql);
+        return Connection.Query<SelectListItem>(sql).ToList();
     }
     
     public List<LoanVm> GetLoansByMemberId(int memberId)
@@ -72,7 +71,7 @@ public class LoanRepository : RepositoryBase
         SELECT 
             l.Id, 
             b.Title AS BookName, 
-            a.FirstName + ' ' + a.LastName, 
+            a.FirstName + ' ' + a.LastName AS AuthorFullName, 
             l.LoanDate, 
             l.DueDate, 
             l.ReturnDate
@@ -81,14 +80,14 @@ public class LoanRepository : RepositoryBase
         INNER JOIN Authors a ON b.AuthorID = a.Id
         WHERE l.MemberID = @MemberID";
     
-        return ExecuteReadQuery<LoanVm>(sql, new {memberID =  memberId});
+        return Connection.Query<LoanVm>(sql, new {memberID =  memberId}).ToList();
     }
     
     public void ReturnBook(int loanId)
     {
         string sql = "UPDATE Loans SET ReturnDate = GETDATE() WHERE Id = @Id";
     
-        ExecuteCommand(sql, new{Id = loanId});
+        Connection.Execute(sql, new{Id = loanId});
     }
     }
     

@@ -6,14 +6,14 @@ namespace LibraryApp.Data;
 
 public class BookRepository : RepositoryBase
 {
-    public BookRepository(IConfiguration configuration) : base(configuration) { }
-    public List<BookVm> GetAllBooks()
+    public BookRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
+    public List<BookVm> GetAllBooks() 
     {
         string sql = @" 
         SELECT 
             b.Id, 
             b.Title, 
-            a.FirstName + ' ' + a.LastName AS FullName,
+            a.FirstName + ' ' + a.LastName AS AuthorFullName,
             c.CategoryName,
             p.Name AS PublisherName,
             CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed
@@ -22,7 +22,7 @@ public class BookRepository : RepositoryBase
         LEFT JOIN Categories c ON b.CategoryID = c.Id
         LEFT JOIN Publishers p ON b.PublisherID = p.Id";
         
-        return ExecuteReadQuery<BookVm>(sql);
+        return Connection.Query<BookVm>(sql).ToList();
     }
 
     public BookVm GetBookById(int id)
@@ -31,7 +31,7 @@ public class BookRepository : RepositoryBase
     SELECT 
         b.Id AS BookId, 
         b.Title AS BookName, 
-        a.FirstName + ' ' + a.LastName AS FullName, 
+        a.FirstName , a.LastName AS AuthorFullName, 
         c.CategoryName, 
         CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed 
     FROM Books b
@@ -39,14 +39,14 @@ public class BookRepository : RepositoryBase
     LEFT JOIN Categories c ON b.CategoryID = c.Id -- INNER yerine LEFT yaptık (Kategorisi yoksa bile kitap gelsin)
     WHERE b.Id = @Id";
         
-        return ExecuteReadSingle<BookVm>(sql, new{Id = id});
+        return Connection.QueryFirstOrDefault<BookVm>(sql, new{Id = id});
     }
 
     public void Insert(BookCreateVm bookVm)
     {
         string sql =
             "INSERT INTO Books(Title, PublishYear, AuthorID, CategoryID, PublisherId) VALUES (@Title, @PublishYear, @AuthorID, @CategoryID, @PublisherId)";
-        ExecuteCommand(sql, bookVm);
+        Connection.Execute(sql, bookVm);
     }
 
     public void Update(BookEditVm bookVm)
@@ -54,13 +54,13 @@ public class BookRepository : RepositoryBase
         string sql =
             "UPDATE Books SET Title = @Title, PublishYear = @PublishYear, PublisherId = @PublisherId, CategoryID = @CategoryID WHERE Id = @Id";
 
-        ExecuteCommand(sql, bookVm);
+        Connection.Execute(sql, bookVm);
     }
 
     public void Delete(BookDeleteVm bookVm)
     {
         string sql = "UPDATE Books SET IsActive = 0 WHERE Id = @Id";
         
-        ExecuteCommand(sql, bookVm);
+        Connection.Execute(sql, bookVm);
     }
 }

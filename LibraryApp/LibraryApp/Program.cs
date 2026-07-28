@@ -8,6 +8,7 @@ builder.Services.AddScoped<AuthorRepository>();
 builder.Services.AddScoped<BookRepository>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddScoped<PublisherRepository>();
+builder.Services.AddScoped<DbConnectionFactory>();
 
 
 builder.Services.AddControllersWithViews()
