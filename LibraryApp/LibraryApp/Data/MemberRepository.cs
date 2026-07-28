@@ -11,53 +11,34 @@ public class MemberRepository : RepositoryBase
     {
         string sql = "SELECT * FROM Members WHERE IsActive = 1";
 
-        List<MemberVm> vmList = ExecuteReadQuery<MemberVm>(sql, reader => new MemberVm
-        {
-            ID = Convert.ToInt32(reader["Id"]),
-            FirstName = reader["FirstName"].ToString(),
-            LastName = reader["LastName"].ToString(),
-        });
-        return vmList;
+        return ExecuteReadQuery<MemberVm>(sql);
     }
 
     public MemberVm GetMemberById(int id)
     {
         string sql = "SELECT * FROM Members WHERE ID = @ID";
 
-        MemberVm memberVm = ExecuteReadSingle<MemberVm>(sql, reader => new MemberVm
-        {
-            ID = Convert.ToInt32(reader["Id"]),
-            FirstName = reader["FirstName"].ToString(),
-            LastName = reader["LastName"].ToString(),
-        },
-            new SqlParameter("ID", id)
-            );
-        return memberVm;
+        return ExecuteReadSingle<MemberVm>(sql, new{ Id = id});
     }
 
     public void Insert(MemberCreateVm memberVm)
     {
         string sql = "INSERT INTO Members(FirstName, LastName) VALUES(@FirstName, @LastName)";
         
-        ExecuteCommand(sql, new SqlParameter("FirstName", memberVm.FirstName),
-            new SqlParameter("LastName", memberVm.LastName)
-            );
+        ExecuteCommand(sql, memberVm);
     }
 
     public void Update(MemberVm memberVm)
     {
         string sql = "UPDATE Members SET FirstName = @FirstName, LastName = @LastName WHERE ID = @ID";
         
-        ExecuteCommand(sql, new SqlParameter("FirstName", memberVm.FirstName),
-            new SqlParameter("LastName", memberVm.LastName),
-            new SqlParameter("ID", memberVm.ID)
-        );
+        ExecuteCommand(sql, memberVm);
     }
 
     public void Delete(int id)
     {
         string sql = "UPDATE Members SET IsActive = 0 WHERE ID = @ID";
         
-        ExecuteCommand(sql, new SqlParameter("ID", id));
+        ExecuteCommand(sql, new { Id = id });
     }
 }

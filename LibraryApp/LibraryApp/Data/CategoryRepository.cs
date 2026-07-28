@@ -14,47 +14,28 @@ public class CategoryRepository : RepositoryBase
     {
         var sql = "SELECT * FROM Categories WHERE IsActive = 1";
 
-        List<CategoryVm> vmList = ExecuteReadQuery<CategoryVm>(sql, reader => new CategoryVm
-        {
-            Id = Convert.ToInt32(reader["Id"]),
-            CategoryName = reader["CategoryName"].ToString()!,
-            IsActive = Convert.ToBoolean(reader["IsActive"])
-        });
-        return vmList;
+        return ExecuteReadQuery<CategoryVm>(sql);
     }
 
     public CategoryVm GetById(int id)
     {
         string sql = "SELECT * FROM Categories WHERE Id = @Id";
-
-        CategoryVm category = ExecuteReadSingle<CategoryVm>(sql, reader => new CategoryVm
-            {
-                Id = Convert.ToInt32(reader["Id"]),
-                CategoryName = reader["CategoryName"].ToString()!,
-                IsActive = Convert.ToBoolean(reader["IsActive"])
-            },
-            new SqlParameter("@Id", id)
-        );
-        return category;
+        
+        return ExecuteReadSingle<CategoryVm>(sql, new {Id = id});
     }
     
     public void Insert(CategoryVm categoryVm)
     {
         string sql = "INSERT INTO Categories(CategoryName) VALUES (@CategoryName)";
 
-        // Sadece ExecuteCommand çağrılır ve parametre gönderilir
-        ExecuteCommand(sql, new SqlParameter("@CategoryName", categoryVm.CategoryName));
+        ExecuteCommand(sql, categoryVm);
     }
     
     public void Update(CategoryVm categoryVm)
     {
         string sql = "UPDATE Categories SET CategoryName = @CategoryName WHERE Id = @Id";
         
-        // ExecuteCommand'a birden fazla parametre virgülle eklenebilir
-        ExecuteCommand(sql, 
-            new SqlParameter("@CategoryName", categoryVm.CategoryName),
-            new SqlParameter("@Id", categoryVm.Id)
-        );
+        ExecuteCommand(sql, categoryVm);
     }
 
     // DELETE (SOFT DELETE) METODU
@@ -62,6 +43,6 @@ public class CategoryRepository : RepositoryBase
     {
         string sql = "UPDATE Categories SET IsActive = 0 WHERE Id = @Id";
         
-        ExecuteCommand(sql, new SqlParameter("@Id", id));
+        ExecuteCommand(sql, new {Id = id});
     }
 }
