@@ -7,5 +7,5 @@ public class LoanVm
     public DateTime DueDate { get; set; }
     public DateTime ReturnDate { get; set; }
     public string BookName { get; set; } = string.Empty;
-    public  string BookAuthor { get; set; } = string.Empty;
+    public  string FullName { get; set; } = string.Empty;
 }

@@ -8,23 +8,27 @@
         <div class="col-md-6">
             <form asp-action="Create" method="post">
                 
-                <!-- Üye Seçimi -->
                 <div class="mb-3">
-                    <label asp-for="MemberID" class="form-label">Üye Seçiniz</label>
-                    <select asp-for="MemberID" asp-items="ViewBag.Members" class="form-select" required>
-                        <option value="">Lütfen listeden üye seçin...</option>
+                    <label>Üye Seçimi</label>
+                    <select asp-for="MemberID" class="form-control">
+                        <option value="">-- Lütfen Bir Üye Seçin --</option>
+    
+                        @foreach (var member in ViewBag.Members)
+                        {
+                            <option value="@member.ID">@member.FullName</option>
+                        }
                     </select>
                 </div>
+                <label>Kitap Seçimi</label>
+                <select asp-for="BookID" class="form-control">
+                    <option value="">-- Lütfen Bir Kitap Seçin --</option>
+    
+                    @foreach (var book in ViewBag.Books)
+                    {
+                        <option value="@book.Id">@book.Title</option>
+                    }
+                </select>
 
-                <!-- Kitap Seçimi -->
-                <div class="mb-3">
-                    <label asp-for="BookID" class="form-label">Ödünç Verilecek Kitap</label>
-                    <select asp-for="BookID" asp-items="ViewBag.Books" class="form-select" required>
-                        <option value="">Lütfen kütüphanedeki kitaplardan seçin...</option>
-                    </select>
-                </div>
-
-                <!-- Veriliş Tarihi -->
                 <div class="mb-3">
                     <label asp-for="LoanDate" class="form-label">Veriliş Tarihi</label>
                     <input asp-for="LoanDate" type="date" class="form-control" required/>

@@ -12,10 +12,8 @@
         <tr>
             <th>ID</th>
             <th>Kitap Adı</th>
-            <th>Yazar</th>
             <th>Alış Tarihi</th>
-            <th>Teslim Tarihi</th>
-            <th>İade Tarihi</th>
+            <th>Son Teslim Tarihi</th>
         </tr>
         </thead>
         <tbody>
@@ -24,12 +22,9 @@
             <tr>
                 <td>@item.Id</td>
                 <td>@item.BookName</td>
-                <td>@item.BookAuthor</td>
                 <td>@item.LoanDate.ToShortDateString()</td>
                 <td>@item.DueDate.ToShortDateString()</td>
-                <td>
-                    @(item.ReturnDate == default(DateTime) ? "İade Edilmedi" : item.ReturnDate.ToShortDateString())
-                </td>
+                
                 <td>
                     @if(item.ReturnDate == default(DateTime) || item.ReturnDate == null)
                     {

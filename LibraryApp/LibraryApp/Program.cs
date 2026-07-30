@@ -1,4 +1,4 @@
-using LibraryApp.Data;
+using Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +8,8 @@ builder.Services.AddScoped<AuthorRepository>();
 builder.Services.AddScoped<BookRepository>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddScoped<PublisherRepository>();
-
-
+builder.Services.AddScoped<DbConnectionFactory>();
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.
 
