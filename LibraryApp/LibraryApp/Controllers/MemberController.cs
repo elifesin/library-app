@@ -1,46 +1,53 @@
-﻿using LibraryApp.Data;
+﻿using AutoMapper;
+using Data.Entities;
+using Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Members;
-using Microsoft.Data.SqlClient;
 
 namespace LibraryApp.Controllers;
 
-public class MemberController : Controller
+public class  MemberController : Controller
 {
     private readonly MemberRepository _memberRepository;
     private readonly LoanRepository _loanRepository;
+    private readonly IMapper _mapper;
 
-    public MemberController(MemberRepository memberRepository, LoanRepository loanRepository)
+    public MemberController(MemberRepository memberRepository, LoanRepository loanRepository, IMapper mapper)
     {
         _memberRepository = memberRepository;
         _loanRepository = loanRepository;
+        _mapper = mapper;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        List<MemberVm> vmList = _memberRepository.GetAllMembers();
-        return View(vmList);
+        var memberEntities = _memberRepository.GetAllMembers();
+        var memberViewModels = _mapper.Map<List<MemberVm>>(memberEntities);
+        
+        return View(memberViewModels);
     }
 
 
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new MemberCreateVm());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(MemberCreateVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _memberRepository.Insert(vm);
-            return RedirectToAction(nameof(Index));
-
+            return View(vm);
         }
-        return View(vm);
+        
+        var memberEntity = _mapper.Map<Member>(vm);
+        _memberRepository.Insert(memberEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -51,30 +58,38 @@ public class MemberController : Controller
         {
             return NotFound();
         }
-        return View(vm);
+        var bookEntity = _mapper.Map<MemberVm>(vm);
+        return View(bookEntity);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(MemberVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _memberRepository.Update(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
-        return View(vm);
+        
+        var memberEntity = _mapper.Map<Member>(vm);
+        _memberRepository.Update(memberEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Delete(int id)
     {
         var vm = _memberRepository.GetMemberById(id);
+        
         if (vm == null)
         {
             return NotFound();
         }
-        return View(vm);
+        
+        var bookEntity = _mapper.Map<MemberVm>(vm);
+        
+        return View(bookEntity);
     }
 
     [HttpPost]
@@ -82,25 +97,29 @@ public class MemberController : Controller
     public IActionResult DeleteConfirmed(int id)
     {
         _memberRepository.Delete(id);
+        
         return RedirectToAction(nameof(Index));
     }
     
     [HttpGet]
-    public IActionResult BorrowedBooks(int id) // id = MemberId
+    public IActionResult BorrowedBooks(int id) 
     {
-        // Önce üyenin adını sayfada göstermek için üye bilgilerini çekiyoruz
         var member = _memberRepository.GetMemberById(id);
         if (member == null)
         {
             return NotFound();
         }
 
-        ViewBag.MemberName = $"{member.FirstName} {member.LastName}";
-    
-        // Sonra bu üyenin ödünç aldığı kitapların listesini çekiyoruz
         var loans = _loanRepository.GetLoansByMemberId(id);
-    
-        return View(loans);
+
+        var vm = new MemberBorrowedBooksVm
+        {
+            MemberId = member.ID,
+            FullName = member.FullName, 
+            
+            BorrowedBooks = _mapper.Map<List<BorrowedBookItem>>(loans) 
+        };
+        return View(vm);
     }
    
 }

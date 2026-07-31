@@ -1,4 +1,6 @@
-﻿using LibraryApp.Data;
+﻿using AutoMapper;
+using Data.Entities;
+using Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Category;
 
@@ -8,35 +10,40 @@ public class CategoryController : Controller
 {
     // Artık connection string'e ihtiyacımız yok, sadece Repository'yi kullanacağız.
     private readonly CategoryRepository _categoryRepository;
+    private readonly IMapper _mapper;
 
-    public CategoryController(CategoryRepository categoryRepository)
+    public CategoryController(CategoryRepository categoryRepository, IMapper mapper)
     {
         _categoryRepository = categoryRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        List<CategoryVm> vmList = _categoryRepository.GetAll();
-        return View(vmList);
+        var categoryEntities = _categoryRepository.GetAll();
+        var categoryViewModels = _mapper.Map<List<CategoryVm>>(categoryEntities);
+        return View(categoryViewModels);
     }
 
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new  CategoryVm());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(CategoryVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _categoryRepository.Insert(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
-        return View(vm);
+        var categoryEntity = _mapper.Map<Category>(vm);
+        _categoryRepository.Insert(categoryEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -49,19 +56,24 @@ public class CategoryController : Controller
             return NotFound();
         }
         
-        return View(vm);
+        var category =  _mapper.Map<CategoryVm>(vm);
+        
+        return View(category);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(CategoryVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _categoryRepository.Update(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
-        return View(vm);
+        
+        var categoryEntity = _mapper.Map<Category>(vm);
+        _categoryRepository.Update(categoryEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -74,7 +86,9 @@ public class CategoryController : Controller
             return NotFound();
         }
         
-        return View(vm);
+        var category = _mapper.Map<CategoryVm>(vm);
+        
+        return View(category);
     }
 
     [HttpPost]
@@ -82,7 +96,6 @@ public class CategoryController : Controller
     public IActionResult DeleteConfirmed(int id)
     {
         _categoryRepository.Delete(id);
-        
         return RedirectToAction(nameof(Index));
     }
 }

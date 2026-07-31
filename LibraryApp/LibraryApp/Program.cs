@@ -1,20 +1,17 @@
-using LibraryApp.Data;
+using Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<CategoryRepository>();
-builder.Services.AddScoped<LoanRepository>();
-builder.Services.AddScoped<AuthorRepository>();
-builder.Services.AddScoped<BookRepository>();
-builder.Services.AddScoped<MemberRepository>();
-builder.Services.AddScoped<PublisherRepository>();
+// Data Layer Services
+builder.Services.AddDataLayerServices();
 
-
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.
 
 var app = builder.Build(); // Uygulamayı oluştur.
     
+
 // Standart Middleware ayarları
 if (!app.Environment.IsDevelopment())
 {

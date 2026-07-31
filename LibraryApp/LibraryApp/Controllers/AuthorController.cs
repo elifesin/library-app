@@ -1,83 +1,96 @@
-﻿using LibraryApp.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Data.Entities;
+using Data.Repositories;
 using LibraryApp.Models.Author;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers;
 
 public class AuthorController : Controller
 {
     private readonly AuthorRepository _authorRepository;
+    private readonly IMapper _mapper;
 
-    public AuthorController(AuthorRepository authorRepository)
+    public AuthorController(AuthorRepository authorRepository, IMapper mapper)
     {
         _authorRepository = authorRepository;
+        _mapper = mapper;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        List<AuthorVm> vmList = _authorRepository.GetAllAuthors();
-        return View(vmList);
+        var authorEntities = _authorRepository.GetAllAuthors();
+        
+        var authorViewModels = _mapper.Map<List<AuthorVm>>(authorEntities);
+        
+        return View(authorViewModels);
     }
 
+    [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new AuthorCreateVm());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(AuthorCreateVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _authorRepository.Insert(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
-        return View(vm);
+        
+        var authorEntity = _mapper.Map<Author>(vm);
+        _authorRepository.Insert(authorEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Edit(int id)
     {
         var author = _authorRepository.GetAuthorById(id);
+        
         if (author == null)
         {
             return NotFound();
         }
         
-        var vm = new AuthorEditVm
-        {
-            Id = author.Id,
-            FirstName = author.FirstName,
-            LastName = author.LastName
-        };
-        return View(vm);
+        var authorVm = _mapper.Map<AuthorEditVm>(author);
+        
+        return View(authorVm);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(AuthorEditVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _authorRepository.Update(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
 
-        return View(vm);
+        var authorEntity = _mapper.Map<Author>(vm);
+        _authorRepository.Update(authorEntity);
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var vm = _authorRepository.GetAuthorById(id);
-        if (vm == null)
+        var author = _authorRepository.GetAuthorById(id);
+        
+        if (author == null)
         {
             return NotFound();
         }
-            
-        return View(vm);
+        
+        var authorVm = _mapper.Map<AuthorVm>(author);
+
+        return View(authorVm);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -88,6 +101,4 @@ public class AuthorController : Controller
         
         return RedirectToAction(nameof(Index));
     }
-    
-    
 }

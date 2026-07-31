@@ -1,6 +1,5 @@
 ﻿@model LibraryApp.Models.Book.BookCreateVm
 
-
 <div class="container mt-4">
     <h2>Yeni Kitap Ekle</h2>
     <hr />
@@ -31,7 +30,7 @@
                         @foreach (var author in ViewBag.Authors)
                         {
                             <option value="@author.Id">
-                                @author.FullName
+                                @author.AuthorFullName
                             </option>
                         }
                     </select>

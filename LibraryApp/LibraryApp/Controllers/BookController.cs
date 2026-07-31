@@ -1,6 +1,8 @@
-﻿using LibraryApp.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Data.Entities;
+using Data.Repositories;
 using LibraryApp.Models.Book;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers;
 
@@ -10,24 +12,26 @@ public class BookController : Controller
     private readonly AuthorRepository _authorRepository;
     private readonly CategoryRepository _categoryRepository;
     private readonly PublisherRepository _publisherRepository; 
-
-    public BookController(AuthorRepository authorRepository, CategoryRepository categoryRepository, BookRepository bookRepository, PublisherRepository publisherRepository)
+    private readonly IMapper _mapper;
+    public BookController(AuthorRepository authorRepository, CategoryRepository categoryRepository, BookRepository bookRepository, PublisherRepository publisherRepository, IMapper mapper)
     {
         _authorRepository = authorRepository;
         _categoryRepository = categoryRepository;
         _bookRepository = bookRepository;
         _publisherRepository = publisherRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        List<BookVm> vmList = _bookRepository.GetAllBooks();
+        var bookEntities = _bookRepository.GetAllBooks();
+        var bookViewModels = _mapper.Map<List<BookVm>>(bookEntities);
         
         ViewBag.Authors = _authorRepository.GetAllAuthors();
         ViewBag.Categories = _categoryRepository.GetAll();
         
-        return View(vmList);
+        return View(bookViewModels);
     }
 
     [HttpGet]
@@ -37,23 +41,26 @@ public class BookController : Controller
         ViewBag.Categories = _categoryRepository.GetAll();
         ViewBag.Publishers = _publisherRepository.GetAllPublishers();
        
-        return View();
+        return View(new BookCreateVm());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(BookCreateVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _bookRepository.Insert(vm);
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
         
         ViewBag.Authors = _authorRepository.GetAllAuthors();
         ViewBag.Categories = _categoryRepository.GetAll();
         ViewBag.Publishers = _publisherRepository.GetAllPublishers();
-        return View(vm);
+        
+        var bookEntity = _mapper.Map<Book>(vm);
+        _bookRepository.Insert(bookEntity);
+
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -65,18 +72,12 @@ public class BookController : Controller
         {
             return NotFound();
         }
-
-        var vm = new BookEditVm
-        {
-            Id = book.Id,
-            Title = book.Title,
-            IsBorrowed =book.IsBorrowed
-        };
         
+        var vm = _mapper.Map<BookEditVm>(book);
+
         ViewBag.Authors = _authorRepository.GetAllAuthors();
         ViewBag.Publishers = _publisherRepository.GetAllPublishers();
         ViewBag.Categories = _categoryRepository.GetAll();
-
         
         return View(vm);
     }
@@ -85,16 +86,21 @@ public class BookController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Edit(BookEditVm vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _bookRepository.Update(vm);
-            return RedirectToAction(nameof(Index));
+            ViewBag.Authors = _authorRepository.GetAllAuthors();
+            ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+            ViewBag.Categories = _categoryRepository.GetAll();
+            
+            return View(vm);
         }
         
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
-        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
-        ViewBag.Categories = _categoryRepository.GetAll();
-        return View(vm);
+        var bookEntity = _mapper.Map<Book>(vm);
+        _bookRepository.Update(bookEntity);
+        
+        
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -106,10 +112,8 @@ public class BookController : Controller
         {
             return NotFound();
         }
-        var vm = new BookDeleteVm
-        {
-            Id = book.Id
-        };
+        
+        var vm = _mapper.Map<BookDeleteVm>(book);
         
         return View(vm);
     }
@@ -118,9 +122,9 @@ public class BookController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        var vm = new BookDeleteVm { Id = id };
+        var book = new Book { Id = id };
+        _bookRepository.Delete(book);
         
-        _bookRepository.Delete(vm);
         return RedirectToAction(nameof(Index));
     }
 }
