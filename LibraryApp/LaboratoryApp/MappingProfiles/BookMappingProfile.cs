@@ -2,7 +2,7 @@
 using Data.Entities;
 using LaboratoryApp.Models.Book;
 
-namespace LaboratoryApp.Profiles;
+namespace LaboratoryApp.MappingProfiles;
 
 public class BookMappingProfile : Profile
 {
