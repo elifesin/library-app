@@ -5,11 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Data Layer Services
 builder.Services.AddDataLayerServices();
 
-
-// MVC sistemi aktif edilir.
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build(); // Uygulamayı oluştur.
     
+
 // Standart Middleware ayarları
 if (!app.Environment.IsDevelopment())
 {
