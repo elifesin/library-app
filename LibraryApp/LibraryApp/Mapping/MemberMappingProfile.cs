@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Entities;
+using Domain;
 using LibraryApp.Models.Members;
 
 namespace LibraryApp.Mapping;

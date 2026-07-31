@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Entities;
+using Domain;
 
 namespace Data.Repositories;
 

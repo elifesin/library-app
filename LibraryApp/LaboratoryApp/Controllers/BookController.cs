@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Entities;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Data.Repositories;
 using LaboratoryApp.Models.Book;
