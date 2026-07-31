@@ -13,6 +13,7 @@ public class BookRepository : RepositoryBase
         SELECT 
             b.Id, 
             b.Title, 
+            b.PublishYear,
             a.FirstName + ' ' + a.LastName AS AuthorName,
             c.CategoryName,
             p.Name AS PublisherName,
