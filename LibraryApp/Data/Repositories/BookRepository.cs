@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Data.Entities;
+using Entities;
 using Microsoft.Data.SqlClient;
 
 namespace Data.Repositories;

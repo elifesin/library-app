@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Data.Entities;
+using Entities;
 using Data.Repositories;
 using LibraryApp.Models.Book;
 using Microsoft.AspNetCore.Mvc;

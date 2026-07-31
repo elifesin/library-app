@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Data.Entities;
+using Entities;
 using LibraryApp.Models.Loan;
-using LibraryApp.Models.Members;
 
 namespace LibraryApp.Mapping;
 

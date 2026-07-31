@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Data.Entities;
+using Entities;
 using LaboratoryApp.Models.Book;
 
 namespace LaboratoryApp.MappingProfiles;
