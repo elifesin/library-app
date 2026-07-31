@@ -13,7 +13,7 @@ public class BookRepository : RepositoryBase
         SELECT 
             b.Id, 
             b.Title, 
-            a.FirstName + ' ' + a.LastName AS AuthorFullName,
+            a.FirstName + ' ' + a.LastName AS AuthorName,
             c.CategoryName,
             p.Name AS PublisherName,
             CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed

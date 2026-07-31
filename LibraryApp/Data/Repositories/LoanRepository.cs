@@ -9,7 +9,6 @@ public class LoanRepository : RepositoryBase
 
     public List<Loan> GetAll()
     {
-        // 1. SELECT kısmında önce Loan (l) kolonlarını, sonra Book (b) kolonlarını düzenli bir sırayla çekiyoruz.
         string sql = @"
     SELECT 
         l.Id, 

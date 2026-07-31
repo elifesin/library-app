@@ -88,15 +88,17 @@ public class BookController : Controller
     {
         if (!ModelState.IsValid)
         {
+            ViewBag.Authors = _authorRepository.GetAllAuthors();
+            ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+            ViewBag.Categories = _categoryRepository.GetAll();
+            
             return View(vm);
         }
         
         var bookEntity = _mapper.Map<Book>(vm);
         _bookRepository.Update(bookEntity);
         
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
-        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
-        ViewBag.Categories = _categoryRepository.GetAll();
+        
         
         return RedirectToAction(nameof(Index));
     }

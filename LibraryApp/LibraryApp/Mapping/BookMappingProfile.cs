@@ -8,7 +8,7 @@ public class BookMappingProfile : Profile
 {
     public BookMappingProfile()
     {
-        CreateMap<Book, BookVm>();
+        CreateMap<Book, BookVm>().ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AuthorName));
         CreateMap<BookVm, Book>();
         
         CreateMap<Book, BookEditVm>();

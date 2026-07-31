@@ -20,21 +20,17 @@
                          <tr>
                              <td>
                                  <div class="dropdown">
-                                     <!-- Dropdown'ı tetikleyen ana buton -->
                                      <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton_@item.ID" data-bs-toggle="dropdown" aria-expanded="false">
                                          İşlemler
                                      </button>
         
-                                     <!-- Açılır menü içindeki seçenekler -->
                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.ID">
                                          <li>
-                                             <!-- Güncelle/Düzenle linki -->
                                              <a class="dropdown-item text-primary" asp-action="Edit" asp-route-id="@item.ID">
                                                  <i class="bi bi-pencil"></i> Güncelle
                                              </a>
                                          </li>
                                          <li>
-                                             <!-- Kitapları Gör linki (Sizin görselinizde 'Sil' altında bu yazıyordu) -->
                                              <a class="dropdown-item text-info" asp-action="BorrowedBooks" asp-route-id="@item.ID">
                                                  <i class="bi bi-book"></i> Kitapları Gör
                                              </a>
@@ -43,7 +39,6 @@
                                              <hr class="dropdown-divider">
                                          </li>
                                          <li>
-                                             <!-- Sil linki -->
                                              <a class="dropdown-item text-danger" asp-action="Delete" asp-route-id="@item.ID">
                                                  <i class="bi bi-trash"></i> Sil
                                              </a>

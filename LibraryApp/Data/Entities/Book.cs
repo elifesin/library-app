@@ -10,4 +10,12 @@ public class Book
     public int CategoryID{ get; set; }
     public int AuthorID { get; set; }
     public int PublisherId { get; set; }
+    
+    public string AuthorName { get; set; }
+    public string CategoryName { get; set; }
+    public string PublisherName { get; set; }
+    
+    public  Category Category { get; set; }
+    public  Author Author { get; set; }
+    public  Publisher Publisher { get; set; }
 }
