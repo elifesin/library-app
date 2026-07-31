@@ -2,7 +2,7 @@
 using Domain;
 using LibraryApp.Models.Members;
 
-namespace LibraryApp.Mapping;
+namespace LibraryApp.MappingProfiles;
 
 public class MemberPageMappingProfile : Profile
 {

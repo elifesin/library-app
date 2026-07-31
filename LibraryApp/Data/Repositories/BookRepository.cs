@@ -7,7 +7,7 @@ namespace Data.Repositories;
 public class BookRepository : RepositoryBase
 {
     public BookRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
-    public List<Book> GetAllBooks() 
+    public List<Book> GetAll() 
     {
         string sql = @" 
         SELECT 
@@ -27,7 +27,7 @@ public class BookRepository : RepositoryBase
         return Connection.Query<Book>(sql).ToList();
     }
 
-    public Book GetBookById(int id)
+    public Book GetById(int id)
     {
         string sql = @" 
     SELECT 
@@ -56,7 +56,7 @@ public class BookRepository : RepositoryBase
         string sql =
             "UPDATE Books SET Title = @Title, PublishYear = @PublishYear, PublisherId = @PublisherId, CategoryID = @CategoryID WHERE Id = @Id";
 
-        Connection.Query<Book>(sql).ToList();
+        Connection.Execute(sql, bookVm);
     }
 
     public void Delete(Book book)

@@ -22,10 +22,10 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var bookEntities = _bookRepository.GetAllBooks();
+        var bookEntities = _bookRepository.GetAll();
         var bookViewModel = _mapper.Map<List<BookListVm>>(bookEntities);
         
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Authors = _authorRepository.GetAll();
         
         return View(bookViewModel);
     }

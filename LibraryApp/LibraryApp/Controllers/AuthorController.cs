@@ -20,7 +20,7 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var authorEntities = _authorRepository.GetAllAuthors();
+        var authorEntities = _authorRepository.GetAll();
         
         var authorViewModels = _mapper.Map<List<AuthorVm>>(authorEntities);
         
@@ -51,7 +51,7 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var author = _authorRepository.GetAuthorById(id);
+        var author = _authorRepository.GetById(id);
         
         if (author == null)
         {
@@ -81,7 +81,7 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var author = _authorRepository.GetAuthorById(id);
+        var author = _authorRepository.GetById(id);
         
         if (author == null)
         {

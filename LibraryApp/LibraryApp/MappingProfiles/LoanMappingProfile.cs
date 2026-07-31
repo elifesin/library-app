@@ -2,7 +2,7 @@
 using Domain;
 using LibraryApp.Models.Loan;
 
-namespace LibraryApp.Mapping;
+namespace LibraryApp.MappingProfiles;
 
 public class LoanMappingProfile : Profile
 {

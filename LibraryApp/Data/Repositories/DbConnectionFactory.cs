@@ -15,7 +15,6 @@ public class DbConnectionFactory
     }
 
     public IDbConnection Connection
-    
     {
         get
         {

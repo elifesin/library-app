@@ -8,14 +8,14 @@ public class AuthorRepository : RepositoryBase
 {
     public AuthorRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) {}
 
-    public List<Author> GetAllAuthors()
+    public List<Author> GetAll()
     {
         string sql = "SELECT * FROM Authors WHERE IsActive = 1";
         
         return Connection.Query<Author>(sql).ToList();
     }
 
-    public Author GetAuthorById(int id)
+    public Author GetById(int id)
     {
         string sql = "SELECT * FROM Authors WHERE Id = @Id"; 
 
@@ -40,6 +40,6 @@ public class AuthorRepository : RepositoryBase
     {
         string sql = "UPDATE Authors SET IsActive = 0 WHERE Id = @Id";
         
-        Connection.Execute(sql, new SqlParameter("@Id", id));
+        Connection.Execute(sql, new {Id = id});
     }
 }

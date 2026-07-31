@@ -28,7 +28,7 @@ public class CategoryRepository : RepositoryBase
         string sql = "INSERT INTO Categories(CategoryName) VALUES (@CategoryName)";
 
         // Sadece ExecuteCommand çağrılır ve parametre gönderilir
-        Connection.Execute(sql, new SqlParameter("@CategoryName", categoryVm.CategoryName));
+        Connection.Execute(sql, new { CategoryName = categoryVm.CategoryName });
     }
     
     public void Update(Category category)

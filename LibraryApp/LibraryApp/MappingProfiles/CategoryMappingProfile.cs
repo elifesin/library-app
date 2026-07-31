@@ -2,8 +2,7 @@
 using Domain;
 using LibraryApp.Models.Category;
 
-
-namespace LibraryApp.Mapping;
+namespace LibraryApp.MappingProfiles;
 
 public class CategoryMappingProfile : Profile
 {

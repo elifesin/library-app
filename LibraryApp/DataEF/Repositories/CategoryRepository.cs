@@ -15,33 +15,33 @@ namespace DataEF
 
         public List<Category> GetAll()
         {
-            // SELECT * FROM Categories WHERE IsActive = 1 işleminin LINQ karşılığı
+            // SELECT * FROM Categories WHERE IsActive = 1 
             return _context.Categories.Where(c => c.IsActive).ToList();
         }
 
         public Category GetById(int id)
         {
-            // SELECT * FROM Categories WHERE Id = @Id işleminin LINQ karşılığı
+            // SELECT * FROM Categories WHERE Id = @Id 
             return _context.Categories.FirstOrDefault(c => c.Id == id);
         }
         
         public void Insert(Category category)
         {
-            // INSERT INTO işleminin karşılığı[cite: 12]
+            // INSERT INTO Categories(...) SET (@...)
             _context.Categories.Add(category);
             _context.SaveChanges();
         }
         
         public void Update(Category category)
         {
-            // UPDATE işleminin karşılığı[cite: 12]
+            // UPDATE 
             _context.Categories.Update(category);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            // UPDATE Categories SET IsActive = 0 WHERE Id = @Id (Soft Delete) işleminin karşılığı[cite: 12]
+            // UPDATE Categories SET IsActive = 0 WHERE Id = @Id (Soft Delete) 
             var category = _context.Categories.FirstOrDefault(c => c.Id == id);
             
             if (category != null)

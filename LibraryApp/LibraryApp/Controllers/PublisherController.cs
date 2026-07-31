@@ -20,7 +20,7 @@ public class PublisherController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var publisherEntities = _publisherRepository.GetAllPublishers();
+        var publisherEntities = _publisherRepository.GetAll();
         var publisherVms = _mapper.Map<List<PublisherVm>>(publisherEntities);
         return View(publisherVms);
     }
@@ -49,7 +49,7 @@ public class PublisherController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = _publisherRepository.GetPublisherById(id);
+        var vm = _publisherRepository.GetById(id);
         
         if (vm == null)
         {
@@ -79,7 +79,7 @@ public class PublisherController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var vm = _publisherRepository.GetPublisherById(id);
+        var vm = _publisherRepository.GetById(id);
         
         if (vm == null)
         {

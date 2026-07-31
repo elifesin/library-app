@@ -7,14 +7,14 @@ public class MemberRepository : RepositoryBase
 {
     public MemberRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
 
-    public List<Member> GetAllMembers()
+    public List<Member> GetAll()
     {
         string sql = "SELECT * FROM Members WHERE IsActive = 1";
 
         return Connection.Query<Member>(sql).ToList();
     }
 
-    public Member GetMemberById(int id)
+    public Member GetById(int id)
     {
         string sql = "SELECT * FROM Members WHERE ID = @ID";
 

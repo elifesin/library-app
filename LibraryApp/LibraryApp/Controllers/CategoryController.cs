@@ -8,7 +8,6 @@ namespace LibraryApp.Controllers;
 
 public class CategoryController : Controller
 {
-    // Artık connection string'e ihtiyacımız yok, sadece Repository'yi kullanacağız.
     private readonly CategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
 
@@ -29,7 +28,7 @@ public class CategoryController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View(new  CategoryVm());
+        return View(new CategoryVm());
     }
 
     [HttpPost]

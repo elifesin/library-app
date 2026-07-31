@@ -2,7 +2,7 @@
 using Domain;
 using LibraryApp.Models.Book;
 
-namespace LibraryApp.Mapping;
+namespace LibraryApp.MappingProfiles;
 
 public class BookMappingProfile : Profile
 {

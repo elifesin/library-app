@@ -25,10 +25,10 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var bookEntities = _bookRepository.GetAllBooks();
+        var bookEntities = _bookRepository.GetAll();
         var bookViewModels = _mapper.Map<List<BookVm>>(bookEntities);
         
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Authors = _authorRepository.GetAll();
         ViewBag.Categories = _categoryRepository.GetAll();
         
         return View(bookViewModels);
@@ -37,9 +37,9 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Authors = _authorRepository.GetAll();
         ViewBag.Categories = _categoryRepository.GetAll();
-        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+        ViewBag.Publishers = _publisherRepository.GetAll();
        
         return View(new BookCreateVm());
     }
@@ -53,9 +53,9 @@ public class BookController : Controller
             return View(vm);
         }
         
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
+        ViewBag.Authors = _authorRepository.GetAll();
         ViewBag.Categories = _categoryRepository.GetAll();
-        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+        ViewBag.Publishers = _publisherRepository.GetAll();
         
         var bookEntity = _mapper.Map<Book>(vm);
         _bookRepository.Insert(bookEntity);
@@ -66,7 +66,7 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var book = _bookRepository.GetBookById(id);
+        var book = _bookRepository.GetById(id);
         
         if (book == null)
         {
@@ -75,8 +75,8 @@ public class BookController : Controller
         
         var vm = _mapper.Map<BookEditVm>(book);
 
-        ViewBag.Authors = _authorRepository.GetAllAuthors();
-        ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+        ViewBag.Authors = _authorRepository.GetAll();
+        ViewBag.Publishers = _publisherRepository.GetAll();
         ViewBag.Categories = _categoryRepository.GetAll();
         
         return View(vm);
@@ -88,8 +88,8 @@ public class BookController : Controller
     {
         if (!ModelState.IsValid)
         {
-            ViewBag.Authors = _authorRepository.GetAllAuthors();
-            ViewBag.Publishers = _publisherRepository.GetAllPublishers();
+            ViewBag.Authors = _authorRepository.GetAll();
+            ViewBag.Publishers = _publisherRepository.GetAll();
             ViewBag.Categories = _categoryRepository.GetAll();
             
             return View(vm);
@@ -98,15 +98,13 @@ public class BookController : Controller
         var bookEntity = _mapper.Map<Book>(vm);
         _bookRepository.Update(bookEntity);
         
-        
-        
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Delete(int id) 
     {
-        var book = _bookRepository.GetBookById(id);
+        var book = _bookRepository.GetById(id);
         
         if (book == null)
         {

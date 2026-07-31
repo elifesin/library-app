@@ -22,7 +22,7 @@ public class  MemberController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var memberEntities = _memberRepository.GetAllMembers();
+        var memberEntities = _memberRepository.GetAll();
         var memberViewModels = _mapper.Map<List<MemberVm>>(memberEntities);
         
         return View(memberViewModels);
@@ -53,7 +53,7 @@ public class  MemberController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm =  _memberRepository.GetMemberById(id);
+        var vm =  _memberRepository.GetById(id);
         if (vm == null)
         {
             return NotFound();
@@ -80,7 +80,7 @@ public class  MemberController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var vm = _memberRepository.GetMemberById(id);
+        var vm = _memberRepository.GetById(id);
         
         if (vm == null)
         {
@@ -104,7 +104,7 @@ public class  MemberController : Controller
     [HttpGet]
     public IActionResult BorrowedBooks(int id) 
     {
-        var member = _memberRepository.GetMemberById(id);
+        var member = _memberRepository.GetById(id);
         if (member == null)
         {
             return NotFound();

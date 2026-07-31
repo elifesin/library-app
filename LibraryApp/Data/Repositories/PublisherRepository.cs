@@ -10,14 +10,14 @@ public class PublisherRepository : RepositoryBase
     {
     }
 
-    public List<Publisher> GetAllPublishers()
+    public List<Publisher> GetAll()
     {
         string sql = "SELECT * FROM Publishers WHERE IsActive = 1";
 
         return Connection.Query<Publisher>(sql).ToList();
     }
 
-    public Publisher GetPublisherById(int id)
+    public Publisher GetById(int id)
     {
         string sql = "SELECT * FROM Publishers WHERE Id = @Id";
 
