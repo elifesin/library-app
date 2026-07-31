@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDataLayerServices();
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.
 
 var app = builder.Build(); // Uygulamayı oluştur.
     
