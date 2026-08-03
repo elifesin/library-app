@@ -1,11 +1,12 @@
 ﻿using Dapper;
 using Domain;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class PublisherRepository : RepositoryBase
+public class PublisherRepository : RepositoryBase, IPublisherRepository
 {
-    // 1. Dependency Injection (DI) artık IConfiguration değil, DbConnectionFactory üzerinden sağlanıyor
     public PublisherRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
     {
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Domain;
-using Data.Repositories;
+using Domain.Entities;
+using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Members;
 
@@ -8,11 +8,11 @@ namespace LibraryApp.Controllers;
 
 public class  MemberController : Controller
 {
-    private readonly MemberRepository _memberRepository;
-    private readonly LoanRepository _loanRepository;
+    private readonly IMemberRepository _memberRepository;
+    private readonly ILoanRepository _loanRepository;
     private readonly IMapper _mapper;
 
-    public MemberController(MemberRepository memberRepository, LoanRepository loanRepository, IMapper mapper)
+    public MemberController(IMemberRepository memberRepository, ILoanRepository loanRepository, IMapper mapper)
     {
         _memberRepository = memberRepository;
         _loanRepository = loanRepository;
@@ -27,8 +27,7 @@ public class  MemberController : Controller
         
         return View(memberViewModels);
     }
-
-
+    
     [HttpGet]
     public IActionResult Create()
     {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain;
+using Domain.Entities;
 using LibraryApp.Models.Author;
 
 namespace LibraryApp.MappingProfiles;

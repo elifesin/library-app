@@ -1,9 +1,11 @@
-﻿using Domain;
+﻿using DataEF.Contexts;
+using Domain.Entities;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataEF
+namespace DataEF.Repositories
 {
-    public class LoanRepository
+    public class LoanRepository : ILoanRepository
     {
         private readonly AppDbContext _context;
 

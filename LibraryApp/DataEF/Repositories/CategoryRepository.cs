@@ -1,9 +1,10 @@
-﻿using Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using DataEF.Contexts;
+using Domain.Entities;
+using Domain.Repositories;
 
-namespace DataEF
+namespace DataEF.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly AppDbContext _context;
 

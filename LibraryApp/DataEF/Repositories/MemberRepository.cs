@@ -1,8 +1,10 @@
-﻿using Domain;
+﻿using DataEF.Contexts;
+using Domain.Entities;
+using Domain.Repositories;
 
-namespace DataEF;
+namespace DataEF.Repositories;
 
-public class MemberRepository
+public class MemberRepository : IMemberRepository
 {
     private readonly AppDbContext _context;
     
@@ -47,10 +49,5 @@ public class MemberRepository
             member.IsActive = false; 
             _context.SaveChanges();
         }
-    }
-    
-    public List<Member> GetActiveMembers()
-    {
-        return _context.Members.Where(m => m.IsActive).ToList();
     }
 }

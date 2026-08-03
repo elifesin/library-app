@@ -1,9 +1,10 @@
 ﻿using Dapper;
-using Domain;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class MemberRepository : RepositoryBase
+public class MemberRepository : RepositoryBase, IMemberRepository
 {
     public MemberRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
 

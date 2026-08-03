@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Data.Repositories;
+using Domain.Repositories;
 using LaboratoryApp.Models.Book;
 
 namespace LaboratoryApp.Controllers;
 
 public class BookController : Controller
 {
-    private readonly BookRepository _bookRepository;
+    private readonly IBookRepository _bookRepository;
     private readonly IMapper _mapper;
-    private readonly AuthorRepository _authorRepository;
+    private readonly IAuthorRepository _authorRepository;
 
-    public BookController(BookRepository bookRepository, IMapper mapper, AuthorRepository authorRepository)
+    public BookController(IBookRepository bookRepository, IMapper mapper, IAuthorRepository authorRepository)
     {
         _bookRepository = bookRepository;
         _mapper = mapper;

@@ -1,10 +1,10 @@
 ﻿using Dapper;
-using Domain;
-using Microsoft.Data.SqlClient;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class AuthorRepository : RepositoryBase
+public class AuthorRepository : RepositoryBase, IAuthorRepository
 {
     public AuthorRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) {}
 

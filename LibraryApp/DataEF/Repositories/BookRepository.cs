@@ -1,9 +1,11 @@
-﻿using Domain;
+﻿using DataEF.Contexts;
+using Domain.Entities;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataEF
+namespace DataEF.Repositories
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly AppDbContext _context;
 
@@ -36,7 +38,7 @@ namespace DataEF
             return books;
         }
 
-        public Book GetBookById(int id)
+        public Book GetById(int id)
         {
             var book = _context.Books
                 .Include(b => b.Author)

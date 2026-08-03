@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataEF
+namespace DataEF.Contexts
 {
     public class AppDbContext : DbContext
     {

@@ -1,4 +1,5 @@
-﻿namespace Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+namespace Domain.Entities;
 
 public class Book
 {
@@ -6,13 +7,17 @@ public class Book
     public bool IsActive { get; set; }
     public string Title { get; set; }
     public int PublishYear { get; set; }
+    [NotMapped]
     public bool IsBorrowed { get; set; }
     public int CategoryID{ get; set; }
     public int AuthorID { get; set; }
     public int PublisherId { get; set; }
     
+    [NotMapped]
     public string AuthorName { get; set; }
+    [NotMapped]
     public string CategoryName { get; set; }
+    [NotMapped]
     public string PublisherName { get; set; }
     
     public  Category Category { get; set; }

@@ -1,10 +1,15 @@
 using Data;
+using DataEF;
+using DataEF.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Data Layer Services
-builder.Services.AddDataLayerServices();
+//builder.Services.AddDataLayerServices();
+builder.Services.AddDataEFLayerServices();
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();// MVC sistemi aktif edilir.

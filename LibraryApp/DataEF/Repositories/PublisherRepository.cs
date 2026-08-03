@@ -1,8 +1,10 @@
-﻿using Domain;
+﻿using DataEF.Contexts;
+using Domain.Entities;
+using Domain.Repositories;
 
-namespace DataEF;
+namespace DataEF.Repositories;
 
-public class PublisherRepository
+public class PublisherRepository : IPublisherRepository
 {
     public readonly AppDbContext _context;
 
@@ -39,7 +41,7 @@ public class PublisherRepository
 
     public void Delete(int id)
     {
-        // UPDATE Publishers SET IsActive = 0 WHERE Id = @Id (Soft Delete) işleminin karşılığı[cite: 15]
+        // UPDATE Publishers SET IsActive = 0 WHERE Id = @Id (Soft Delete) işleminin karşılığı
         var publisher = _context.Publishers.FirstOrDefault(p => p.Id == id);
             
         if (publisher != null)

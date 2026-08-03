@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Domain;
-using Data.Repositories;
+using Domain.Entities;
+using Domain.Repositories;
 using LibraryApp.Models.Loan;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +8,14 @@ namespace LibraryApp.Controllers;
 
     public class LoanController : Controller
     {
-        private readonly LoanRepository _loanRepository;
-        private readonly BookRepository _bookRepository;
-        private readonly MemberRepository _memberRepository;
+        private readonly ILoanRepository _loanRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IMemberRepository _memberRepository;
         private readonly IMapper _mapper;
 
-        public LoanController(LoanRepository loanRepository, 
-            BookRepository bookRepository, 
-            MemberRepository memberRepository,
+        public LoanController(ILoanRepository loanRepository, 
+            IBookRepository bookRepository, 
+            IMemberRepository memberRepository,
             IMapper mapper)
         {
             _loanRepository = loanRepository;
@@ -43,7 +43,7 @@ namespace LibraryApp.Controllers;
                 DueDate = DateTime.Today.AddDays(15) 
             };
             
-            ViewBag.Members = _memberRepository.GetActiveMembers();
+            ViewBag.Members = _memberRepository.GetAll();
             ViewBag.Books = _bookRepository.GetAvailableBooks();
 
             return View(vm);

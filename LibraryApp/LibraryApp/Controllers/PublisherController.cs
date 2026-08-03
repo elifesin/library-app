@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Domain;
-using Data.Repositories;
+using Domain.Entities;
+using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Publisher;
 
@@ -8,10 +8,10 @@ namespace LibraryApp.Controllers;
 
 public class PublisherController : Controller
 {
-    private readonly PublisherRepository _publisherRepository;
+    private readonly IPublisherRepository _publisherRepository;
     private readonly IMapper _mapper;
 
-    public PublisherController(PublisherRepository publisherRepository, IMapper mapper)
+    public PublisherController(IPublisherRepository publisherRepository, IMapper mapper)
     {
         _publisherRepository = publisherRepository;
         _mapper = mapper;

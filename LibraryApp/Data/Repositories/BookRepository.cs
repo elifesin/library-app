@@ -1,10 +1,10 @@
 ﻿using Dapper;
-using Domain;
-using Microsoft.Data.SqlClient;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class BookRepository : RepositoryBase
+public class BookRepository : RepositoryBase, IBookRepository
 {
     public BookRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }
     public List<Book> GetAll() 

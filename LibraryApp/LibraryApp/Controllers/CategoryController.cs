@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Domain;
-using Data.Repositories;
+using Domain.Entities;
+using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Models.Category;
 
@@ -8,10 +8,10 @@ namespace LibraryApp.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly CategoryRepository _categoryRepository;
+    private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
 
-    public CategoryController(CategoryRepository categoryRepository, IMapper mapper)
+    public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
     {
         _categoryRepository = categoryRepository;
         _mapper = mapper;

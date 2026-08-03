@@ -1,10 +1,10 @@
 ﻿using Dapper;
-using Domain;
-using Microsoft.Data.SqlClient;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class CategoryRepository : RepositoryBase
+public class CategoryRepository : RepositoryBase, ICategoryRepository
 {
     // Constructor (Yapıcı Metot) base sınıfa gönderiliyor
     public CategoryRepository(DbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory) { }

@@ -1,9 +1,15 @@
 using Data;
+using DataEF;
+using DataEF.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Data Layes Servies
-builder.Services.AddDataLayerServices();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDataEFLayerServices();
 
 // Web Layer Services
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
