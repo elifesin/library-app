@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Domain;
 using Domain.Entities;
 using LibraryApp.Models.Book;
 
@@ -9,7 +8,16 @@ public class BookMappingProfile : Profile
 {
     public BookMappingProfile()
     {
-        CreateMap<Book, BookVm>().ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AuthorName));
+        CreateMap<Book, BookVm>()
+            // Yazar adını Author tablosunun içindeki FirstName (veya Name) özelliğinden al
+            .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.FirstName + " " + src.Author.LastName)) 
+            
+            // Kategori adını Category tablosunun içinden al
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+            
+            // Yayınevi adını Publisher tablosunun içinden al
+            .ForMember(dest => dest.PublisherName, opt => opt.MapFrom(src => src.Publisher.Name));
+
         CreateMap<BookVm, Book>();
         
         CreateMap<Book, BookEditVm>();

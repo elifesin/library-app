@@ -40,6 +40,7 @@ public class CategoryController : Controller
             return View(vm);
         }
         var categoryEntity = _mapper.Map<Category>(vm);
+        categoryEntity.IsActive = true;
         _categoryRepository.Insert(categoryEntity);
         
         return RedirectToAction(nameof(Index));
@@ -56,7 +57,6 @@ public class CategoryController : Controller
         }
         
         var category =  _mapper.Map<CategoryVm>(vm);
-        
         return View(category);
     }
 
@@ -70,6 +70,7 @@ public class CategoryController : Controller
         }
         
         var categoryEntity = _mapper.Map<Category>(vm);
+        categoryEntity.IsActive = true;
         _categoryRepository.Update(categoryEntity);
         
         return RedirectToAction(nameof(Index));

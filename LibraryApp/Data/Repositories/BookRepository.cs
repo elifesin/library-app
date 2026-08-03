@@ -33,7 +33,7 @@ public class BookRepository : RepositoryBase, IBookRepository
     SELECT 
         b.Id AS BookId, 
         b.Title AS BookName, 
-        a.FirstName + ' ' + a.LastName AS AuthorFullName, 
+        a.FirstName + ' ' + a.LastName AS AuthorName, 
         c.CategoryName,
         CASE WHEN EXISTS (SELECT 1 FROM Loans l WHERE l.BookID = b.Id AND l.ReturnDate IS NULL) THEN 1 ELSE 0 END AS IsBorrowed 
     FROM Books b

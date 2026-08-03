@@ -59,6 +59,7 @@ namespace LibraryApp.Controllers;
             }
             
             var loanEntity = _mapper.Map<Loan>(vm);
+            loanEntity.ReturnDate = null;
             _loanRepository.Insert(loanEntity);
             
             return RedirectToAction(nameof(Index));

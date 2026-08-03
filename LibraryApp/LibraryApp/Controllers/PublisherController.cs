@@ -41,6 +41,7 @@ public class PublisherController : Controller
         }
         
         var publisher =  _mapper.Map<Publisher>(vm);
+        publisher.IsActive = true;
         _publisherRepository.Insert(publisher);
         
         return RedirectToAction(nameof(Index));
@@ -71,6 +72,7 @@ public class PublisherController : Controller
         }
         
         var publisher = _mapper.Map<Publisher>(vm);
+        publisher.IsActive = true;
         _publisherRepository.Update(publisher);
         
         return RedirectToAction(nameof(Index));

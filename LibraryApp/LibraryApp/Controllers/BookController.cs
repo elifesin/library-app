@@ -62,6 +62,7 @@ public class BookController : Controller
         ViewBag.Publishers = _publisherRepository.GetAll();
         
         var bookEntity = _mapper.Map<Book>(vm);
+        bookEntity.IsActive = true;
         _bookRepository.Insert(bookEntity);
 
         return RedirectToAction(nameof(Index));
@@ -100,6 +101,7 @@ public class BookController : Controller
         }
         
         var bookEntity = _mapper.Map<Book>(vm);
+        bookEntity.IsActive = true;
         _bookRepository.Update(bookEntity);
         
         return RedirectToAction(nameof(Index));

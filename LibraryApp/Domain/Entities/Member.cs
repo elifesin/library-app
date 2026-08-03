@@ -8,5 +8,5 @@ public class Member
         
     public string FullName => $"{FirstName} {LastName}";
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 }

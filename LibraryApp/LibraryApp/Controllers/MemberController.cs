@@ -44,6 +44,7 @@ public class  MemberController : Controller
         }
         
         var memberEntity = _mapper.Map<Member>(vm);
+        memberEntity.IsActive = true;
         _memberRepository.Insert(memberEntity);
         
         return RedirectToAction(nameof(Index));
@@ -69,8 +70,9 @@ public class  MemberController : Controller
         {
             return View(vm);
         }
-        
+
         var memberEntity = _mapper.Map<Member>(vm);
+        memberEntity.IsActive = true;
         _memberRepository.Update(memberEntity);
         
         return RedirectToAction(nameof(Index));
