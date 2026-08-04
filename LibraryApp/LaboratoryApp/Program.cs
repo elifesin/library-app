@@ -1,3 +1,4 @@
+using Application;
 using Data;
 using DataEF;
 using DataEF.Contexts;
@@ -6,7 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddApplicationServices();
+
+builder.Services.AddAutoMapper(cfg => { }, 
+    typeof(Program),                        // Web katmanındaki profilleri (AuthorMappingProfile vb.) tarar
+    typeof(Application.ApplicationModule)   // Application katmanındaki profilleri (AuthorProfile vb.) tarar
+);
+
+builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddDataEFLayerServices();

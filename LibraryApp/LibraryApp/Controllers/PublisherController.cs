@@ -1,28 +1,29 @@
-﻿using AutoMapper;
-using Domain.Entities;
-using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Application.Publishers;
+using Application.Publishers.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Publisher;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers;
 
 public class PublisherController : Controller
 {
-    private readonly IPublisherRepository _publisherRepository;
+    private readonly IPublisherService _publisherService;
     private readonly IMapper _mapper;
 
-    public PublisherController(IPublisherRepository publisherRepository, IMapper mapper)
+    public PublisherController(IPublisherService publisherService, IMapper mapper)
     {
-        _publisherRepository = publisherRepository;
+        _publisherService = publisherService;
         _mapper = mapper;
     }
-    
+
     [HttpGet]
     public IActionResult Index()
     {
-        var publisherEntities = _publisherRepository.GetAll();
-        var publisherVms = _mapper.Map<List<PublisherVm>>(publisherEntities);
-        return View(publisherVms);
+        var publisherDtos = _publisherService.GetAll();
+        var publisherViewModels = _mapper.Map<List<PublisherVm>>(publisherDtos);
+        
+        return View(publisherViewModels);
     }
 
     [HttpGet]
@@ -40,28 +41,22 @@ public class PublisherController : Controller
             return View(vm);
         }
         
-        var publisher =  _mapper.Map<Publisher>(vm);
-        publisher.IsActive = true;
-        _publisherRepository.Insert(publisher);
-        
+        var publisherDto = _mapper.Map<PublisherDto>(vm);
+        _publisherService.Insert(publisherDto);
+
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = _publisherRepository.GetById(id);
+        var publisherDto = _publisherService.GetById(id);
+        if (publisherDto == null) return NotFound();
         
-        if (vm == null)
-        {
-            return NotFound();
-        }
-        
-        var publisher = _mapper.Map<PublisherVm>(vm);
-        
-        return View(publisher);
+        var vm = _mapper.Map<PublisherVm>(publisherDto);
+        return View(vm);
     }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(PublisherVm vm)
@@ -71,34 +66,27 @@ public class PublisherController : Controller
             return View(vm);
         }
         
-        var publisher = _mapper.Map<Publisher>(vm);
-        publisher.IsActive = true;
-        _publisherRepository.Update(publisher);
+        var publisherDto = _mapper.Map<PublisherDto>(vm);
+        _publisherService.Update(publisherDto);
         
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(int id) 
     {
-        var vm = _publisherRepository.GetById(id);
+        var publisherDto = _publisherService.GetById(id);
+        if (publisherDto == null) return NotFound();
         
-        if (vm == null)
-        {
-            return NotFound();
-        }
-        
-        var publisher = _mapper.Map<PublisherVm>(vm);
-        
-        return View(publisher);
+        var vm = _mapper.Map<PublisherVm>(publisherDto);
+        return View(vm);
     }
 
-    [HttpPost]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
-    { 
-        _publisherRepository.Delete(id);
-        
+    {
+        _publisherService.Delete(id);
         return RedirectToAction(nameof(Index));
     }
 }

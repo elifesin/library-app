@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Domain;
-using Domain.Entities;
+﻿using Application.Publishers.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Publisher;
 
 namespace LibraryApp.MappingProfiles;
@@ -9,7 +8,6 @@ public class PublisherMappingProfile : Profile
 {
     public PublisherMappingProfile()
     {
-        CreateMap<Publisher, PublisherVm>();
-        CreateMap<PublisherVm, Publisher>();
+        CreateMap<PublisherDto, PublisherVm>().ReverseMap();
     }
 }

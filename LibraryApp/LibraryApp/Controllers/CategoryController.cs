@@ -1,27 +1,30 @@
-﻿using AutoMapper;
-using Domain.Entities;
-using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Application.Categories;
+using Application.Categories.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Category;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICategoryService _categoryService;
     private readonly IMapper _mapper;
-
-    public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
+    public CategoryController(ICategoryService categoryService, IMapper mapper)
     {
-        _categoryRepository = categoryRepository;
+        _categoryService = categoryService;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var categoryEntities = _categoryRepository.GetAll();
-        var categoryViewModels = _mapper.Map<List<CategoryVm>>(categoryEntities);
+        // 1. Servisten (Application katmanından) DTO listesini çekiyoruz
+        var categoryDtos = _categoryService.GetAll();
+        
+        // 2. View'ın (UI katmanının) anladığı VM listesine dönüştürüyoruz
+        var categoryViewModels = _mapper.Map<List<CategoryVm>>(categoryDtos);
+        
         return View(categoryViewModels);
     }
 
@@ -39,27 +42,32 @@ public class CategoryController : Controller
         {
             return View(vm);
         }
-        var categoryEntity = _mapper.Map<Category>(vm);
-        categoryEntity.IsActive = true;
-        _categoryRepository.Insert(categoryEntity);
         
+        // Ekrandan gelen VM, servisin beklediği DTO'ya dönüştürülüyor
+        var categoryDto = _mapper.Map<CategoryDto>(vm);
+        
+        // Servise iletiyoruz (İçeride Entity'e çevrilip IsActive=true vb. yapılarak eklenecek)
+        _categoryService.Insert(categoryDto);
+
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm = _categoryRepository.GetById(id);
+        var categoryDto = _categoryService.GetById(id);
         
-        if (vm == null) 
+        if (categoryDto == null)
         {
             return NotFound();
         }
         
-        var category =  _mapper.Map<CategoryVm>(vm);
-        return View(category);
+        // Ekranda (View) göstermek için DTO'yu UpdateVm'e (veya EditVm) dönüştürüyoruz
+        var vm = _mapper.Map<CategoryVm>(categoryDto);
+        
+        return View(vm);
     }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(CategoryVm vm)
@@ -69,33 +77,38 @@ public class CategoryController : Controller
             return View(vm);
         }
         
-        var categoryEntity = _mapper.Map<Category>(vm);
-        categoryEntity.IsActive = true;
-        _categoryRepository.Update(categoryEntity);
+        // Güncellenmiş VM'i, servise göndermek üzere DTO'ya çeviriyoruz
+        var categoryDto = _mapper.Map<CategoryDto>(vm);
+        
+        _categoryService.Update(categoryDto);
         
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public IActionResult Delete(int id)
-    { 
-        var vm = _categoryRepository.GetById(id);
+    public IActionResult Delete(int id) 
+    {
+        var categoryDto = _categoryService.GetById(id);
         
-        if (vm == null) 
+        if (categoryDto == null)
         {
             return NotFound();
         }
         
-        var category = _mapper.Map<CategoryVm>(vm);
+        // Emin misiniz? ekranı için DTO'yu VM'e çevirip gönderiyoruz
+        var vm = _mapper.Map<CategoryVm>(categoryDto); // veya sadece CategoryVm kullanıyorsanız o
         
-        return View(category);
+        return View(vm);
     }
 
-    [HttpPost]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        _categoryRepository.Delete(id);
+        // Sadece ID bilgisini servise iletiyoruz. 
+        // Yeni bir entity örneği (new Category { Id = id }) yaratma işini controller'dan kaldırdık.
+        _categoryService.Delete(id);
+        
         return RedirectToAction(nameof(Index));
     }
 }

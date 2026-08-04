@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Domain;
-using Domain.Entities;
+﻿using Application.Members.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Members;
 
 namespace LibraryApp.MappingProfiles;
@@ -9,10 +8,10 @@ public class MemberMappingProfile : Profile
 {
     public MemberMappingProfile()
     {
-        CreateMap<Member, MemberVm>();
-        CreateMap<MemberVm, Member>();
+        CreateMap<MemberDto, MemberVm>().ReverseMap();
 
-        CreateMap<Member, MemberCreateVm>();
-        CreateMap<MemberCreateVm, Member>();
+        CreateMap<MemberCreateDto, MemberCreateVm>().ReverseMap();
+        
+        CreateMap<MemberBorrowedBooksDto, MemberBorrowedBooksVm>().ReverseMap();
     }
 }

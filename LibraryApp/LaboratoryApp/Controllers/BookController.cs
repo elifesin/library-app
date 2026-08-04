@@ -1,31 +1,40 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Domain.Repositories;
+using Application.Books;
+using Application.Authors;
+using Application.Categories;
 using LaboratoryApp.Models.Book;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LaboratoryApp.Controllers;
 
 public class BookController : Controller
 {
-    private readonly IBookRepository _bookRepository;
+    private readonly IBookService _bookService;
     private readonly IMapper _mapper;
-    private readonly IAuthorRepository _authorRepository;
+    private readonly IAuthorService _authorService;
+    private readonly ICategoryService _categoryService;
 
-    public BookController(IBookRepository bookRepository, IMapper mapper, IAuthorRepository authorRepository)
+    public BookController(IBookService bookService, 
+        IMapper mapper, IAuthorService authorService, 
+        ICategoryService categoryService)
     {
-        _bookRepository = bookRepository;
+        _bookService = bookService;
         _mapper = mapper;
-        _authorRepository = authorRepository;
+        _authorService = authorService;
+        _categoryService = categoryService;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        var bookEntities = _bookRepository.GetAll();
-        var bookViewModel = _mapper.Map<List<BookListVm>>(bookEntities);
+        var bookDtos = _bookService.GetAll();
         
-        ViewBag.Authors = _authorRepository.GetAll();
+        // 2. Ekranda göstermek için DTO'yu View Model'e dönüştürüyoruz
+        var bookViewModels = _mapper.Map<List<BookListVm>>(bookDtos);
         
-        return View(bookViewModel);
+        ViewBag.Authors = _authorService.GetAll();
+        ViewBag.Categories = _categoryService.GetAll();
+        
+        return View(bookViewModels);
     }
 }

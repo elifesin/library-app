@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Domain.Repositories;
-using Domain.Entities;
+﻿using Application.Authors;
+using Application.Authors.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Author;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +8,22 @@ namespace LibraryApp.Controllers;
 
 public class AuthorController : Controller
 {
-    private readonly IAuthorRepository _authorRepository;
-    private readonly IMapper _mapper;
-
-    public AuthorController(IAuthorRepository authorRepository, IMapper mapper)
+    private readonly IAuthorService _authorService;
+    private  readonly IMapper _mapper;
+    public AuthorController(IAuthorService authorService, IMapper mapper)
     {
-        _authorRepository = authorRepository;
+        _authorService = authorService;
         _mapper = mapper;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        var authorEntities = _authorRepository.GetAll();
-        
-        var authorViewModels = _mapper.Map<List<AuthorVm>>(authorEntities);
+        var authorDtos = _authorService.GetAll();
+        var authorViewModels = _mapper.Map<List<AuthorVm>>(authorDtos);
         
         return View(authorViewModels);
+        
     }
 
     [HttpGet]
@@ -42,8 +41,8 @@ public class AuthorController : Controller
             return View(vm);
         }
         
-        var authorEntity = _mapper.Map<Author>(vm);
-        _authorRepository.Insert(authorEntity);
+        var authorDto = _mapper.Map<AuthorCreateDto>(vm);
+        _authorService.Insert(authorDto);
         
         return RedirectToAction(nameof(Index));
     }
@@ -51,14 +50,15 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var author = _authorRepository.GetById(id);
+        var authorDto = _authorService.GetById(id);
         
-        if (author == null)
+        if (authorDto == null)
         {
             return NotFound();
         }
         
-        var authorVm = _mapper.Map<AuthorEditVm>(author);
+        // Düzenleme ekranında göstermek üzere DTO, View'ın anladığı UpdateVm'ye dönüştürülür
+        var authorVm = _mapper.Map<AuthorEditVm>(authorDto);
         
         return View(authorVm);
     }
@@ -71,9 +71,9 @@ public class AuthorController : Controller
         {
             return View(vm);
         }
-
-        var authorEntity = _mapper.Map<Author>(vm);
-        _authorRepository.Update(authorEntity);
+        
+        var authorDto = _mapper.Map<AuthorEditDto>(vm);
+        _authorService.Update(authorDto);
         
         return RedirectToAction(nameof(Index));
     }
@@ -81,15 +81,15 @@ public class AuthorController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var author = _authorRepository.GetById(id);
-        
-        if (author == null)
+        var authorDto = _authorService.GetById(id);
+    
+        if (authorDto == null)
         {
             return NotFound();
         }
-        
-        var authorVm = _mapper.Map<AuthorVm>(author);
-
+    
+        var authorVm = _mapper.Map<AuthorVm>(authorDto);
+    
         return View(authorVm);
     }
 
@@ -97,8 +97,8 @@ public class AuthorController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        _authorRepository.Delete(id);
-        
+        _authorService.Delete(id);
+    
         return RedirectToAction(nameof(Index));
     }
 }

@@ -11,7 +11,7 @@ public class MemberBorrowedBooksVm
 
 public class BorrowedBookItem
 {
-    public string BookTitle { get; set; } 
+    public string BookName { get; set; } 
     public DateTime LoanDate { get; set; }
     public DateTime DueDate { get; set; }
     public DateTime ReturnDate { get; set; }

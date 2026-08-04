@@ -1,6 +1,9 @@
-﻿using AutoMapper;
-using Domain.Entities;
-using Domain.Repositories;
+﻿using Application.Authors;
+using Application.Books;
+using Application.Books.DTOs;
+using Application.Categories;
+using Application.Publishers;
+using AutoMapper; 
 using LibraryApp.Models.Book;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,32 +11,38 @@ namespace LibraryApp.Controllers;
 
 public class BookController : Controller
 {
-    private readonly IBookRepository _bookRepository;
-    private readonly IAuthorRepository _authorRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly IPublisherRepository _publisherRepository; 
+    private readonly IBookService _bookService;
+    private readonly IAuthorService _authorService;
+    private readonly ICategoryService _categoryService;
+    private readonly IPublisherService _publisherService; 
     private readonly IMapper _mapper;
-    public BookController(IAuthorRepository authorRepository, 
-        ICategoryRepository categoryRepository, 
-        IBookRepository bookRepository, 
-        IPublisherRepository publisherRepository, 
+
+    public BookController(
+        IAuthorService authorService, 
+        ICategoryService categoryService, 
+        IBookService bookService, 
+        IPublisherService publisherService, 
         IMapper mapper)
     {
-        _authorRepository = authorRepository;
-        _categoryRepository = categoryRepository;
-        _bookRepository = bookRepository;
-        _publisherRepository = publisherRepository;
+        _authorService = authorService;
+        _categoryService = categoryService;
+        _bookService = bookService;
+        _publisherService = publisherService;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var bookEntities = _bookRepository.GetAll();
-        var bookViewModels = _mapper.Map<List<BookVm>>(bookEntities);
+        // 1. Servisten Entity değil, DTO listesi gelir
+        var bookDtos = _bookService.GetAll();
         
-        ViewBag.Authors = _authorRepository.GetAll();
-        ViewBag.Categories = _categoryRepository.GetAll();
+        // 2. Ekranda göstermek için DTO'yu View Model'e dönüştürüyoruz
+        var bookViewModels = _mapper.Map<List<BookVm>>(bookDtos);
+        
+        // ViewBag'leri doldururken de Servisleri (DTO listesi dönecek şekilde) kullanıyoruz
+        ViewBag.Authors = _authorService.GetAll();
+        ViewBag.Categories = _categoryService.GetAll();
         
         return View(bookViewModels);
     }
@@ -41,9 +50,9 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        ViewBag.Authors = _authorRepository.GetAll();
-        ViewBag.Categories = _categoryRepository.GetAll();
-        ViewBag.Publishers = _publisherRepository.GetAll();
+        ViewBag.Authors = _authorService.GetAll();
+        ViewBag.Categories = _categoryService.GetAll();
+        ViewBag.Publishers = _publisherService.GetAll();
        
         return View(new BookCreateVm());
     }
@@ -54,16 +63,17 @@ public class BookController : Controller
     {
         if (!ModelState.IsValid)
         {
+            ViewBag.Authors = _authorService.GetAll();
+            ViewBag.Categories = _categoryService.GetAll();
+            ViewBag.Publishers = _publisherService.GetAll();
             return View(vm);
         }
         
-        ViewBag.Authors = _authorRepository.GetAll();
-        ViewBag.Categories = _categoryRepository.GetAll();
-        ViewBag.Publishers = _publisherRepository.GetAll();
+        // UI'dan gelen VM, Application katmanının anladığı DTO'ya dönüştürülüyor
+        var bookDto = _mapper.Map<BookCreateDto>(vm);
         
-        var bookEntity = _mapper.Map<Book>(vm);
-        bookEntity.IsActive = true;
-        _bookRepository.Insert(bookEntity);
+        // DTO'yu servise gönderiyoruz. 
+        _bookService.Insert(bookDto);
 
         return RedirectToAction(nameof(Index));
     }
@@ -71,18 +81,19 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var book = _bookRepository.GetById(id);
+        var bookDto = _bookService.GetById(id);
         
-        if (book == null)
+        if (bookDto == null)
         {
             return NotFound();
         }
         
-        var vm = _mapper.Map<BookEditVm>(book);
+        // View'a DTO değil, VM gönderiyoruz
+        var vm = _mapper.Map<BookEditVm>(bookDto);
 
-        ViewBag.Authors = _authorRepository.GetAll();
-        ViewBag.Publishers = _publisherRepository.GetAll();
-        ViewBag.Categories = _categoryRepository.GetAll();
+        ViewBag.Authors = _authorService.GetAll();
+        ViewBag.Publishers = _publisherService.GetAll();
+        ViewBag.Categories = _categoryService.GetAll();
         
         return View(vm);
     }
@@ -93,16 +104,17 @@ public class BookController : Controller
     {
         if (!ModelState.IsValid)
         {
-            ViewBag.Authors = _authorRepository.GetAll();
-            ViewBag.Publishers = _publisherRepository.GetAll();
-            ViewBag.Categories = _categoryRepository.GetAll();
+            ViewBag.Authors = _authorService.GetAll();
+            ViewBag.Publishers = _publisherService.GetAll();
+            ViewBag.Categories = _categoryService.GetAll();
             
             return View(vm);
         }
         
-        var bookEntity = _mapper.Map<Book>(vm);
-        bookEntity.IsActive = true;
-        _bookRepository.Update(bookEntity);
+        // VM'den DTO'ya dönüşüm
+        var bookDto = _mapper.Map<BookEditDto>(vm); // (Eğer UpdateDto kullanıyorsanız)
+        
+        _bookService.Update(bookDto);
         
         return RedirectToAction(nameof(Index));
     }
@@ -110,14 +122,15 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Delete(int id) 
     {
-        var book = _bookRepository.GetById(id);
+        var bookDto = _bookService.GetById(id);
         
-        if (book == null)
+        if (bookDto == null)
         {
             return NotFound();
         }
         
-        var vm = _mapper.Map<BookDeleteVm>(book);
+        // Emin misiniz ekranı için DTO -> VM
+        var vm = _mapper.Map<BookDeleteVm>(bookDto);
         
         return View(vm);
     }
@@ -126,8 +139,8 @@ public class BookController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        var book = new Book { Id = id };
-        _bookRepository.Delete(book);
+        // Controller sadece Id'yi servise iletiyor
+        _bookService.Delete(id);
         
         return RedirectToAction(nameof(Index));
     }

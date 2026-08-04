@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Domain.Entities;
+﻿using Application.Books.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Book;
 
 namespace LibraryApp.MappingProfiles;
@@ -8,25 +8,14 @@ public class BookMappingProfile : Profile
 {
     public BookMappingProfile()
     {
-        CreateMap<Book, BookVm>()
-            // Yazar adını Author tablosunun içindeki FirstName (veya Name) özelliğinden al
-            .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.FirstName + " " + src.Author.LastName)) 
-            
-            // Kategori adını Category tablosunun içinden al
-            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
-            
-            // Yayınevi adını Publisher tablosunun içinden al
-            .ForMember(dest => dest.PublisherName, opt => opt.MapFrom(src => src.Publisher.Name));
-
-        CreateMap<BookVm, Book>();
+        CreateMap<BookDto, BookVm>().ReverseMap(); 
         
-        CreateMap<Book, BookEditVm>();
-        CreateMap<BookEditVm, Book>();
+        CreateMap<BookEditDto, BookEditVm>().ReverseMap();
         
-        CreateMap<Book, BookCreateVm>();
-        CreateMap<BookCreateVm, Book>();
+        CreateMap<BookCreateDto, BookCreateVm>().ReverseMap();
         
-        CreateMap<Book, BookDeleteVm>();
-        CreateMap<BookDeleteVm, Book>();
+        CreateMap<BookDto, BookDeleteVm>().ReverseMap();
+        
+        CreateMap<BookDto, BookEditVm>().ReverseMap();
     }
 }

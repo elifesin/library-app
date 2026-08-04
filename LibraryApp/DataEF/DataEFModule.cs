@@ -1,5 +1,15 @@
-﻿using Domain.Repositories;
-using DataEF.Repositories;
+﻿using DataEF.Authors;
+using DataEF.Books;
+using DataEF.Categories;
+using DataEF.Loans;
+using DataEF.Members;
+using DataEF.Publishers;
+using Domain.Authors;
+using Domain.Books;
+using Domain.Categories;
+using Domain.Loans;
+using Domain.Members;
+using Domain.Publishers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataEF;

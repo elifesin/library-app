@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Domain;
-using Domain.Entities;
+﻿using Application.Authors.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Author;
 
 namespace LibraryApp.MappingProfiles;
@@ -9,13 +8,12 @@ public class AuthorMappingProfile : Profile
 {
     public AuthorMappingProfile()
     {
-        CreateMap<Author, AuthorVm>();
-        CreateMap<AuthorVm, Author>();
+        CreateMap<AuthorDto, AuthorVm>().ReverseMap();
         
-        CreateMap<Author, AuthorCreateVm>();
-        CreateMap<AuthorCreateVm, Author>();
+        CreateMap<AuthorCreateDto, AuthorCreateVm>().ReverseMap();
         
-        CreateMap<Author, AuthorEditVm>();
-        CreateMap<AuthorEditVm, Author>();
+        CreateMap<AuthorEditDto, AuthorEditVm>().ReverseMap();
+        
+        CreateMap<AuthorDto, AuthorEditVm>().ReverseMap();
     }
 }

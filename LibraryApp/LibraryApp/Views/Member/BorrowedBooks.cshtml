@@ -21,7 +21,7 @@
     @foreach (var item in Model.BorrowedBooks)
     {
         <tr>
-            <td>@item.BookTitle</td>
+            <td>@item.BookName</td>
             <td>@item.LoanDate.ToShortDateString()</td>
             <td>@item.DueDate.ToShortDateString()</td>
             <td>

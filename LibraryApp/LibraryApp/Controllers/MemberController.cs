@@ -1,33 +1,34 @@
-﻿using AutoMapper;
-using Domain.Entities;
-using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Application.Loans;
+using Application.Members;
+using Application.Members.DTOs;
+using AutoMapper;
 using LibraryApp.Models.Members;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers;
 
-public class  MemberController : Controller
+public class MemberController : Controller
 {
-    private readonly IMemberRepository _memberRepository;
-    private readonly ILoanRepository _loanRepository;
+    private readonly IMemberService _memberService;
+    private readonly ILoanService _loanService;
     private readonly IMapper _mapper;
 
-    public MemberController(IMemberRepository memberRepository, ILoanRepository loanRepository, IMapper mapper)
+    public MemberController(IMemberService memberService, IMapper mapper, ILoanService loanService)
     {
-        _memberRepository = memberRepository;
-        _loanRepository = loanRepository;
+        _memberService = memberService;
         _mapper = mapper;
+        _loanService = loanService;
     }
-    
+
     [HttpGet]
     public IActionResult Index()
     {
-        var memberEntities = _memberRepository.GetAll();
-        var memberViewModels = _mapper.Map<List<MemberVm>>(memberEntities);
+        var memberDtos = _memberService.GetAll();
+        var memberViewModels = _mapper.Map<List<MemberVm>>(memberDtos);
         
         return View(memberViewModels);
     }
-    
+
     [HttpGet]
     public IActionResult Create()
     {
@@ -43,25 +44,22 @@ public class  MemberController : Controller
             return View(vm);
         }
         
-        var memberEntity = _mapper.Map<Member>(vm);
-        memberEntity.IsActive = true;
-        _memberRepository.Insert(memberEntity);
-        
+        var memberDto = _mapper.Map<MemberCreateDto>(vm);
+        _memberService.Insert(memberDto);
+
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var vm =  _memberRepository.GetById(id);
-        if (vm == null)
-        {
-            return NotFound();
-        }
-        var bookEntity = _mapper.Map<MemberVm>(vm);
-        return View(bookEntity);
+        var memberDto = _memberService.GetById(id);
+        if (memberDto == null) return NotFound();
+        
+        var vm = _mapper.Map<MemberVm>(memberDto);
+        return View(vm);
     }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(MemberVm vm)
@@ -70,57 +68,44 @@ public class  MemberController : Controller
         {
             return View(vm);
         }
-
-        var memberEntity = _mapper.Map<Member>(vm);
-        memberEntity.IsActive = true;
-        _memberRepository.Update(memberEntity);
+        
+        var memberDto = _mapper.Map<MemberDto>(vm);
+        _memberService.Update(memberDto);
         
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(int id) 
     {
-        var vm = _memberRepository.GetById(id);
+        var memberDto = _memberService.GetById(id);
+        if (memberDto == null) return NotFound();
         
-        if (vm == null)
-        {
-            return NotFound();
-        }
-        
-        var bookEntity = _mapper.Map<MemberVm>(vm);
-        
-        return View(bookEntity);
+        var vm = _mapper.Map<MemberVm>(memberDto);
+        return View(vm);
     }
 
-    [HttpPost]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        _memberRepository.Delete(id);
-        
+        _memberService.Delete(id);
         return RedirectToAction(nameof(Index));
     }
     
     [HttpGet]
-    public IActionResult BorrowedBooks(int id) 
+    public IActionResult BorrowedBooks(int id)
     {
-        var member = _memberRepository.GetById(id);
-        if (member == null)
+        var loanDtos = _loanService.GetLoansByMemberId(id);
+        var memberDto = _memberService.GetById(id);
+        
+        var viewModel = new MemberBorrowedBooksVm
         {
-            return NotFound();
-        }
-
-        var loans = _loanRepository.GetLoansByMemberId(id);
-
-        var vm = new MemberBorrowedBooksVm
-        {
-            MemberId = member.ID,
-            FullName = member.FullName, 
-            
-            BorrowedBooks = _mapper.Map<List<BorrowedBookItem>>(loans) 
+            FullName = memberDto.FirstName + " " + memberDto.LastName, // veya memberDto.FullName
+            BorrowedBooks = _mapper.Map<List<BorrowedBookItem>>(loanDtos) // DTO listesini item listesine çeviriyoruz
         };
-        return View(vm);
+
+        // 3. Modeli View'a gönderiyoruz
+        return View(viewModel);
     }
-   
 }

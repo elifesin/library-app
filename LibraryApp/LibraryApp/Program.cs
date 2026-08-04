@@ -1,14 +1,21 @@
-using Data;
+using Application;
 using DataEF;
 using DataEF.Contexts;
 using Microsoft.EntityFrameworkCore;
-
+using LibraryApp.MappingProfiles
+    ;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplicationServices();
+
+builder.Services.AddAutoMapper(cfg => { }, 
+    typeof(Program),                        // Web katmanındaki profilleri (AuthorMappingProfile vb.) tarar
+    typeof(Application.ApplicationModule)   // Application katmanındaki profilleri (AuthorProfile vb.) tarar
+);
 //builder.Services.AddDataLayerServices();
 builder.Services.AddDataEFLayerServices();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 builder.Services.AddControllersWithViews()

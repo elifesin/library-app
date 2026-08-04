@@ -1,4 +1,9 @@
-﻿using Domain.Entities;
+﻿using Domain.Authors;
+using Domain.Books;
+using Domain.Categories;
+using Domain.Loans;
+using Domain.Members;
+using Domain.Publishers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataEF.Contexts
