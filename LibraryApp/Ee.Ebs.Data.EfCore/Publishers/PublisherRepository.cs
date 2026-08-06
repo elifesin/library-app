@@ -21,13 +21,14 @@ public class PublisherRepository : IPublisherRepository
     public Publisher GetById(int id)
     {
         // SELECT WHERE @Id = Id
-        return _context.Publishers.FirstOrDefault(p => p.Id == id);
+        return _context.Publishers.FirstOrDefault(p => p.Id == id && p.IsActive);
     }
 
     public void Insert(Publisher publisher)
     {
         // INSERT INTO Publishers(...) VALUES (@...)
         _context.Add(publisher);
+        publisher.IsActive = true;
         _context.SaveChanges();
     }
 
@@ -35,6 +36,7 @@ public class PublisherRepository : IPublisherRepository
     {
         // UPDATE Publishers SET Name = @Name WHERE Id = @Id
         _context.Update(publisher);
+        publisher.IsActive = true;
         _context.SaveChanges();
     }
 

@@ -9,9 +9,9 @@
         @Model.CategoryName adlı kategoriyi kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
     </div>
 
-    <form asp-action="DeleteConfirmed" method="post">
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
-        
+    
         <button type="submit" class="btn btn-danger">Evet, Kalıcı Olarak Sil</button>
         <a asp-action="Index" class="btn btn-outline-secondary ms-2">İptal ve Listeye Dön</a>
     </form>

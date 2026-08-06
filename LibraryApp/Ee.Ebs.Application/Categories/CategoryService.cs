@@ -30,12 +30,14 @@ public class CategoryService : ICategoryService
     public void Insert(CategoryDto category)
     {
         var categoryDto = _mapper.Map<Category>(category);
+        categoryDto.IsActive = true;
         _categoryRepository.Insert(categoryDto);
     }
 
     public void Update(CategoryDto category)
     {
         var categoryDto = _mapper.Map<Category>(category);
+        categoryDto.IsActive = true;
         _categoryRepository.Update(categoryDto);    
     }
 

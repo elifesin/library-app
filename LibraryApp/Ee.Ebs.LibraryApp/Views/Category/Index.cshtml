@@ -2,20 +2,18 @@
 
 <div class="container mt-4">
     <h2>Kategori Listesi</h2>
-    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Kategori Ekle</a>
-
+    <a asp-action="Create" class="btn btn-primary mb-3"> Yeni Kategori Ekle </a>
     @if (Model != null && Model.Any())
     {
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
             <tr>
                 <th>İşlemler</th>
-                <th>ID</th>
                 <th>Kategori</th>
             </tr>
             </thead>
             <tbody>
-            -        @foreach (var item in Model)
+                    @foreach (var item in Model)
                      {
                          <tr>
                              <td>
@@ -41,7 +39,6 @@
                                      </ul>
                                  </div>
                              </td>
-                             <td>@item.Id</td>
                              <td>@item.CategoryName</td>
                          </tr>
                      }

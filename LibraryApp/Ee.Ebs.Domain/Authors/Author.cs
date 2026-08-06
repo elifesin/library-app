@@ -8,6 +8,6 @@
 
         public bool IsActive { get; set; } = true;
         
-        public string AuthorFullName => $"{FirstName} {LastName}";
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

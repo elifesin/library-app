@@ -20,13 +20,6 @@ public class LoanService : ILoanService
         var loans = _loanRepository.GetAll();
         return _mapper.Map<List<LoanDto>>(loans);
     }
-
-    public LoanDto GetById(int id)
-    {
-        var loan = _loanRepository.GetLoansByMemberId(id);
-        if (loan == null) throw new Exception("Kayıt bulunamadı.");
-        return _mapper.Map<LoanDto>(loan);
-    }
     
     public void Insert(LoanCreateDto vm)
     {

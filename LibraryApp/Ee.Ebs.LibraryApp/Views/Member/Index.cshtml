@@ -10,12 +10,11 @@
             <thead class="table-dark">
             <tr>
                 <th>İşlemler</th>
-                <th>ID</th>
                 <th>Üye Adı Soyadı</th>
             </tr>
             </thead>
             <tbody>
-            -        @foreach (var item in Model)
+                    @foreach (var item in Model)
                      {
                          <tr>
                              <td>
@@ -46,7 +45,6 @@
                                      </ul>
                                  </div>
                              </td>
-                             <td>@item.ID</td>
                              <td>@item.FirstName @item.LastName</td>
                              </tr>
                      }

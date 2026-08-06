@@ -42,14 +42,13 @@ namespace Ee.Ebs.Data.EfCore.Loans
 
         public void ReturnBook(int loanId)
         {
-            // UPDATE Loans SET ReturnDate = GETDATE() WHERE Id = @Id 
             var loan = _context.Loans.FirstOrDefault(l => l.Id == loanId);
-            
-            if (loan != null)
-            {
-                loan.ReturnDate = DateTime.Now; // SQL'deki GETDATE() fonksiyonu
-                _context.SaveChanges();
-            }
+
+            if (loan == null)
+                throw new KeyNotFoundException("Ödünç kaydı bulunamadı.");
+
+            loan.Return(DateTime.Now);   // artık kural burada değil, entity'de kontrol ediliyor
+            _context.SaveChanges();
         }
     }
 }

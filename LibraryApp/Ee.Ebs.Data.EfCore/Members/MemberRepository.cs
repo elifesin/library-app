@@ -21,7 +21,7 @@ public class MemberRepository : IMemberRepository
     public Member GetById(int id)
     {
         // SELECT WHERE @ID = Id
-        return _context.Members.FirstOrDefault(m => m.ID == id);
+        return _context.Members.FirstOrDefault(m => m.ID == id &&  m.IsActive);
     }
 
     public void Insert(Member member)

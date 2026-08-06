@@ -14,6 +14,8 @@ public class Loan
     public int MemberID { get; set; }
     public Book Book { get; set; }
     public Member Member { get; set; }
+    public bool IsReturned => ReturnDate.HasValue;
+
     
     private Loan() { }
     
@@ -30,5 +32,16 @@ public class Loan
         LoanDate = loanDate;
         DueDate = dueDate;
         ReturnDate = null; // Yeni kayıtta iade tarihi her zaman boştur
+    }
+    
+    public void Return(DateTime returnDate)
+    {
+        if (IsReturned)
+            throw new InvalidOperationException("Bu ödünç kaydı zaten iade edilmiş.");
+
+        if (returnDate < LoanDate)
+            throw new ArgumentException("İade tarihi, ödünç alma tarihinden önce olamaz.");
+
+        ReturnDate = returnDate;
     }
 }

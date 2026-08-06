@@ -83,9 +83,19 @@ public class LoanController : Controller
     [HttpGet]
     public IActionResult ReturnBook(int id)
     {
-        // İade işlemi doğrudan servise paslanıyor
-        _loanService.ReturnBook(id);
-        
+        try
+        {
+            _loanService.ReturnBook(id);
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
         return RedirectToAction(nameof(Index));
     }
     
