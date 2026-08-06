@@ -1,0 +1,46 @@
+﻿using AutoMapper;
+using Ee.Ebs.Domain.Categories;
+using Ee.Ebs.Application.Categories.DTOs;
+
+namespace Ee.Ebs.Application.Categories;
+
+public class CategoryService : ICategoryService
+{
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly IMapper _mapper;
+
+    public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+    {
+        _categoryRepository = categoryRepository;
+        _mapper = mapper;
+    }
+
+    public List<CategoryDto> GetAll()
+    {
+        var  categories = _categoryRepository.GetAll();
+        return _mapper.Map<List<CategoryDto>>(categories);
+    }
+
+    public CategoryDto GetById(int id)
+    {
+        var category = _categoryRepository.GetById(id);
+        return _mapper.Map<CategoryDto>(category);
+    }
+
+    public void Insert(CategoryDto category)
+    {
+        var categoryDto = _mapper.Map<Category>(category);
+        _categoryRepository.Insert(categoryDto);
+    }
+
+    public void Update(CategoryDto category)
+    {
+        var categoryDto = _mapper.Map<Category>(category);
+        _categoryRepository.Update(categoryDto);    
+    }
+
+    public void Delete(int id)
+    {
+        _categoryRepository.Delete(id);
+    }
+}

@@ -1,0 +1,20 @@
+﻿@model Ee.Ebs.LibraryApp.Models.Author.AuthorVm
+
+<div class="container mt-4">
+    <h2 class="text-danger">Yazar Silinecek!</h2>
+    <hr />
+    
+    <div class="alert alert-danger">
+        <strong>Dikkat!</strong> 
+        @Model.FirstName @Model.LastName adlı yazarı kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+    </div>
+
+    <!-- Sadece ID'yi POST eden basit bir form -->
+    <form asp-action="Delete" method="post">
+        <!-- Silinecek ID'yi gizli olarak yolluyoruz -->
+        <input type="hidden" asp-for="Id" />
+        
+        <button type="submit" class="btn btn-danger">Evet, Kalıcı Olarak Sil</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">İptal ve Listeye Dön</a>
+    </form>
+</div>

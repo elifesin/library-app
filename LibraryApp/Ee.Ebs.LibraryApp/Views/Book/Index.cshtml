@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Ee.Ebs.LibraryApp.Models.Book.BookVm>
+
+<div class="container mt-4">
+    <h2>Kitap Listesi</h2>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Kitap Ekle</a>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>İşlemler</th>
+                <th>Kitap Adı</th>
+                <th>Yazarı</th>
+                <th>Ödünç Alındı Mı?</th>
+                <th>Kategori</th>
+                <th>Yayınevi</th>
+            </tr>
+            </thead>
+            <tbody>
+            -        @foreach (var item in Model)
+                     {
+                         <tr>
+                             <td>
+                                 <div class="dropdown">
+                                     <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton_@item.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                                         İşlemler
+                                     </button>
+        
+                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.Id">
+                                         <li>
+                                             <a class="dropdown-item text-primary" asp-action="Edit" asp-route-id="@item.Id">
+                                                 <i class="bi bi-pencil"></i> Güncelle
+                                             </a>
+                                         </li>
+                                         <li>
+                                             <hr class="dropdown-divider">
+                                         </li>
+                                         <li>
+                                             <a class="dropdown-item text-danger" asp-action="Delete" asp-route-id="@item.Id">
+                                                 <i class="bi bi-trash"></i> Sil
+                                             </a>
+                                         </li>
+                                     </ul>
+                                 </div>
+                             </td>
+                             <td>@item.Title</td>
+                             <td>@item.AuthorName</td> 
+                             <td>@item.IsBorrowed</td> 
+                             <td>@item.CategoryName</td>
+                             <td>@item.PublisherName</td>
+
+                         </tr>
+                     }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>
+

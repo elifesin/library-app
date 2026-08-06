@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Ee.Ebs.LibraryApp.Models.Loan.LoanVm>
+@{
+    ViewData["Title"] = "Ödünç İşlemleri";
+}
+
+<div class="container mt-4">
+    <h2>Ödünç Verilen Kitaplar</h2>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Ödünç Ver</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kitap Adı</th>
+            <th>Alış Tarihi</th>
+            <th>Son Teslim Tarihi</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.BookName</td>
+                <td>@item.LoanDate.ToShortDateString()</td>
+                <td>@item.DueDate.ToShortDateString()</td>
+                
+                <td>
+                    @if(item.ReturnDate == default(DateTime) || item.ReturnDate == null)
+                    {
+                        <a asp-action="ReturnBook" asp-controller="Loan" asp-route-id="@item.Id" class="btn btn-success btn-sm">
+                            <i class="bi bi-check-circle"></i> İade Al
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">İade Edildi (@item.ReturnDate.ToShortDateString())</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div> 
