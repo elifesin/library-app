@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Categories.DTOs;
 using Ee.Ebs.Domain.Categories;
-using Ee.Ebs.Application.Categories.DTOs;
 
 namespace Ee.Ebs.Application.Categories;
 

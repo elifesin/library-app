@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Categories.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Categories.DTOs;
 
 public class CategoryDto
 {

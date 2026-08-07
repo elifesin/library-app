@@ -1,6 +1,6 @@
-﻿namespace Ee.Ebs.Application.Authors.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Members.DTOs;
 
-public class AuthorCreateDto
+public class MemberCreateDto
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

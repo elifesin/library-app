@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Books.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Books.DTOs;
 
-namespace Ee.Ebs.Application.Books;
+namespace Ee.Ebs.Application.Contracts.Books;
 
 public interface IBookService
 {

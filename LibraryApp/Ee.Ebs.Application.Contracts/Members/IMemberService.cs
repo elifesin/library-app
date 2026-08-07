@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Members.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Members.DTOs;
 
-namespace Ee.Ebs.Application.Members;
+namespace Ee.Ebs.Application.Contracts.Members;
 
 public interface IMemberService
 {

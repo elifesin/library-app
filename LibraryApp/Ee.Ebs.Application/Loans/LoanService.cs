@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Loans;
+using Ee.Ebs.Application.Contracts.Loans.DTOs;
 using Ee.Ebs.Domain.Loans;
-using Ee.Ebs.Application.Loans.DTOs;
 
 namespace Ee.Ebs.Application.Loans;
 

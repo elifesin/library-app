@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Publishers.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Publishers.DTOs;
 
-namespace Ee.Ebs.Application.Publishers;
+namespace Ee.Ebs.Application.Contracts.Publishers;
 
 public interface IPublisherService
 {

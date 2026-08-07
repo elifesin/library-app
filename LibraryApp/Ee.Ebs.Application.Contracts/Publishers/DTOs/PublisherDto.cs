@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Publishers.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Publishers.DTOs;
 
 public class PublisherDto
 {

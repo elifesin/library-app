@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Loans.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Loans.DTOs;
 
-namespace Ee.Ebs.Application.Loans;
+namespace Ee.Ebs.Application.Contracts.Loans;
 
 public interface ILoanService
 {

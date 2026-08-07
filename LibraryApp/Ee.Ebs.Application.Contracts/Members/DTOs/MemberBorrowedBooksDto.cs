@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Members.DTOs
+﻿namespace Ee.Ebs.Application.Contracts.Members.DTOs
 {
     public class MemberBorrowedBooksDto
     {

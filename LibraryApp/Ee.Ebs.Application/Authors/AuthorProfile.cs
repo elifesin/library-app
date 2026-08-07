@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Ee.Ebs.Domain.Authors;
-using Ee.Ebs.Application.Authors.DTOs;
 
 namespace Ee.Ebs.Application.Authors;
 

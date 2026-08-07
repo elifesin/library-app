@@ -2,6 +2,9 @@
 using Ee.Ebs.Application.Books;
 using Ee.Ebs.Application.Authors;
 using Ee.Ebs.Application.Categories;
+using Ee.Ebs.Application.Contracts.Authors;
+using Ee.Ebs.Application.Contracts.Books;
+using Ee.Ebs.Application.Contracts.Categories;
 using Ee.Ebs.Web.Laboratory.ViewModels.Book;
 using Microsoft.AspNetCore.Mvc;
 

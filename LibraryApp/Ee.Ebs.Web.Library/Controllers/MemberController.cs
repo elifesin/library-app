@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Loans;
+using Ee.Ebs.Application.Contracts.Members;
+using Ee.Ebs.Application.Contracts.Members.DTOs;
 using Ee.Ebs.Application.Loans;
 using Ee.Ebs.Application.Members;
-using Ee.Ebs.Application.Members.DTOs;
 using Ee.Ebs.Web.Library.ViewModels.Members;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Authors;
-using Ee.Ebs.Application.Authors.DTOs;
+using Ee.Ebs.Application.Contracts.Authors;
+using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Ee.Ebs.Web.Library.ViewModels.Author;
 using Microsoft.AspNetCore.Mvc;
 

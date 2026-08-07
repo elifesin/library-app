@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Categories.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Categories.DTOs;
 
-namespace Ee.Ebs.Application.Categories;
+namespace Ee.Ebs.Application.Contracts.Categories;
 
 public interface ICategoryService
 {

@@ -1,6 +1,6 @@
-﻿using Ee.Ebs.Application.Authors.DTOs;
+﻿using Ee.Ebs.Application.Contracts.Authors.DTOs;
 
-namespace Ee.Ebs.Application.Authors;
+namespace Ee.Ebs.Application.Contracts.Authors;
 
 public interface IAuthorService
 {

@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Loans.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Loans.DTOs;
 
 public class LoanCreateDto
 {

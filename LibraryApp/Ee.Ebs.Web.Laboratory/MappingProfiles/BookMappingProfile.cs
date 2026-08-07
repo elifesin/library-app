@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Ee.Ebs.Application.Books.DTOs;
+using Ee.Ebs.Application.Contracts.Books.DTOs;
 using Ee.Ebs.Domain.Books;
 using Ee.Ebs.Web.Laboratory.ViewModels.Book;
 

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Books;
+using Ee.Ebs.Application.Contracts.Books;
+using Ee.Ebs.Application.Contracts.Loans;
+using Ee.Ebs.Application.Contracts.Loans.DTOs;
+using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Loans;
-using Ee.Ebs.Application.Loans.DTOs;
 using Ee.Ebs.Application.Members;
 using Ee.Ebs.Web.Library.ViewModels.Loan;
 using Microsoft.AspNetCore.Mvc;

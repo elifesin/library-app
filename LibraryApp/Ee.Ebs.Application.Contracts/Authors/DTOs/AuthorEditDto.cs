@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Authors.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Authors.DTOs;
 
 public class AuthorEditDto
 {

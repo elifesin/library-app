@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Members;
+using Ee.Ebs.Application.Contracts.Members.DTOs;
 using Ee.Ebs.Domain.Loans;
 using Ee.Ebs.Domain.Members;
-using Ee.Ebs.Application.Members.DTOs;
 
 namespace Ee.Ebs.Application.Members;
 

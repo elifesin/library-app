@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Application.Books.DTOs;
+﻿namespace Ee.Ebs.Application.Contracts.Books.DTOs;
 
 public class BookEditDto
 {
