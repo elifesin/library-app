@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.LibraryApp", "Ee.Ebs.LibraryApp\Ee.Ebs.LibraryApp.csproj", "{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Library", "Ee.Ebs.Web.Library\Ee.Ebs.Web.Library.csproj", "{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.LaboratoryApp", "Ee.Ebs.LaboratoryApp\Ee.Ebs.LaboratoryApp.csproj", "{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Laboratory", "Ee.Ebs.Web.Laboratory\Ee.Ebs.Web.Laboratory.csproj", "{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Data.Dapper", "Ee.Ebs.Data.Dapper\Ee.Ebs.Data.Dapper.csproj", "{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}"
 EndProject

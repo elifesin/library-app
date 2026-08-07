@@ -1,0 +1,55 @@
+﻿@model LoanCreateVm
+
+<div class="container mt-4">
+    <h2>Yeni Ödünç Ver</h2>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post" novalidate>
+                
+                <div asp-validation-summary="All" class="text-danger mb-3" style="font-weight:bold; font-size:1.1rem;"></div>
+                
+                <div class="mb-3">
+                    <label>Üye Seçimi</label>
+                    <select asp-for="MemberID" class="form-control">
+                        <option value="">-- Lütfen Bir Üye Seçin --</option>
+                        @foreach (var member in ViewBag.Members)
+                        {
+                            <option value="@member.ID">@member.FullName</option>
+                        }
+                    </select>
+                    <!-- 3. DEĞİŞİKLİK: Her alanın altına kendi özel hata mesajını basacak span eklendi -->
+                    <span asp-validation-for="MemberID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label>Kitap Seçimi</label>
+                    <select asp-for="BookID" class="form-control">
+                        <option value="">-- Lütfen Bir Kitap Seçin --</option>
+                        @foreach (var book in ViewBag.Books)
+                        {
+                            <option value="@book.Id">@book.Title</option>
+                        }
+                    </select>
+                    <span asp-validation-for="BookID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LoanDate" class="form-label">Veriliş Tarihi</label>
+                    <input asp-for="LoanDate" type="date" class="form-control" required/>
+                    <span asp-validation-for="LoanDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DueDate" class="form-label">Son Teslim Tarihi</label>
+                    <input asp-for="DueDate" type="date" class="form-control" required/>
+                    <span asp-validation-for="DueDate" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Ödünç Ver</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>
