@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models;
+﻿namespace Ee.Ebs.Web.Library.ViewModels;
 
 public class ErrorViewModel
 {

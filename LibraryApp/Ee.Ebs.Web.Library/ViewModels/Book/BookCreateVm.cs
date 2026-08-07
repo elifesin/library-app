@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Book
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Book
 {
     public class BookCreateVm
     {

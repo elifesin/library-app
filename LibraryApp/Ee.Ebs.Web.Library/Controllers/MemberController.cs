@@ -2,7 +2,7 @@
 using Ee.Ebs.Application.Loans;
 using Ee.Ebs.Application.Members;
 using Ee.Ebs.Application.Members.DTOs;
-using Ee.Ebs.Web.Library.Models.Members;
+using Ee.Ebs.Web.Library.ViewModels.Members;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ee.Ebs.Web.Library.Controllers;

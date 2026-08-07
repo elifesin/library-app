@@ -4,7 +4,7 @@ using Ee.Ebs.Application.Books;
 using Ee.Ebs.Application.Books.DTOs;
 using Ee.Ebs.Application.Categories;
 using Ee.Ebs.Application.Publishers;
-using Ee.Ebs.Web.Library.Models.Book;
+using Ee.Ebs.Web.Library.ViewModels.Book;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ee.Ebs.Web.Library.Controllers;

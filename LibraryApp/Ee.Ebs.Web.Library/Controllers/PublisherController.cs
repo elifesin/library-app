@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Publishers;
 using Ee.Ebs.Application.Publishers.DTOs;
-using Ee.Ebs.Web.Library.Models.Publisher;
+using Ee.Ebs.Web.Library.ViewModels.Publisher;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ee.Ebs.Web.Library.Controllers;

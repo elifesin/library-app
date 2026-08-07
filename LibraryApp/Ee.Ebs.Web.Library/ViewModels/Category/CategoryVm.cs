@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Category;
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Category;
 
 public class CategoryVm
 {

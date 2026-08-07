@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Loans.DTOs;
-using Ee.Ebs.Web.Library.Models.Loan;
+using Ee.Ebs.Web.Library.ViewModels.Loan;
 
 namespace Ee.Ebs.Web.Library.MappingProfiles;
 

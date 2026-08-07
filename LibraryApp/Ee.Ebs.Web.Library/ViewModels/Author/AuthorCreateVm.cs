@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Author;
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Author;
 
 public class AuthorCreateVm
 {

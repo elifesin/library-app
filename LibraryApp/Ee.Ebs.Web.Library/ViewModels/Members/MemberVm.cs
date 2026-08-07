@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Members
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Members
 {
     public class MemberVm
     {

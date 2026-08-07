@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Members.DTOs;
-using Ee.Ebs.Web.Library.Models.Members;
+using Ee.Ebs.Web.Library.ViewModels.Members;
 
 namespace Ee.Ebs.Web.Library.MappingProfiles;
 

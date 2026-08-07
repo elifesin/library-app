@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Loan;
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Loan;
 
 public class LoanVm
 {

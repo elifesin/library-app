@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Ee.Ebs.Web.Library.Models;
+using Ee.Ebs.Web.Library.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ee.Ebs.Web.Library.Controllers;

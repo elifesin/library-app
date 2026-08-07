@@ -3,7 +3,7 @@ using Ee.Ebs.Application.Books;
 using Ee.Ebs.Application.Loans;
 using Ee.Ebs.Application.Loans.DTOs;
 using Ee.Ebs.Application.Members;
-using Ee.Ebs.Web.Library.Models.Loan;
+using Ee.Ebs.Web.Library.ViewModels.Loan;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ee.Ebs.Web.Library.Controllers;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Categories.DTOs;
-using Ee.Ebs.Web.Library.Models.Category;
+using Ee.Ebs.Web.Library.ViewModels.Category;
 
 namespace Ee.Ebs.Web.Library.MappingProfiles;
 

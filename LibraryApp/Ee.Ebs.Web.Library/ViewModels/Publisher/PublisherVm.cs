@@ -1,4 +1,4 @@
-﻿namespace Ee.Ebs.Web.Library.Models.Publisher;
+﻿namespace Ee.Ebs.Web.Library.ViewModels.Publisher;
 
 public class PublisherVm
 {
