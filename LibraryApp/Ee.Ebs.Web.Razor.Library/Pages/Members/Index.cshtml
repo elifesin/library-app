@@ -1,0 +1,53 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Pages.Members.IndexModel
+
+<div class="container mt-4">
+    <h2>Üye Listesi</h2>
+    <a asp-page="Create" class="btn btn-primary mb-3">Yeni Üye Ekle</a>
+
+    @if (Model.Members != null && Model.Members.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>İşlemler</th>
+                    <th>Ad Soyad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Members)
+                {
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton_@item.ID" data-bs-toggle="dropdown" aria-expanded="false">
+                                    İşlemler
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.ID">
+                                    <li>
+                                        <a class="dropdown-item text-primary" asp-page="Edit" asp-route-id="@item.ID">
+                                            <i class="bi bi-pencil"></i> Güncelle
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" asp-page="Delete" asp-route-id="@item.ID">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>@item.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir üye bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

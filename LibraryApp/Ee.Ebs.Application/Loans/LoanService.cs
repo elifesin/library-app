@@ -21,6 +21,12 @@ public class LoanService : ILoanService
         var loans = _loanRepository.GetAll();
         return _mapper.Map<List<LoanDto>>(loans);
     }
+
+    public LoanDto GetById(int id)
+    {
+        var loan = _loanRepository.GetById(id);
+        return _mapper.Map<LoanDto>(loan);
+    }
     
     public void Insert(LoanCreateDto vm)
     {

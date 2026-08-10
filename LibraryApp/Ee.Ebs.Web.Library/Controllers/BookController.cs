@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using Ee.Ebs.Application.Authors;
-using Ee.Ebs.Application.Books;
-using Ee.Ebs.Application.Categories;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
@@ -38,13 +35,10 @@ public class BookController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        // 1. Servisten Entity değil, DTO listesi gelir
         var bookDtos = _bookService.GetAll();
         
-        // 2. Ekranda göstermek için DTO'yu View Model'e dönüştürüyoruz
         var bookViewModels = _mapper.Map<List<BookVm>>(bookDtos);
         
-        // ViewBag'leri doldururken de Servisleri (DTO listesi dönecek şekilde) kullanıyoruz
         ViewBag.Authors = _authorService.GetAll();
         ViewBag.Categories = _categoryService.GetAll();
         
@@ -116,7 +110,7 @@ public class BookController : Controller
         }
         
         // VM'den DTO'ya dönüşüm
-        var bookDto = _mapper.Map<BookEditDto>(vm); // (Eğer UpdateDto kullanıyorsanız)
+        var bookDto = _mapper.Map<BookEditDto>(vm); 
         
         _bookService.Update(bookDto);
         

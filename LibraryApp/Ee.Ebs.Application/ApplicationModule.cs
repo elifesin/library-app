@@ -16,7 +16,7 @@ namespace Ee.Ebs.Application;
 
 public static class ApplicationModule
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationModuleServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IBookService, BookService>();

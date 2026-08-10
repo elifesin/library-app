@@ -6,4 +6,6 @@ public interface ILoanRepository
     public void Insert(Loan loan);
     public List<Loan> GetLoansByMemberId(int id);
     public void ReturnBook(int loanId);
+    public Loan GetById(int id); 
+
 }

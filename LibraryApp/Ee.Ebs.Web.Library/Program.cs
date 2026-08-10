@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationModuleServices();
 
 builder.Services.AddAutoMapper(cfg => { }, 
     typeof(Program),                        // Web katmanındaki profilleri (AuthorMappingProfile vb.) tarar

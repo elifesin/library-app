@@ -17,10 +17,16 @@ namespace Ee.Ebs.Data.EfCore.Loans
         {
             // INNER JOIN Books ve INNER JOIN Authors işlemlerinin LINQ karşılığı
             return _context.Loans
-                .Include(l => l.Book)             // Loan nesnesi üzerinden Book'u dahil et
-                .ThenInclude(b => b.Author)   // Book nesnesi üzerinden de Author'u dahil et
+                .Include(l => l.Book) 
+                    .ThenInclude(b => b.Author)   // Book nesnesi üzerinden de Author'u dahil et
+                .Include (m => m.Member)
                 .Where(l => l.ReturnDate == null) // WHERE ReturnDate IS NULL
                 .ToList();
+        }
+
+        public Loan GetById(int id)
+        {
+            return _context.Loans.FirstOrDefault(l => l.Id == id);
         }
 
         public void Insert(Loan loan)

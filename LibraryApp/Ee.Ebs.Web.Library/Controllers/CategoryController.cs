@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Ee.Ebs.Application.Categories;
 using Ee.Ebs.Application.Contracts.Categories;
 using Ee.Ebs.Application.Contracts.Categories.DTOs;
 using Ee.Ebs.Web.Library.ViewModels.Category;

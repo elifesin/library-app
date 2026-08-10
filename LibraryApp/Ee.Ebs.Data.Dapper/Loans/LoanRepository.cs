@@ -71,5 +71,12 @@ public class LoanRepository : RepositoryBase, ILoanRepository
     
         Connection.Execute(sql, new{Id = loanId});
     }
+
+    public Loan GetById(int id)
+    {
+        string sql = "SELECT FROM Loans WHERE Id = @Id";
+        
+        return Connection.QueryFirstOrDefault<Loan>(sql, new {Id = id});
     }
+}
     

@@ -24,6 +24,13 @@
       <ProjectReference Include="..\Ee.Ebs.Application\Ee.Ebs.Application.csproj" />
       <ProjectReference Include="..\Ee.Ebs.Data.EfCore\Ee.Ebs.Data.EfCore.csproj" />
       <ProjectReference Include="..\Ee.Ebs.Data.Dapper\Ee.Ebs.Data.Dapper.csproj" />
+        
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
     </ItemGroup>
 
 </Project>
