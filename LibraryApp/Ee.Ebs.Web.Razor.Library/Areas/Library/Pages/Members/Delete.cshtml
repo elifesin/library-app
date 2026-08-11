@@ -1,0 +1,37 @@
+﻿@page "{id:int}"
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members.DeleteModel
+
+<div class="container mt-4">
+    <h2 class="text-danger">Üyeyi Sil</h2>
+
+    <div class="alert alert-warning mt-3" role="alert">
+        <h4 class="alert-heading">Dikkat!</h4>
+        <p><strong>@Model.Vm.FirstName @Model.Vm.LastName</strong> isimli üyeyi sistemden silmek üzeresiniz.</p>
+        <hr>
+        <p class="mb-0">Bu işlemi onaylarsanız üye kalıcı olarak silinecektir. Devam etmek istediğinize emin misiniz?</p>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Üye Detayları</h5>
+            <dl class="row mt-3">
+                <dt class="col-sm-3">Adı</dt>
+                <dd class="col-sm-9">@Model.Vm.FirstName</dd>
+
+                <dt class="col-sm-3">Soyadı</dt>
+                <dd class="col-sm-9">@Model.Vm.LastName</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <form method="post">
+            <input type="hidden" asp-for="Vm.ID" />
+            
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Evet, Kalıcı Olarak Sil
+            </button>
+            <a asp-page="./Index" class="btn btn-secondary ms-2">İptal ve Listeye Dön</a>
+        </form>
+    </div>
+</div>

@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Laboratory", "Ee.Ebs.Web.Laboratory\Ee.Ebs.Web.Laboratory.csproj", "{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Data.Dapper", "Ee.Ebs.Data.Dapper\Ee.Ebs.Data.Dapper.csproj", "{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Data.EfCore", "Ee.Ebs.Data.EfCore\Ee.Ebs.Data.EfCore.csproj", "{11928641-7B0C-4B7E-BD1A-B2741EA0811D}"
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}.Release|Any CPU.ActiveCfg = Release|Any CPU

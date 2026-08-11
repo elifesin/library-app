@@ -1,0 +1,45 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Categories.IndexModel
+
+<div class="container mt-4">
+    <h2>Kategori Listesi</h2>
+
+    @if (Model.Categories != null && Model.Categories.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>İşlemler</th>
+                <th>Kategori</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                İşlemler
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-page="/Categories/Edit" asp-route-id="@item.Id">Güncelle</a>
+    
+                                <a class="dropdown-item" asp-page="/Categories/Delete" asp-route-id="@item.Id">Sil</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@item.CategoryName</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>
+

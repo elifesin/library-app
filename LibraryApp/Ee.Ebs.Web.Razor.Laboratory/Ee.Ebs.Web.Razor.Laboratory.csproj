@@ -19,5 +19,13 @@
       <PackageReference Include="AutoMapper" Version="16.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Areas\Laboratory\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Laboratory\Pages\Books\Index.cshtml" />
+    </ItemGroup>
+
 
 </Project>

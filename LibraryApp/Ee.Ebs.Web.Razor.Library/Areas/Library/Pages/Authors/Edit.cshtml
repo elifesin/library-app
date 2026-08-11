@@ -1,0 +1,29 @@
+﻿@page "{id:int}"
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors.EditModel
+
+<div class="Güncelle">
+    <h2>Yazar Güncelle</h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <input type="hidden" asp-for="Vm.Id" />
+                <div class="mb-3">
+                    <label asp-for="Vm.FirstName" class="form-label">Yazar Adı</label>
+                    <input asp-for="Vm.FirstName" class="form-control" autocomplete="off" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Vm.LastName" class="form-label">Yazar Soyadı</label>
+                    <input asp-for="Vm.LastName" class="form-control" autocomplete="off" required/>
+                </div>
+
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary ms-2">Listeye Dön</a>
+            </form>
+
+        </div>
+    </div>
+
+</div>

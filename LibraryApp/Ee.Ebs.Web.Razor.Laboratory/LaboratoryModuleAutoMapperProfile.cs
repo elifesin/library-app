@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
-using Ee.Ebs.Web.Razor.Laboratory.Pages;
-using Ee.Ebs.Web.Razor.Laboratory.Pages.Books;
+using Ee.Ebs.Web.Razor.Laboratory.Areas.Laboratory.Pages.Books;
 
 namespace Ee.Ebs.Web.Razor.Laboratory;
 

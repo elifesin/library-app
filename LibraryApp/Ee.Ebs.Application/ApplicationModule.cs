@@ -19,11 +19,11 @@ public static class ApplicationModule
     public static IServiceCollection AddApplicationModuleServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthorAppService, AuthorAppService>();
-        services.AddScoped<IBookService, BookService>();
-        services.AddScoped<ICategoryService, CategoryService>();
-        services.AddScoped<IPublisherService, PublisherService>();
-        services.AddScoped<IMemberService, MemberService>();
-        services.AddScoped<ILoanService, LoanService>();
+        services.AddScoped<IBookAppService, BookAppService>();
+        services.AddScoped<ICategoryAppService, CategoryAppAppService>();
+        services.AddScoped<IPublisherAppService, PublisherAppAppService>();
+        services.AddScoped<IMemberAppService, MemberAppAppService>();
+        services.AddScoped<ILoanAppService, LoanAppAppService>();
         
         return services;
     }
