@@ -8,22 +8,22 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Authors;
 
 public class DeleteModel : PageModel
 {
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorAppService _authorAppService;
     private readonly IMapper _objectMapper;
 
     [BindProperty] 
     public AuthorVm Vm { get; set; }
 
-    public DeleteModel(IAuthorService authorService, IMapper objectMapper)
+    public DeleteModel(IAuthorAppService authorAppService, IMapper objectMapper)
     {
-        _authorService = authorService;
+        _authorAppService = authorAppService;
         _objectMapper = objectMapper;
     }
     
     [HttpGet]
     public IActionResult OnGet(int id)
     {
-        var dto = _authorService.GetById(id);
+        var dto = _authorAppService.GetById(id);
 
         if (dto == null)
         {
@@ -38,7 +38,7 @@ public class DeleteModel : PageModel
     [HttpPost]
     public IActionResult OnPost(int id)
     {
-        _authorService.Delete(id);
+        _authorAppService.Delete(id);
  
         return RedirectToPage("./Index");
     }

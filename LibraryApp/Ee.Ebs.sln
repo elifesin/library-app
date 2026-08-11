@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Library", "Ee.Ebs.Web.Library\Ee.Ebs.Web.Library.csproj", "{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Laboratory", "Ee.Ebs.Web.Laboratory\Ee.Ebs.Web.Laboratory.csproj", "{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Data.Dapper", "Ee.Ebs.Data.Dapper\Ee.Ebs.Data.Dapper.csproj", "{74CB511C-CAF6-4FCA-B424-5D439FCE36BE}"
@@ -18,16 +16,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Host", "Ee.Ebs.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Razor.Library", "Ee.Ebs.Web.Razor.Library\Ee.Ebs.Web.Razor.Library.csproj", "{2F653279-4FCA-4A86-AC26-ACF4C0044E36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ee.Ebs.Web.Razor.Laboratory", "Ee.Ebs.Web.Razor.Laboratory\Ee.Ebs.Web.Razor.Laboratory.csproj", "{39D39418-DA16-4A87-A47E-A2DCB0B2CDC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D26DDEA-F7A3-4A0F-8487-937BDB6EB5F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{746B3ED1-6FF0-41A6-AEED-3C38E56A55E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +56,9 @@ Global
 		{2F653279-4FCA-4A86-AC26-ACF4C0044E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F653279-4FCA-4A86-AC26-ACF4C0044E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F653279-4FCA-4A86-AC26-ACF4C0044E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D39418-DA16-4A87-A47E-A2DCB0B2CDC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D39418-DA16-4A87-A47E-A2DCB0B2CDC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D39418-DA16-4A87-A47E-A2DCB0B2CDC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D39418-DA16-4A87-A47E-A2DCB0B2CDC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -8,22 +8,22 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Authors;
 
 public class EditModel : PageModel
 {
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorAppService _authorAppService;
     private  readonly IMapper _mapper;
     
     [BindProperty]
     public AuthorEditVm Vm { get; set; }
     
-    public EditModel(IAuthorService authorService, IMapper mapper)
+    public EditModel(IAuthorAppService authorAppService, IMapper mapper)
     {
-        _authorService = authorService;
+        _authorAppService = authorAppService;
         _mapper = mapper;
     }
     
     [HttpGet]
     public IActionResult OnGet(int id)
     {
-        var authorDto = _authorService.GetById(id);
+        var authorDto = _authorAppService.GetById(id);
  
         if (authorDto == null)
         {
@@ -44,7 +44,7 @@ public class EditModel : PageModel
         }
  
         var authorDto = _mapper.Map<AuthorEditDto>(Vm);
-        _authorService.Update(authorDto);
+        _authorAppService.Update(authorDto);
         
         return RedirectToPage("./Index");
     }

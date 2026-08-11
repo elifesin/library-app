@@ -25,6 +25,11 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.ID">
                                     <li>
+                                        <a class="dropdown-item text-primary" asp-page="BorrowedBooks" asp-route-id="@item.ID">
+                                            <i class="bi bi-pencil"></i> Kitapları Gör
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item text-primary" asp-page="Edit" asp-route-id="@item.ID">
                                             <i class="bi bi-pencil"></i> Güncelle
                                         </a>

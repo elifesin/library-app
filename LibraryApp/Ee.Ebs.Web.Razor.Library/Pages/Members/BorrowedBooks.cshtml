@@ -8,7 +8,7 @@
     <div class="card mb-4">
         <div class="card-body bg-light">
             <h5 class="card-title mb-0 text-primary">
-                <i class="bi bi-person-circle"></i> @Model.Vm.FullName
+                <i class="bi bi-person-circle"></i> @Model.Vm.FullName Adlı Üyenin Ödünç Aldığı Kitaplar
             </h5>
         </div>
     </div>
@@ -28,7 +28,7 @@
                 @foreach (var item in Model.Vm.BorrowedBooks)
                 {
                     <tr>
-                        <td>@item.BookTitle</td>
+                        <td>@item.BookName</td>
                         
                         <td>@item.LoanDate.ToShortDateString()</td>
                         <td>@item.DueDate.ToShortDateString()</td>

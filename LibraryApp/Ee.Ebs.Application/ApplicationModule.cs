@@ -18,7 +18,7 @@ public static class ApplicationModule
 {
     public static IServiceCollection AddApplicationModuleServices(this IServiceCollection services)
     {
-        services.AddScoped<IAuthorService, AuthorService>();
+        services.AddScoped<IAuthorAppService, AuthorAppService>();
         services.AddScoped<IBookService, BookService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IPublisherService, PublisherService>();

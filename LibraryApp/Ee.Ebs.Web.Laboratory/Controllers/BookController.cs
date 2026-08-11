@@ -14,16 +14,16 @@ public class BookController : Controller
 {
     private readonly IBookService _bookService;
     private readonly IMapper _mapper;
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorAppService _authorAppService;
     private readonly ICategoryService _categoryService;
 
     public BookController(IBookService bookService, 
-        IMapper mapper, IAuthorService authorService, 
+        IMapper mapper, IAuthorAppService authorAppService, 
         ICategoryService categoryService)
     {
         _bookService = bookService;
         _mapper = mapper;
-        _authorService = authorService;
+        _authorAppService = authorAppService;
         _categoryService = categoryService;
     }
     
@@ -35,7 +35,7 @@ public class BookController : Controller
         // 2. Ekranda göstermek için DTO'yu View Model'e dönüştürüyoruz
         var bookViewModels = _mapper.Map<List<BookListVm>>(bookDtos);
         
-        ViewBag.Authors = _authorService.GetAll();
+        ViewBag.Authors = _authorAppService.GetAll();
         ViewBag.Categories = _categoryService.GetAll();
         
         return View(bookViewModels);

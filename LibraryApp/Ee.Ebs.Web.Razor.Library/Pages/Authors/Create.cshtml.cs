@@ -8,15 +8,15 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Authors;
 
 public class CreateModel : PageModel
 {
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorAppService _authorAppService;
     private readonly IMapper _objectMapper;
 
     [BindProperty] 
     public AuthorCreateVm Vm { get; set; }
 
-    public CreateModel(IAuthorService authorService, IMapper objectMapper)
+    public CreateModel(IAuthorAppService authorAppService, IMapper objectMapper)
     {
-        _authorService = authorService;
+        _authorAppService = authorAppService;
         _objectMapper = objectMapper;
     }
 
@@ -36,7 +36,7 @@ public class CreateModel : PageModel
 
         var authorDto = _objectMapper.Map<AuthorCreateDto>(Vm);
         
-        _authorService.Insert(authorDto);
+        _authorAppService.Insert(authorDto);
         
         return RedirectToPage("./Index");
     }

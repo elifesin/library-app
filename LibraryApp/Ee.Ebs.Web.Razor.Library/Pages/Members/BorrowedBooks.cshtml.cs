@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Loans;   
 using Ee.Ebs.Application.Contracts.Members;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +11,18 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Members
     {
         private readonly IMemberService _memberService;
         private readonly ILoanService _loanService;
+        private readonly IBookService _bookService;
         private readonly IMapper _objectMapper;
 
         public BorrowedBooksModel(
             IMemberService memberService,
             ILoanService loanService,
-            IMapper objectMapper)
+            IMapper objectMapper, IBookService bookService)
         {
             _memberService = memberService;
             _loanService = loanService;
             _objectMapper = objectMapper;
+            _bookService = bookService;
         }
 
         public MemberBorrowedBooksVm Vm { get; set; } = new();
@@ -27,19 +30,15 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Members
         public IActionResult OnGet(int id)
         {
             var memberDto = _memberService.GetById(id);
+            if (memberDto == null) return NotFound();
 
-            if (memberDto == null)
-            {
-                return NotFound();
-            }
-
-            var loanDtos = _loanService.GetLoansByMemberId(id);
+            var loanDtos = _loanService.GetLoansByMemberId(id); 
 
             Vm = new MemberBorrowedBooksVm
             {
                 MemberId = memberDto.ID,
                 FullName = $"{memberDto.FirstName} {memberDto.LastName}",
-                BorrowedBooks = _objectMapper.Map<List<BorrowedBookItem>>(loanDtos)
+                BorrowedBooks = _objectMapper.Map<List<BorrowedBookItem>>(loanDtos) 
             };
 
             return Page();
@@ -54,7 +53,8 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Members
 
         public class BorrowedBookItem
         {
-            public string BookTitle { get; set; } = string.Empty; 
+            public int BookId { get; set; }
+            public string BookName { get; set; }  
             public DateTime LoanDate { get; set; }
             public DateTime DueDate { get; set; }
             public DateTime? ReturnDate { get; set; } 

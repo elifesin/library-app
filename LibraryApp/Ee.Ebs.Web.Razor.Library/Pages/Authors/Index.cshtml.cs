@@ -8,12 +8,12 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Authors
 {
     public class IndexModel : PageModel
     {
-        private readonly IAuthorService _authorService;
+        private readonly IAuthorAppService _authorAppService;
         private readonly IMapper _objectMapper;
 
-        public IndexModel(IAuthorService authorService, IMapper objectMapper)
+        public IndexModel(IAuthorAppService authorAppService, IMapper objectMapper)
         {
-            _authorService = authorService;
+            _authorAppService = authorAppService;
             _objectMapper = objectMapper;
         }
 
@@ -22,7 +22,7 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Authors
         [HttpGet]
         public IActionResult OnGet()
         {
-            var authorDtos = _authorService.GetAll();
+            var authorDtos = _authorAppService.GetAll();
             
             Authors = _objectMapper.Map<List<AuthorVm>>(authorDtos);
             

@@ -15,20 +15,20 @@ namespace Ee.Ebs.Web.Razor.Library.Pages.Books;
 public class EditModel : PageModel
 {
     private readonly IBookService _bookService;
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorAppService _authorAppService;
     private readonly ICategoryService _categoryService;
     private readonly IPublisherService _publisherService;
     private readonly IMapper _objectMapper;
 
     public EditModel(
         IBookService bookService,
-        IAuthorService authorService,
+        IAuthorAppService authorAppService,
         ICategoryService categoryService,
         IPublisherService publisherService,
         IMapper objectMapper)
     {
         _bookService = bookService;
-        _authorService = authorService;
+        _authorAppService = authorAppService;
         _categoryService = categoryService;
         _publisherService = publisherService;
         _objectMapper = objectMapper;
@@ -75,7 +75,7 @@ public class EditModel : PageModel
     
     private void LoadData()
     {
-        Authors = _authorService.GetAll().ToList();
+        Authors = _authorAppService.GetAll().ToList();
         Categories = _categoryService.GetAll().ToList();
         Publishers = _publisherService.GetAll().ToList();
     }
