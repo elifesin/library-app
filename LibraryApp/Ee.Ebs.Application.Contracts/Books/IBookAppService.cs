@@ -10,4 +10,5 @@ public interface IBookAppService
     void Update(BookEditDto book);
     void Delete(int id);
     List<BookDto> GetAvailableBooks();
+    List<BookDto> GetBooksByCategory(int categoryId);
 }

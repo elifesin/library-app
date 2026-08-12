@@ -53,4 +53,10 @@ public class BookAppService : IBookAppService
         var availableBooks = _bookRepository.GetAvailableBooks();
         return _mapper.Map<List<BookDto>>(availableBooks);
     }
+
+    public List<BookDto> GetBooksByCategory(int categoryId)
+    {
+        var categoricBooks = _bookRepository.GetBooksByCategory(categoryId);
+        return _mapper.Map<List<BookDto>>(categoricBooks);
+    }
 }

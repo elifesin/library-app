@@ -89,5 +89,15 @@ namespace Ee.Ebs.Data.EfCore.Books
                 .Where(b => b.IsActive && !_context.Loans.Any(l => l.BookID == b.Id && l.ReturnDate == null))
                 .ToList();
         }
+
+        public List<Book> GetBooksByCategory(int categoryId)
+        {
+            return _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.Category)
+                .Where(b => b.CategoryID == categoryId)
+                .ToList();
+        }
     }
 }

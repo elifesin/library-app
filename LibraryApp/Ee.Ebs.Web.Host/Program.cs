@@ -25,6 +25,11 @@ builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation()
     .AddApplicationPart(typeof(Ee.Ebs.Web.Razor.Library.LibraryModule).Assembly);
 
+builder.Services.AddAutoMapper(cfg => {},
+    typeof(LibraryModule),
+    typeof(ApplicationModule),
+    typeof(Ee.Ebs.Web.Razor.Laboratory.LaboratoryModuleAutoMapperProfile) 
+);
 var app = builder.Build();
 
 

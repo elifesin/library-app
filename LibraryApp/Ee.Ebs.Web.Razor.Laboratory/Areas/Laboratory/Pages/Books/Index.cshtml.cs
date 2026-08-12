@@ -20,8 +20,7 @@ public class IndexModel : PageModel
     
     public IActionResult OnGet()
     {
-        var bookDtos = _bookAppService.GetAll();
-            
+        var bookDtos = _bookAppService.GetBooksByCategory(3002);
         Books = _mapper.Map<List<BookListVm>>(bookDtos);
             
         return Page();

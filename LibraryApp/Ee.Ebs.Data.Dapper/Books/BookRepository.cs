@@ -72,4 +72,15 @@ public class BookRepository : RepositoryBase, IBookRepository
         string sql = "SELECT *  FROM Books WHERE IsActive = 1 AND Id NOT IN (SELECT BookID FROM Loans WHERE ReturnDate IS NULL)";
         return Connection.Query<Book>(sql).ToList();
     }
+
+    public List<Book> GetBooksByCategory(int categoryId)
+    {
+        string sql = @"SELECT
+                     b.*, 
+                     c.*
+                     FROM Books b
+                     INNER JOIN Categories c ON b.CategoryId = c.Id
+                     WHERE b.CategoryId = @categoryId";
+        return Connection.Query<Book>(sql).ToList();
+    }
 }

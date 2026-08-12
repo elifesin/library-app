@@ -8,4 +8,5 @@ public interface IBookRepository
     void Update(Book book);
     void Delete(Book book);
     List<Book> GetAvailableBooks();
+    List<Book> GetBooksByCategory(int categoryId);
 }
