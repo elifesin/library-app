@@ -5,12 +5,12 @@ using Ee.Ebs.Domain.Loans;
 
 namespace Ee.Ebs.Application.Loans;
 
-public class LoanAppAppService : ILoanAppService
+public class LoanAppService : ILoanAppService
 {
     private readonly ILoanRepository _loanRepository;
     private readonly IMapper _mapper;
 
-    public LoanAppAppService(ILoanRepository loanRepository, IMapper mapper)
+    public LoanAppService(ILoanRepository loanRepository, IMapper mapper)
     {
         _loanRepository = loanRepository;
         _mapper = mapper;

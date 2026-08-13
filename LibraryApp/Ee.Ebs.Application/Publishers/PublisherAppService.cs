@@ -5,12 +5,12 @@ using Ee.Ebs.Domain.Publishers;
 
 namespace Ee.Ebs.Application.Publishers;
 
-public class PublisherAppAppService : IPublisherAppService
+public class PublisherAppService : IPublisherAppService
 {
     private readonly IMapper _mapper;
     private readonly IPublisherRepository _publisherRepository;
     
-    public PublisherAppAppService(IMapper mapper, IPublisherRepository publisherRepository)
+    public PublisherAppService(IMapper mapper, IPublisherRepository publisherRepository)
     {
         _mapper = mapper;
         _publisherRepository = publisherRepository;

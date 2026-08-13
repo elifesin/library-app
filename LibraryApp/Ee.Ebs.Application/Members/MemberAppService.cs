@@ -6,13 +6,13 @@ using Ee.Ebs.Domain.Members;
 
 namespace Ee.Ebs.Application.Members;
 
-public class MemberAppAppService : IMemberAppService
+public class MemberAppService : IMemberAppService
 {
     private readonly IMapper _mapper;
     private readonly IMemberRepository _memberRepository;
     private readonly ILoanRepository _loanRepository;
 
-    public MemberAppAppService(IMapper mapper, IMemberRepository memberRepository, ILoanRepository loanRepository)
+    public MemberAppService(IMapper mapper, IMemberRepository memberRepository, ILoanRepository loanRepository)
     {
         _mapper = mapper;
         _memberRepository = memberRepository;

@@ -5,12 +5,12 @@ using Ee.Ebs.Domain.Categories;
 
 namespace Ee.Ebs.Application.Categories;
 
-public class CategoryAppAppService : ICategoryAppService
+public class CategoryAppService : ICategoryAppService
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
 
-    public CategoryAppAppService(ICategoryRepository categoryRepository, IMapper mapper)
+    public CategoryAppService(ICategoryRepository categoryRepository, IMapper mapper)
     {
         _categoryRepository = categoryRepository;
         _mapper = mapper;

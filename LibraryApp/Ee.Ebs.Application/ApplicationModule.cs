@@ -22,10 +22,10 @@ public static class ApplicationModule
     {
         services.AddScoped<IAuthorAppService, AuthorAppService>();
         services.AddScoped<IBookAppService, BookAppService>();
-        services.AddScoped<ICategoryAppService, CategoryAppAppService>();
-        services.AddScoped<IPublisherAppService, PublisherAppAppService>();
-        services.AddScoped<IMemberAppService, MemberAppAppService>();
-        services.AddScoped<ILoanAppService, LoanAppAppService>();
+        services.AddScoped<ICategoryAppService, CategoryAppService>();
+        services.AddScoped<IPublisherAppService, PublisherAppService>();
+        services.AddScoped<IMemberAppService, MemberAppService>();
+        services.AddScoped<ILoanAppService, LoanAppService>();
         
         services.AddValidatorsFromAssemblyContaining<AuthorEditValidator>();
 
