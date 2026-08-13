@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
 using Ee.Ebs.Domain.Books;
@@ -30,6 +31,14 @@ public class BookAppService : IBookAppService
     
     public void Insert(BookCreateDto dto)
     {
+        bool ifExists = _bookRepository.GetAll().Any(b =>
+            b.Title.ToLower() == dto.Title.ToLower());
+
+        if (ifExists)
+        {
+            throw new InvalidOperationException($"'{dto.Title}' adlı kitap zaten kayıtlı");
+        }
+        
         var bookEntity = _mapper.Map<Book>(dto);
         bookEntity.IsActive = true; 
         _bookRepository.Insert(bookEntity);

@@ -55,10 +55,18 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
                 return Page();
             }
 
-            var bookDto = _objectMapper.Map<BookCreateDto>(Vm);
-            _bookAppService.Insert(bookDto);
+            try
+            {
+                var bookDto = _objectMapper.Map<BookCreateDto>(Vm);
+                _bookAppService.Insert(bookDto);
 
-            return RedirectToPage("./Index");
+                return RedirectToPage("./Index");
+            }
+            catch(InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Page();
+            }
         }
 
         private void LoadData()

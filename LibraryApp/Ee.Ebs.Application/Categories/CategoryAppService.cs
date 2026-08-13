@@ -30,6 +30,14 @@ public class CategoryAppService : ICategoryAppService
 
     public void Insert(CategoryDto category)
     {
+        bool ifExists = _categoryRepository.GetAll().Any(c => 
+            c.CategoryName.ToLower() == category.CategoryName.ToLower());
+
+        if (ifExists)
+        {
+            throw new InvalidOperationException($"'{category.CategoryName}' adlı kategori zaten ekli!");
+        }
+        
         var categoryDto = _mapper.Map<Category>(category);
         categoryDto.IsActive = true;
         _categoryRepository.Insert(categoryDto);

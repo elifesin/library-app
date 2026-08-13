@@ -40,7 +40,6 @@ public class CreateModel : PageModel
             var authorDto = _objectMapper.Map<AuthorCreateDto>(Vm);
             _authorAppService.Insert(authorDto);
             
-            
             return RedirectToPage("./Index");
         }
         catch (InvalidOperationException ex)

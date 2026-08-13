@@ -37,10 +37,18 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        var categoryDto = _mapper.Map<CategoryDto>(Vm);
-        _categoryAppService.Insert(categoryDto);
+        try
+        {
+            var categoryDto = _mapper.Map<CategoryDto>(Vm);
+            _categoryAppService.Insert(categoryDto);
         
-        return RedirectToPage("./Index");
+            return RedirectToPage("./Index");
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return Page();
+        }
     }
     
     public class CategoryVm
