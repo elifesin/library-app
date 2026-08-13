@@ -69,6 +69,11 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Loans
                 LoadData();
                 return Page();
             }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Page();
+            }
         }
         private void LoadData()
         {

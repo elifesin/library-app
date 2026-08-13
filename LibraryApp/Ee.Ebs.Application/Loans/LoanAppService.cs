@@ -36,8 +36,16 @@ public class LoanAppService : ILoanAppService
             loanDate: vm.LoanDate,
             dueDate: vm.DueDate
         );
-        _loanRepository.Insert(loanEntity);
         
+        int activeLoanCount = _loanRepository.GetAll().Count(l =>
+            l.MemberID == loanEntity.MemberID && l.ReturnDate == null);
+
+        if (activeLoanCount >= 5)
+        {
+            throw new InvalidOperationException("Aynı anda en fazla 5 kitap ödünç alınabilir!");
+        }
+        
+        _loanRepository.Insert(loanEntity);
     }
 
     public void ReturnBook(int id)
