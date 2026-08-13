@@ -41,7 +41,7 @@ public class Loan
 
         if (returnDate < LoanDate)
             throw new ArgumentException("İade tarihi, ödünç alma tarihinden önce olamaz.");
-
+        
         ReturnDate = returnDate;
     }
 }

@@ -12,4 +12,5 @@ public class LoanDto
     // AutoMapper ile Member ve Book tablolarından çekilecek alanlar
     public string BookName { get; set; } 
     public string FullName { get; set; }
+    
 }

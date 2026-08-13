@@ -15,19 +15,19 @@
             <form method="post">
                 <div class="mb-3">
                     <label asp-for="Vm.Title" class="form-label">Kitap Adı</label>
-                    <input asp-for="Vm.Title" class="form-control" placeholder="Kitap adını giriniz..." />
+                    <input asp-for="Vm.Title" class="form-control" placeholder="Kitap adını giriniz..." required/>
                     <span asp-validation-for="Vm.Title" class="text-danger"></span>
                 </div>
                 
                 <div class="mb-3">
                     <label asp-for="Vm.PublishYear" class="form-label">Yayınlanma Yılı</label>
-                    <input asp-for="Vm.PublishYear" class="form-control" placeholder="Yayın yılını giriniz..." />
+                    <input asp-for="Vm.PublishYear" class="form-control" placeholder="Yayın yılını giriniz..." required/>
                     <span asp-validation-for="Vm.PublishYear" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Vm.AuthorID" class="form-label">Yazar</label>
-                    <select asp-for="Vm.AuthorID" class="form-select" asp-items="@(new SelectList(Model.Authors, "Id", "FullName"))">
+                    <select asp-for="Vm.AuthorID" class="form-select" asp-items="@(new SelectList(Model.Authors, "Id", "FullName"))" required>
                         <option value="">-- Yazar Seçiniz --</option>
                     </select>
                     <span asp-validation-for="Vm.AuthorID" class="text-danger"></span>
@@ -35,7 +35,7 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.CategoryID" class="form-label">Kategori</label>
-                    <select asp-for="Vm.CategoryID" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "CategoryName"))">
+                    <select asp-for="Vm.CategoryID" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "CategoryName"))" required>
                         <option value="">-- Kategori Seçiniz --</option>
                     </select>
                     <span asp-validation-for="Vm.CategoryID" class="text-danger"></span>
@@ -43,7 +43,7 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.PublisherId" class="form-label">Yayınevi</label>
-                    <select asp-for="Vm.PublisherId" class="form-select" asp-items="@(new SelectList(Model.Publishers, "Id", "Name"))">
+                    <select asp-for="Vm.PublisherId" class="form-select" asp-items="@(new SelectList(Model.Publishers, "Id", "Name"))" required>
                         <option value="">-- Yayınevi Seçiniz --</option>
                     </select>
                     <span asp-validation-for="Vm.PublisherId" class="text-danger"></span>

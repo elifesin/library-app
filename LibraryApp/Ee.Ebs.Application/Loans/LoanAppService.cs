@@ -37,6 +37,11 @@ public class LoanAppService : ILoanAppService
             dueDate: vm.DueDate
         );
         
+        bool hasDelayedBook = _loanRepository.GetAll().Any(l => 
+            l.MemberID == loanEntity.MemberID &&
+            l.ReturnDate == null &&
+            l.DueDate < DateTime.Today);
+        
         int activeLoanCount = _loanRepository.GetAll().Count(l =>
             l.MemberID == loanEntity.MemberID && l.ReturnDate == null);
 
@@ -46,6 +51,11 @@ public class LoanAppService : ILoanAppService
         }
         
         _loanRepository.Insert(loanEntity);
+
+        if (hasDelayedBook)
+        {
+            throw new InvalidOperationException("İade tarihi geçmiş kitabınız olduğu için yeni kitap alamazsınız!");
+        }
     }
 
     public void ReturnBook(int id)

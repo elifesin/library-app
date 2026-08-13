@@ -12,7 +12,7 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.MemberID" class="form-label">Üye</label>
-                    <select asp-for="Vm.MemberID" class="form-select" asp-items="@(new SelectList(Model.Members, "ID", "FullName"))">
+                    <select asp-for="Vm.MemberID" class="form-select" asp-items="@(new SelectList(Model.Members, "ID", "FullName"))" required>
                         <option value="">-- Üye Seçiniz --</option>
                     </select>
                     <span asp-validation-for="Vm.MemberID" class="text-danger"></span>
@@ -20,7 +20,7 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.BookID" class="form-label">Ödünç Alınabilecek Kitaplar</label>
-                    <select asp-for="Vm.BookID" class="form-select" asp-items="@(new SelectList(Model.Books, "Id", "Title"))">
+                    <select asp-for="Vm.BookID" class="form-select" asp-items="@(new SelectList(Model.Books, "Id", "Title"))" required>
                         <option value="">-- Kitap Seçiniz --</option>
                     </select>
                     <span asp-validation-for="Vm.BookID" class="text-danger"></span>
@@ -28,13 +28,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.LoanDate" class="form-label">Ödünç Veriliş Tarihi</label>
-                    <input asp-for="Vm.LoanDate" type="date" class="form-control" />
+                    <input asp-for="Vm.LoanDate" type="date" class="form-control" required/>
                     <span asp-validation-for="Vm.LoanDate" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Vm.DueDate" class="form-label">Son Teslim Tarihi</label>
-                    <input asp-for="Vm.DueDate" type="date" class="form-control" />
+                    <input asp-for="Vm.DueDate" type="date" class="form-control" required/>
                     <span asp-validation-for="Vm.DueDate" class="text-danger"></span>
                 </div>
 
