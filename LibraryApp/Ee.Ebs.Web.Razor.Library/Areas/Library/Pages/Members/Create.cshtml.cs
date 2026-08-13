@@ -35,10 +35,19 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        var memberDto = _objectMapper.Map<MemberCreateDto>(Vm);
-        _memberAppService.Insert(memberDto);
+        try
+        {
+            var memberDto = _objectMapper.Map<MemberCreateDto>(Vm);
+            _memberAppService.Insert(memberDto);
 
-        return RedirectToPage("./Index");
+            return RedirectToPage("./Index");
+    
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return Page();
+        }
     }
 
     public class MemberCreateVm

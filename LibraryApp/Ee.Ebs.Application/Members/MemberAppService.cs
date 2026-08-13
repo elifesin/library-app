@@ -33,6 +33,14 @@ public class MemberAppService : IMemberAppService
 
     public void Insert(MemberCreateDto member)
     {
+        bool ifExists = _memberRepository.GetAll().Any(m =>
+            m.FirstName.ToLower() == member.FirstName.ToLower() &&
+            m.LastName.ToLower() == member.LastName.ToLower());
+
+        if (ifExists)
+        {
+            throw new InvalidOperationException($"Kayıtlı bir üyeyi tekrar kayıt edemezsiniz!");
+        }
         var memberEntity = _mapper.Map<Member>(member);
         memberEntity.IsActive = true; 
         _memberRepository.Insert(memberEntity);

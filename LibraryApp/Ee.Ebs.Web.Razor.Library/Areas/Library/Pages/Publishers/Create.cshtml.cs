@@ -34,11 +34,19 @@ public class CreateModel : PageModel
         {
             return Page();
         }
+
+        try
+        {
+            var publisherDto = _mapper.Map<PublisherDto>(Vm);
+            _publisherAppService.Insert(publisherDto);
         
-        var publisherDto = _mapper.Map<PublisherDto>(Vm);
-        _publisherAppService.Insert(publisherDto);
-        
-        return RedirectToPage("./Index");
+            return RedirectToPage("./Index");
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return Page();
+        }
     }
     public class PublisherVm
     {

@@ -35,7 +35,7 @@ public class CategoryAppService : ICategoryAppService
 
         if (ifExists)
         {
-            throw new InvalidOperationException($"'{category.CategoryName}' adlı kategori zaten ekli!");
+            throw new InvalidOperationException("Kayıtlı bir kategoriyi tekrar kaydedemezsiniz!");
         }
         
         var categoryDto = _mapper.Map<Category>(category);

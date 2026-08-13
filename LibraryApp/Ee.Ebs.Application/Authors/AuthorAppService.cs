@@ -36,7 +36,7 @@ public class AuthorAppService : IAuthorAppService
 
         if (ifExists)
         {
-            throw new InvalidOperationException($" '{dto.FirstName} {dto.LastName}' adlı yazar zaten kayıtlı! ");
+            throw new InvalidOperationException("Yazar kayıtlı! ");
         }
         
         var authorEntity = _mapper.Map<Author>(dto);

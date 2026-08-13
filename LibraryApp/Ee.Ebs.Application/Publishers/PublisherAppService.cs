@@ -30,6 +30,14 @@ public class PublisherAppService : IPublisherAppService
 
     public void Insert(PublisherDto publisher)
     {
+        bool ifExists = _publisherRepository.GetAll().Any(p => 
+            p.Name.ToLower() == publisher.Name.ToLower());
+
+        if (ifExists)
+        {
+            throw new InvalidOperationException("Kayıtlı bir yayınevini tekrar kaydedemezsiniz");
+        }
+        
         var publisherEntity = _mapper.Map<Publisher>(publisher);
         publisherEntity.IsActive = true;
         _publisherRepository.Insert(publisherEntity);

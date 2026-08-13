@@ -32,11 +32,14 @@ public class BookAppService : IBookAppService
     public void Insert(BookCreateDto dto)
     {
         bool ifExists = _bookRepository.GetAll().Any(b =>
-            b.Title.ToLower() == dto.Title.ToLower());
+            b.Title.ToLower() == dto.Title.ToLower() &&
+            b.AuthorID == dto.AuthorID &&
+            b.CategoryID == dto.CategoryID &&
+            b.PublisherId == dto.PublisherId);
 
         if (ifExists)
         {
-            throw new InvalidOperationException($"'{dto.Title}' adlı kitap zaten kayıtlı");
+            throw new InvalidOperationException("Kayıtlı bir kitabı tekrar kaydedemezsiniz!");
         }
         
         var bookEntity = _mapper.Map<Book>(dto);
