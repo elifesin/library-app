@@ -8,6 +8,20 @@
 <div class="container mt-4">
     <h2>Yazar Listesi</h2>
     
+    <div class="author">
+        <div class="form-inline mt-3">
+            <div class="input-group" data-widget="author-search">
+                <input class="form-control form-control-author" type="search" placeholder="Search"
+                       aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     @if (Model.Authors != null && Model.Authors.Any())
     {
         <table class="table table-bordered table-striped">

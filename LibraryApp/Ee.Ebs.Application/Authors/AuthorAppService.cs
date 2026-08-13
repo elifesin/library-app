@@ -30,8 +30,16 @@ public class AuthorAppService : IAuthorAppService
 
     public void Insert(AuthorCreateDto dto)
     {
+        bool ifExists = _authorRepository.GetAll().Any(a =>
+            a.FirstName.ToLower() == dto.FirstName.ToLower() &&
+            a.LastName.ToLower() == dto.LastName.ToLower());
+
+        if (ifExists)
+        {
+            throw new InvalidOperationException($" '{dto.FirstName} {dto.LastName}' adlı yazar zaten kayıtlı! ");
+        }
+        
         var authorEntity = _mapper.Map<Author>(dto);
-        // authorEntity.IsActive = true; // Eğer Entity içinde default true yapmadıysan burada yapabilirsin
         _authorRepository.Insert(authorEntity);
     }
 

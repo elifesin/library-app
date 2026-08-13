@@ -35,11 +35,19 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        var authorDto = _objectMapper.Map<AuthorCreateDto>(Vm);
-        
-        _authorAppService.Insert(authorDto);
-        
-        return RedirectToPage("./Index");
+        try
+        {
+            var authorDto = _objectMapper.Map<AuthorCreateDto>(Vm);
+            _authorAppService.Insert(authorDto);
+            
+            
+            return RedirectToPage("./Index");
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return Page();
+        }
     }
 
     public class AuthorCreateVm
