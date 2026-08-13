@@ -22,7 +22,6 @@ public class Loan
     
     public Loan(int bookId, int memberId, DateTime loanDate, DateTime dueDate)
     {
-        // İŞ KURALI (Business Logic): LoanDate, DueDate'den sonra olamaz!
         if (loanDate > dueDate)
         {
             throw new ArgumentException("Veriliş Tarihi, Son Teslim Tarihi'nden sonra olamaz!");
@@ -32,7 +31,7 @@ public class Loan
         MemberID = memberId;
         LoanDate = loanDate;
         DueDate = dueDate;
-        ReturnDate = null; // Yeni kayıtta iade tarihi her zaman boştur
+        ReturnDate = null;
     }
     
     public void Return(DateTime returnDate)

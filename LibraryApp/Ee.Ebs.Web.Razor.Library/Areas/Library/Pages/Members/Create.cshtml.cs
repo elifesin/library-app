@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Contracts.Members.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,11 @@ public class CreateModel : PageModel
 
     public class MemberCreateVm
     {
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
     }
 }

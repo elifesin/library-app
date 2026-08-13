@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Categories;
 using Ee.Ebs.Application.Contracts.Categories.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,8 @@ public class CreateModel : PageModel
     public class CategoryVm
     {
         public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string CategoryName { get; set; }
         public bool IsActive { get; set; }
     }

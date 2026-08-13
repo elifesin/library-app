@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Ee.Ebs.Application.Contracts.Books;
@@ -69,11 +70,15 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
 
         public class BookCreateVm
         {
-            public int AuthorID { get; set; }
+            [Required(ErrorMessage = "Yazar boş olamaz")]
+            public int? AuthorID { get; set; }
+            [Required]
+            [MaxLength(100)]
             public string Title { get; set; }
-            public int PublishYear { get; set; }
-            public int CategoryID { get; set; } 
-            public int PublisherId { get; set; }
+            [Required]
+            public int ? PublishYear { get; set; }
+            public int ? CategoryID { get; set; } 
+            public int ? PublisherId { get; set; }
             public bool IsBorrowed { get; set; }
         }
     }

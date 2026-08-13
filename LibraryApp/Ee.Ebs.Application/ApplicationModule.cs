@@ -11,6 +11,8 @@ using Ee.Ebs.Application.Loans;
 using Ee.Ebs.Application.Members;
 using Ee.Ebs.Application.Publishers;
 using Microsoft.Extensions.DependencyInjection;
+using Ee.Ebs.Application.Authors.Validators;
+using FluentValidation;
 
 namespace Ee.Ebs.Application;
 
@@ -24,6 +26,9 @@ public static class ApplicationModule
         services.AddScoped<IPublisherAppService, PublisherAppAppService>();
         services.AddScoped<IMemberAppService, MemberAppAppService>();
         services.AddScoped<ILoanAppService, LoanAppAppService>();
+        
+        services.AddValidatorsFromAssemblyContaining<AuthorEditValidator>();
+
         
         return services;
     }

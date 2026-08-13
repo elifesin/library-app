@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,11 @@ public class CreateModel : PageModel
 
     public class AuthorCreateVm
     {
+        [Required]
         public string FirstName { get; set; }
+        
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
     }
 }

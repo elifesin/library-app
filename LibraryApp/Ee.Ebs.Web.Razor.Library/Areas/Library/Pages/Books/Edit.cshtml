@@ -1,6 +1,10 @@
 ﻿@page "{id:int}"
 @model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books.EditModel
 
+@{
+    ViewBag.CurrentPage = LibraryPageNames.BooksUpdate;
+}
+
 <div class="container mt-4">
     <h2>Kitabı Güncelle</h2>
     <hr />

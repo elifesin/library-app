@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Loans;
 using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Contracts.Members.DTOs;
@@ -53,7 +54,11 @@ public class EditModel : PageModel
     public class MemberVm
     {
         public int ID { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
         
         public string FullName => $"{FirstName} {LastName}";

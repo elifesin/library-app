@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Publishers;
 using Ee.Ebs.Application.Contracts.Publishers.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,9 @@ public class CreateModel : PageModel
     public class PublisherVm
     {
         public int Id { get; set; }
+        
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
     }

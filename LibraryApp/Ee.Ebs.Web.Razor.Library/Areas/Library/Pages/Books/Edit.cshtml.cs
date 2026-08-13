@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Ee.Ebs.Application.Contracts.Books;
@@ -83,10 +84,12 @@ public class EditModel : PageModel
     {
         public int Id { get; set; }
         public int AuthorID { get; set; }
+        [Required]
+        [MaxLength(100)]
         public string Title { get; set; }
-        public int PublishYear { get; set; }
+        public int ? PublishYear { get; set; }
         public bool IsBorrowed { get; set; }
-        public int PublisherId { get; set; }
-        public int CategoryID { get; set; }
+        public int ? PublisherId { get; set; }
+        public int ? CategoryID { get; set; }
     }
 }

@@ -12,13 +12,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Vm.FirstName" class="form-label">Ad</label>
-                    <input asp-for="Vm.FirstName" class="form-control" />
+                    <input asp-for="Vm.FirstName" class="form-control" required/>
                     <span asp-validation-for="Vm.FirstName" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Vm.LastName" class="form-label">Soyad</label>
-                    <input asp-for="Vm.LastName" class="form-control" />
+                    <input asp-for="Vm.LastName" class="form-control"  required/>
                     <span asp-validation-for="Vm.LastName" class="text-danger"></span>
                 </div>
                 

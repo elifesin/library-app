@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
 using Ee.Ebs.Application.Contracts.Loans;
@@ -77,8 +78,10 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Loans
 
         public class LoanCreateVm
         {
-            public int MemberID { get; set; }
-            public int BookID { get; set; }
+            [Required]
+            public int ? MemberID { get; set; }
+            [Required]
+            public int ? BookID { get; set; }
             public DateTime LoanDate { get; set; }
             public DateTime DueDate { get; set; }
         }

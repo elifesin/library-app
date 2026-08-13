@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,11 @@ public class EditModel : PageModel
     public class AuthorEditVm
     {
         public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
     }
 }
