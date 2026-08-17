@@ -13,7 +13,7 @@ public class CreateModel : PageModel
     private readonly IMapper _mapper;
     
     [BindProperty]
-    public CategoryVm Vm { get; set; }
+    public CategoryCreateOrEditVm Vm { get; set; }
     
     public CreateModel(ICategoryAppService categoryAppService, IMapper mapper)
     {
@@ -24,7 +24,7 @@ public class CreateModel : PageModel
     [HttpGet]
     public IActionResult OnGet()
     {
-        Vm = new CategoryVm();
+        Vm = new CategoryCreateOrEditVm();
 
         return Page();
     }
@@ -51,12 +51,4 @@ public class CreateModel : PageModel
         }
     }
     
-    public class CategoryVm
-    {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string CategoryName { get; set; }
-        public bool IsActive { get; set; }
-    }
 }

@@ -34,7 +34,13 @@
                                  <div class="dropdown-menu">
                                      <a class="dropdown-item" asp-page="/Books/Edit" asp-route-id="@item.Id">Güncelle</a>
     
-                                     <a class="dropdown-item" asp-page="/Books/Delete" asp-route-id="@item.Id">Sil</a>
+                                     <a  class="dropdown-item"
+                                         data-toggle="modal"
+                                         data-target="#deleteModal"
+                                         data-url="@Url.Page("Index", "Delete",new { id = item.Id })"
+                                         data-message="&quot;@item.Title&quot; silinsin mi?">
+                                         Sil
+                                     </a>
                                  </div>
                              </div>
                          </td>

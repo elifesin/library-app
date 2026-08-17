@@ -13,7 +13,7 @@ public class CreateModel : PageModel
     private readonly IMapper _mapper;
     
     [BindProperty]
-    public PublisherVm Vm { get; set; }
+    public PublisherCreateOrEditVm Vm { get; set; }
 
     public CreateModel(IPublisherAppService publisherAppService, IMapper mapper)
     {
@@ -23,7 +23,7 @@ public class CreateModel : PageModel
     [HttpGet]
     public IActionResult OnGet()
     {
-        Vm = new PublisherVm();
+        Vm = new PublisherCreateOrEditVm();
         return Page();
     }
 
@@ -47,14 +47,5 @@ public class CreateModel : PageModel
             ModelState.AddModelError(string.Empty, ex.Message);
             return Page();
         }
-    }
-    public class PublisherVm
-    {
-        public int Id { get; set; }
-        
-        [Required]
-        [MaxLength(50)]
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
     }
 }

@@ -1,0 +1,38 @@
+﻿<form method="post" id="deleteModalForm">
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <span id="deleteMessage"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        var deleteModal = $('#deleteModal');
+
+        deleteModal.on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var url = button.data('url');
+            var message = button.data('message');
+
+            $('#deleteMessage').text(message);
+            $('#deleteModalForm').attr('action', url);
+        });
+    });
+</script>

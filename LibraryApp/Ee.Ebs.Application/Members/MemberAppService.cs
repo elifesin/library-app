@@ -46,11 +46,11 @@ public class MemberAppService : IMemberAppService
         _memberRepository.Insert(memberEntity);
     }
 
-    public void Update(MemberDto member)
+    public void Update(int id, MemberDto dto)
     {
-        var memberEntity = _mapper.Map<Member>(member);
-        memberEntity.IsActive = true;
-        _memberRepository.Update(memberEntity);
+        var member = _memberRepository.GetById(id);
+        _mapper.Map(dto, member);
+        _memberRepository.Update(member);
     }
     
     public void Delete(int id)

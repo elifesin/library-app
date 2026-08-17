@@ -43,11 +43,13 @@ public class CategoryAppService : ICategoryAppService
         _categoryRepository.Insert(categoryDto);
     }
 
-    public void Update(CategoryDto category)
+    public void Update(int id, CategoryDto dto)
     {
-        var categoryDto = _mapper.Map<Category>(category);
-        categoryDto.IsActive = true;
-        _categoryRepository.Update(categoryDto);    
+        var category =  _categoryRepository.GetById(id);
+        
+        _mapper.Map(dto, category);
+        
+        _categoryRepository.Update(category);
     }
 
     public void Delete(int id)

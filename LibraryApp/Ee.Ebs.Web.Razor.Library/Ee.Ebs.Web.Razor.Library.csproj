@@ -8,47 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Ee.Ebs.Application.Contracts\Ee.Ebs.Application.Contracts.csproj" />
+        <ProjectReference Include="..\Ee.Ebs.Application.Contracts\Ee.Ebs.Application.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="16.2.0" />
+        <PackageReference Include="AutoMapper" Version="16.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.10" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Areas\Library\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Areas\Library\Pages\Authors\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Authors\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Authors\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Authors\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Books\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Books\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Books\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Books\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Categories\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Categories\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Categories\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Categories\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Loans\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Loans\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Loans\ReturnBook.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Members\BorrowedBooks.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Members\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Members\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Members\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Members\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Publishers\Create.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Publishers\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Publishers\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\Publishers\Index.cshtml" />
-      <AdditionalFiles Include="Areas\Library\Pages\_ViewImports.cshtml" />
-    </ItemGroup>
-    
 </Project>

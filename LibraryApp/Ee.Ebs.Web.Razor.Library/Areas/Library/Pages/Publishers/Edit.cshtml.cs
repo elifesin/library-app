@@ -12,8 +12,9 @@ public class EditModel : PageModel
     private readonly IPublisherAppService _publisherAppService;
     private readonly IMapper _mapper;
 
-    [BindProperty]
-    public PublisherVm Vm { get; set; }
+    public int Id { get; set; }
+    
+    [BindProperty] public PublisherCreateOrEditVm Vm { get; set; }
     
     public EditModel(IMapper mapper, IPublisherAppService publisherAppService)
     {
@@ -24,6 +25,7 @@ public class EditModel : PageModel
     [HttpGet]
     public IActionResult OnGet(int id)
     {
+        Id = id;
         var publisherDto =  _publisherAppService.GetById(id);
 
         if (publisherDto == null)
@@ -31,12 +33,13 @@ public class EditModel : PageModel
             return NotFound();
         }
         
-        Vm = _mapper.Map<PublisherVm>(publisherDto);
+        Vm = _mapper.Map<PublisherCreateOrEditVm>(publisherDto);
+        
         return Page();
     }
 
     [HttpPost]
-    public IActionResult OnPost()
+    public IActionResult OnPost(int id)
     {
         if (!ModelState.IsValid)
         {
@@ -44,17 +47,10 @@ public class EditModel : PageModel
         }
 
         var publisherDto = _mapper.Map<PublisherDto>(Vm);
-        _publisherAppService.Update(publisherDto);
+        publisherDto.Id = id;
+        
+        _publisherAppService.Update(id, publisherDto);
         
         return RedirectToPage("./Index");
-    }
-    
-    public class PublisherVm
-    {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
     }
 }

@@ -77,7 +77,7 @@
                                     </li>
                                     <li class="nav-item ">
                                         <a asp-area="Library" asp-page="/Authors/Create"
-                                           class="nav-link @(ViewBag.CurrentPage == LibraryPageNames.AuthorsCreate ? "active" : "")">
+                                           class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Yeni Yazar Ekle</p>
                                         </a>
@@ -248,5 +248,8 @@
 <script src="~/dist/js/adminlte.min.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
+
+@await Html.PartialAsync("_DeleteModal")
+
 </body>
 </html>

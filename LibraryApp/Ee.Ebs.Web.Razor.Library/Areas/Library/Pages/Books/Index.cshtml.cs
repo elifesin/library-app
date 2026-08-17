@@ -27,6 +27,14 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
             
             return Page();
         }
+
+        [HttpPost]
+        public IActionResult OnPostDelete(int id)
+        {
+            _bookAppService.Delete(id);
+            
+            return RedirectToPage();
+        }
         
         public class BookVm
         {

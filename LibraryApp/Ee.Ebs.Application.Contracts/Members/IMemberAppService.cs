@@ -7,6 +7,6 @@ public interface IMemberAppService
     List<MemberDto> GetAll();
     MemberDto GetById(int id);
     void Insert(MemberCreateDto member);
-    void Update(MemberDto member);
+    void Update(int id, MemberDto dto);
     void Delete(int id);
 }

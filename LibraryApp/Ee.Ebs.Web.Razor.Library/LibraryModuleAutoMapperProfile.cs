@@ -13,22 +13,24 @@ using PagesMembers = Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members;
 
 namespace Ee.Ebs.Web.Razor.Library;
 
-using Books_CreateModel = Areas.Library.Pages.Books.CreateModel;
-using Books_DeleteModel = Areas.Library.Pages.Books.DeleteModel;
-using Books_EditModel = Areas.Library.Pages.Books.EditModel;
+using Authors_EditModel = Areas.Library.Pages.Authors.EditModel;
+using Books_CreateModel = Areas.Library.Pages.Books;
+// using Books_DeleteModel = Areas.Library.Pages.Books.DeleteModel;
+using Books_EditModel = Areas.Library.Pages.Books;
 using Books_IndexModel = Areas.Library.Pages.Books.IndexModel;
 using BorrowedBooksModel = Areas.Library.Pages.Members.BorrowedBooksModel;
 using Categories_CreateModel = Areas.Library.Pages.Categories.CreateModel;
-using Categories_DeleteModel = Areas.Library.Pages.Categories.DeleteModel;
+// using Categories_DeleteModel = Areas.Library.Pages.Categories.DeleteModel;
 using Categories_EditModel = Areas.Library.Pages.Categories.EditModel;
 using Categories_IndexModel = Areas.Library.Pages.Categories.IndexModel;
 using CreateModel = Areas.Library.Pages.Authors.CreateModel;
-using DeleteModel = Areas.Library.Pages.Authors.DeleteModel;
-using EditModel = Areas.Library.Pages.Authors.EditModel;
 using IndexModel = Areas.Library.Pages.Authors.IndexModel;
 using Members_CreateModel = Areas.Library.Pages.Members.CreateModel;
-using Members_DeleteModel = Areas.Library.Pages.Members.DeleteModel;
-using Publishers_CreateModel = Areas.Library.Pages.Publishers.CreateModel;
+// using Members_DeleteModel = Areas.Library.Pages.Members.DeleteModel;
+using Members_CreateOrEditModel = Areas.Library.Pages.Members;
+using Categories_CreateOrEditModel = Areas.Library.Pages.Categories;
+
+using Publishers_Model = Areas.Library.Pages.Publishers;
 
 public class LibraryModuleAutoMapperProfile : Profile
 {
@@ -45,28 +47,27 @@ public class LibraryModuleAutoMapperProfile : Profile
     
     private void CreateMapForAuthor()
     {
-        CreateMap<AuthorDto, DeleteModel.AuthorVm>().ReverseMap();
+        // CreateMap<AuthorDto, PagesAuthors.DeleteModel.AuthorVm>().ReverseMap();
         CreateMap<AuthorDto, IndexModel.AuthorVm>().ReverseMap();
-        CreateMap<AuthorCreateDto, CreateModel.AuthorCreateVm>().ReverseMap();
-        CreateMap<AuthorEditDto, EditModel.AuthorEditVm>().ReverseMap();
-        CreateMap<AuthorDto,  EditModel.AuthorEditVm>().ReverseMap();
+        CreateMap<AuthorCreateDto, PagesAuthors.AuthorCreateOrEditVm>().ReverseMap();
+        CreateMap<AuthorEditDto,  PagesAuthors.AuthorCreateOrEditVm>().ReverseMap();
+        CreateMap<AuthorDto, PagesAuthors.AuthorCreateOrEditVm>().ReverseMap();
     }
     
     private void CreateMapForBook()
     {
-        CreateMap<BookDto, Books_DeleteModel.BookDeleteVm>().ReverseMap();  
+        // CreateMap<BookDto, Books_DeleteModel.BookDeleteVm>().ReverseMap();  
         CreateMap<BookDto, Books_IndexModel.BookVm>().ReverseMap();  
-        CreateMap<BookEditDto, Books_EditModel.BookEditVm>().ReverseMap();
-        CreateMap<BookCreateDto, Books_CreateModel.BookCreateVm>().ReverseMap();
-        CreateMap<BookDto, Books_EditModel.BookEditVm>().ReverseMap(); 
+        CreateMap<BookEditDto, Books_EditModel.BookCreateOrEditVm>().ReverseMap();
+        CreateMap<BookCreateDto, Books_CreateModel.BookCreateOrEditVm>().ReverseMap();
+        CreateMap<BookDto, Books_EditModel.BookCreateOrEditVm>().ReverseMap(); 
     }
     
     private void CreateMapForCategory()
     {
-        CreateMap<CategoryDto, Categories_CreateModel.CategoryVm>().ReverseMap();
+        CreateMap<CategoryDto, Categories_CreateOrEditModel.CategoryCreateOrEditVm>().ReverseMap();
         CreateMap<CategoryDto, Categories_IndexModel.CategoryVm>().ReverseMap();
-        CreateMap<CategoryDto, Categories_EditModel.CategoryVm>().ReverseMap();
-        CreateMap<CategoryDto, Categories_DeleteModel.CategoryVm>().ReverseMap();
+        // CreateMap<CategoryDto, Categories_DeleteModel.CategoryVm>().ReverseMap();
     }
     
     private void CreateMapForLoan()
@@ -78,11 +79,11 @@ public class LibraryModuleAutoMapperProfile : Profile
     
     private void CreateMapForMember()
     {
-        CreateMap<MemberDto, Members_DeleteModel.MemberVm>().ReverseMap();
-        CreateMap<MemberCreateDto, Members_CreateModel.MemberCreateVm>().ReverseMap();
+        // CreateMap<MemberDto, Members_DeleteModel.MemberVm>().ReverseMap();
+        CreateMap<MemberCreateDto, Members_CreateOrEditModel.MemberCreateOrEditVm>().ReverseMap();
         CreateMap<MemberBorrowedBooksDto, BorrowedBooksModel.MemberBorrowedBooksVm>().ReverseMap();
         CreateMap<MemberDto, Areas.Library.Pages.Members.IndexModel.MemberVm>().ReverseMap();
-        CreateMap<MemberDto, Areas.Library.Pages.Members.EditModel.MemberVm>().ReverseMap();
+        CreateMap<MemberDto,Members_CreateOrEditModel.MemberCreateOrEditVm>().ReverseMap();
     }
     
     private void CreateMapForMemberPage()
@@ -92,10 +93,9 @@ public class LibraryModuleAutoMapperProfile : Profile
     
     private void CreateMapForPublisher()
     {
-        CreateMap<PublisherDto, Publishers_CreateModel.PublisherVm>().ReverseMap();
+        CreateMap<PublisherDto, Publishers_Model.PublisherCreateOrEditVm>().ReverseMap();
         CreateMap<PublisherDto, Areas.Library.Pages.Publishers.IndexModel.PublisherVm>().ReverseMap();
-        CreateMap<PublisherDto, Areas.Library.Pages.Publishers.EditModel.PublisherVm>().ReverseMap();
-        CreateMap<PublisherDto, Areas.Library.Pages.Publishers.DeleteModel.PublisherVm>().ReverseMap();
+        // CreateMap<PublisherDto, Areas.Library.Pages.Publishers.DeleteModel.PublisherVm>().ReverseMap();
 
 
     }

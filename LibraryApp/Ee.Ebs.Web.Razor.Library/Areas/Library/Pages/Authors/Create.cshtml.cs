@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -10,20 +9,19 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors;
 public class CreateModel : PageModel
 {
     private readonly IAuthorAppService _authorAppService;
-    private readonly IMapper _objectMapper;
+    private readonly IMapper _mapper;
 
-    [BindProperty] 
-    public AuthorCreateVm Vm { get; set; }
-
-    public CreateModel(IAuthorAppService authorAppService, IMapper objectMapper)
+    public CreateModel(IAuthorAppService authorAppService, IMapper mapper)
     {
         _authorAppService = authorAppService;
-        _objectMapper = objectMapper;
+        _mapper = mapper;
     }
 
-    public IActionResult OnGet()
+    [BindProperty] public AuthorCreateOrEditVm Vm { get; set; }
+
+    public IActionResult OnGet(int? id)
     {
-        Vm = new AuthorCreateVm();
+        Vm = new AuthorCreateOrEditVm();
 
         return Page();
     }
@@ -34,12 +32,11 @@ public class CreateModel : PageModel
         {
             return Page();
         }
-
         try
         {
-            var authorDto = _objectMapper.Map<AuthorCreateDto>(Vm);
-            _authorAppService.Insert(authorDto);
-            
+            var createAuthorDto = _mapper.Map<AuthorCreateDto>(Vm);
+            _authorAppService.Insert(createAuthorDto);
+
             return RedirectToPage("./Index");
         }
         catch (InvalidOperationException ex)
@@ -47,15 +44,5 @@ public class CreateModel : PageModel
             ModelState.AddModelError(string.Empty, ex.Message);
             return Page();
         }
-    }
-
-    public class AuthorCreateVm
-    {
-        [Required]
-        public string FirstName { get; set; }
-        
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
     }
 }

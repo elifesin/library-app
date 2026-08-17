@@ -28,13 +28,19 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors
             return Page();
         }
         
+        [HttpPost]
+        public IActionResult OnPostDelete(int id)
+        {
+            _authorAppService.Delete(id); 
+            
+            return RedirectToPage();
+        }
+        
         public class AuthorVm
         {
             public int Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-
-            public bool IsActive { get; set; } = true;
             public string FullName => $"{FirstName} {LastName}";
         }
     }

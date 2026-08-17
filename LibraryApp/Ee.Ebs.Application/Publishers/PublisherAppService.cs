@@ -43,11 +43,13 @@ public class PublisherAppService : IPublisherAppService
         _publisherRepository.Insert(publisherEntity);
     }
 
-    public void Update(PublisherDto publisher)
+    public void Update(int id, PublisherDto dto)
     {
-        var publisherEntity = _mapper.Map<Publisher>(publisher);
-        publisherEntity.IsActive = true;
-        _publisherRepository.Update(publisherEntity);
+        var publisher = _publisherRepository.GetById(id);
+        
+        _mapper.Map(dto, publisher);
+       
+        _publisherRepository.Update(publisher);
     }
 
     public void Delete(int id)

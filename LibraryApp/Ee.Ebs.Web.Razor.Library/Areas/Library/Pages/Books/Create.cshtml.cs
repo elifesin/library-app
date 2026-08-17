@@ -36,7 +36,7 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
         }
 
         [BindProperty]
-        public BookCreateVm Vm { get; set; } = new();
+        public BookCreateOrEditVm Vm { get; set; } = new();
 
         public List<AuthorDto> Authors { get; set; } = new();
         public List<CategoryDto> Categories { get; set; } = new();
@@ -44,11 +44,16 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
 
         public void OnGet()
         {
+            Vm.Authors = _authorAppService.GetAll(); 
+            Vm.Categories = _categoryAppService.GetAll();
+            Vm.Publishers = _publisherAppService.GetAll();
+
             LoadData();
         }
 
         public IActionResult OnPost()
         {
+            
             if (!ModelState.IsValid)
             {
                 LoadData();
@@ -74,20 +79,6 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books
             Authors = _authorAppService.GetAll().ToList();
             Categories = _categoryAppService.GetAll().ToList();
             Publishers = _publisherAppService.GetAll().ToList();
-        }
-
-        public class BookCreateVm
-        {
-            [Required(ErrorMessage = "Yazar boş olamaz")]
-            public int? AuthorID { get; set; }
-            [Required]
-            [MaxLength(100)]
-            public string Title { get; set; }
-            [Required]
-            public int ? PublishYear { get; set; }
-            public int ? CategoryID { get; set; } 
-            public int ? PublisherId { get; set; }
-            public bool IsBorrowed { get; set; }
         }
     }
 }

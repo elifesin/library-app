@@ -27,6 +27,14 @@ public class IndexModel : PageModel
 
         return Page();
     }
+
+    [HttpPost]
+    public IActionResult OnPostDelete(int id)
+    {
+        _publisherAppService.Delete(id);
+        
+        return RedirectToPage();
+    }
     
     public class PublisherVm
     {

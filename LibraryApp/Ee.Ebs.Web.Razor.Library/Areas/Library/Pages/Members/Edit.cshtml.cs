@@ -3,6 +3,7 @@ using AutoMapper;
 using Ee.Ebs.Application.Contracts.Loans;
 using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Contracts.Members.DTOs;
+using Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,22 +12,23 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members;
 public class EditModel : PageModel
 {
     private readonly IMemberAppService _memberAppService;
-    private readonly ILoanAppService _loanAppService;
     private readonly IMapper _mapper;
 
-    public EditModel(IMemberAppService memberAppService, ILoanAppService loanAppService, IMapper mapper)
+    public EditModel(IMemberAppService memberAppService, IMapper mapper)
     {
         _memberAppService = memberAppService;
-        _loanAppService = loanAppService;
         _mapper = mapper;
     }
+
+    public int ID { get; set; }
     
     [BindProperty]
-    public MemberVm Vm { get; set; }
+    public MemberCreateOrEditVm Vm { get; set; }
     
     [HttpGet]
     public IActionResult OnGet(int id)
     {
+        ID = id;
         var memberDto = _memberAppService.GetById(id);
 
         if (memberDto == null)
@@ -34,11 +36,11 @@ public class EditModel : PageModel
             return NotFound();
         }
         
-        Vm = _mapper.Map<MemberVm>(memberDto);
+        Vm = _mapper.Map<MemberCreateOrEditVm>(memberDto);
         return Page();
     }
     
-    public IActionResult OnPost()
+    public IActionResult OnPost(int id)
     {
         if (!ModelState.IsValid)
         {
@@ -46,23 +48,10 @@ public class EditModel : PageModel
         }
 
         var memberDto = _mapper.Map<MemberDto>(Vm);
-        _memberAppService.Update(memberDto);
+        memberDto.ID = id;
+        
+        _memberAppService.Update(id, memberDto);
 
         return RedirectToPage("./Index");
-    }
-    
-    public class MemberVm
-    {
-        public int ID { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
-        
-        public string FullName => $"{FirstName} {LastName}";
-
-        public bool IsActive { get; set; }
     }
 }

@@ -23,7 +23,11 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation()
-    .AddApplicationPart(typeof(Ee.Ebs.Web.Razor.Library.LibraryModule).Assembly);
+    .AddApplicationPart(typeof(LibraryModule).Assembly);
+
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(cfg => {},
     typeof(LibraryModule),
@@ -40,11 +44,15 @@ if (!app.Environment.IsDevelopment())
 else
 {
     app.UseDeveloperExceptionPage();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseStaticFiles();
 app.UseRouting();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

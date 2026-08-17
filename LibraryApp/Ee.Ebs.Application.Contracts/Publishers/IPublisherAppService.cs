@@ -7,6 +7,6 @@ public interface IPublisherAppService
     public List<PublisherDto> GetAll();
     PublisherDto GetById(int id);
     void Insert(PublisherDto dto);
-    void Update(PublisherDto dto);  
+    void Update(int id, PublisherDto dto);  
     void Delete(int id);
 }

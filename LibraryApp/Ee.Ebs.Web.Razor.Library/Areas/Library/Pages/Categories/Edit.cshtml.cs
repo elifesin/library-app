@@ -12,8 +12,9 @@ public class EditModel : PageModel
     private readonly ICategoryAppService _categoryAppService;
     private readonly IMapper _mapper;
 
-    [BindProperty]
-    public CategoryVm Vm { get; set; }
+    public int Id { get; set; }
+    
+    [BindProperty] public CategoryCreateOrEditVm Vm { get; set; }
     
     public EditModel(IMapper mapper, ICategoryAppService categoryAppService)
     {
@@ -24,20 +25,21 @@ public class EditModel : PageModel
     [HttpGet]
     public IActionResult OnGet(int id)
     {
+        Id = id;
         var categoryDto =  _categoryAppService.GetById(id);
 
         if (categoryDto == null)
         {
             return NotFound();
         }
-        Vm = _mapper.Map<CategoryVm>(categoryDto);
+        Vm = _mapper.Map<CategoryCreateOrEditVm>(categoryDto);
         
         
         return Page();
     }
 
     [HttpPost]
-    public IActionResult OnPost()
+    public IActionResult OnPost(int id)
     {
         if (!ModelState.IsValid)
         {
@@ -45,17 +47,10 @@ public class EditModel : PageModel
         }
         
         var categoryDto = _mapper.Map<CategoryDto>(Vm);
-        _categoryAppService.Update(categoryDto);
+        categoryDto.Id = id;
+        
+        _categoryAppService.Update(id, categoryDto);
         
         return RedirectToPage("./Index");
-    }
-    
-    public class CategoryVm
-    {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string CategoryName { get; set; }
-        public bool IsActive { get; set; }
     }
 }

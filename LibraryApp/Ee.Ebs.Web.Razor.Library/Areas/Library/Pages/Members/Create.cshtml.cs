@@ -2,6 +2,7 @@
 using AutoMapper;
 using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Contracts.Members.DTOs;
+using Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,11 +20,11 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
-    public MemberCreateVm Vm { get; set; }
+    public MemberCreateOrEditVm Vm { get; set; }
 
-    public IActionResult OnGet()
+    public IActionResult OnGet(int? id)
     {
-        Vm = new MemberCreateVm();
+        Vm = new MemberCreateOrEditVm();
     
         return Page();
     }
@@ -34,7 +35,6 @@ public class CreateModel : PageModel
         {
             return Page();
         }
-
         try
         {
             var memberDto = _objectMapper.Map<MemberCreateDto>(Vm);
@@ -48,15 +48,5 @@ public class CreateModel : PageModel
             ModelState.AddModelError(string.Empty, ex.Message);
             return Page();
         }
-    }
-
-    public class MemberCreateVm
-    {
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
     }
 }

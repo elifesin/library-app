@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -10,54 +9,45 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors;
 public class EditModel : PageModel
 {
     private readonly IAuthorAppService _authorAppService;
-    private  readonly IMapper _mapper;
-    
-    [BindProperty]
-    public AuthorEditVm Vm { get; set; }
-    
+    private readonly IMapper _mapper;
+
     public EditModel(IAuthorAppService authorAppService, IMapper mapper)
     {
         _authorAppService = authorAppService;
         _mapper = mapper;
     }
-    
-    [HttpGet]
+
+    public int Id { get; set; }
+
+    [BindProperty] public AuthorCreateOrEditVm Vm { get; set; }
+
     public IActionResult OnGet(int id)
     {
-        var authorDto = _authorAppService.GetById(id);
- 
-        if (authorDto == null)
+        Id = id;
+        
+        var author = _authorAppService.GetById(id);
+        if (author == null)
         {
             return NotFound();
         }
- 
-        Vm = _mapper.Map<AuthorEditVm>(authorDto);
-        return Page(); 
+        
+        Vm = _mapper.Map<AuthorCreateOrEditVm>(author);
+
+        return Page();
     }
 
-
-    [HttpPost]
-    public IActionResult OnPost()
+    public IActionResult OnPost(int id)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
- 
-        var authorDto = _mapper.Map<AuthorEditDto>(Vm);
-        _authorAppService.Update(authorDto);
+
+        var updateAuthorDto = _mapper.Map<AuthorEditDto>(Vm);
+        updateAuthorDto.Id = id;
         
+        _authorAppService.Update(updateAuthorDto);
+
         return RedirectToPage("./Index");
-    }
-    
-    public class AuthorEditVm
-    {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
     }
 }

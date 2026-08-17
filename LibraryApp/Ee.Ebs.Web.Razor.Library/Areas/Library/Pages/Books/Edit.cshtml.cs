@@ -35,16 +35,14 @@ public class EditModel : PageModel
         _objectMapper = objectMapper;
     }
 
-    [BindProperty]
-    public BookEditVm Vm { get; set; } = new();
-
-    public List<AuthorDto> Authors { get; set; } = new();
-    public List<CategoryDto> Categories { get; set; } = new();
-    public List<PublisherDto> Publishers { get; set; } = new();
+    public int Id { get; set; }
+    
+    [BindProperty] public BookCreateOrEditVm Vm { get; set; }
     
     [HttpGet]
     public IActionResult OnGet(int id)
     {
+        Id = id;
         var bookDto = _bookAppService.GetById(id);
 
         if (bookDto == null)
@@ -52,14 +50,14 @@ public class EditModel : PageModel
             return NotFound(); 
         }
         
-        Vm = _objectMapper.Map<BookEditVm>(bookDto);
+        Vm = _objectMapper.Map<BookCreateOrEditVm>(bookDto);
 
         LoadData();
             
         return Page();
     }
     
-    public IActionResult OnPost()
+    public IActionResult OnPost(int id)
     {
         if (!ModelState.IsValid)
         {  
@@ -68,28 +66,17 @@ public class EditModel : PageModel
         }
         
         var bookDto = _objectMapper.Map<BookEditDto>(Vm); 
-            
+        bookDto.Id = id;    
+        
         _bookAppService.Update(bookDto);
-
+        
         return RedirectToPage("./Index");
     }
     
     private void LoadData()
     {
-        Authors = _authorAppService.GetAll().ToList();
-        Categories = _categoryAppService.GetAll().ToList();
-        Publishers = _publisherAppService.GetAll().ToList();
-    }
-    public class BookEditVm
-    {
-        public int Id { get; set; }
-        public int AuthorID { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string Title { get; set; }
-        public int ? PublishYear { get; set; }
-        public bool IsBorrowed { get; set; }
-        public int ? PublisherId { get; set; }
-        public int ? CategoryID { get; set; }
+        Vm.Authors = _authorAppService.GetAll().ToList();
+        Vm.Categories = _categoryAppService.GetAll().ToList();
+        Vm.Publishers = _publisherAppService.GetAll().ToList();
     }
 }
