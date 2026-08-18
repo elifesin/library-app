@@ -68,7 +68,7 @@ public class EditModel : PageModel
         var bookDto = _objectMapper.Map<BookEditDto>(Vm); 
         bookDto.Id = id;    
         
-        _bookAppService.Update(bookDto);
+        _bookAppService.Update(id, bookDto);
         
         return RedirectToPage("./Index");
     }

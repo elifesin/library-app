@@ -47,10 +47,10 @@ public class BookAppService : IBookAppService
         _bookRepository.Insert(bookEntity);
     }
     
-    public void Update(BookEditDto dto)
+    public void Update(int id, BookEditDto dto)
     {
-        var bookEntity = _mapper.Map<Book>(dto);
-        bookEntity.IsActive = true; 
+        var bookEntity = _bookRepository.GetById(id);
+        _mapper.Map(dto, bookEntity);
         _bookRepository.Update(bookEntity);
     }
     

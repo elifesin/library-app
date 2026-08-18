@@ -7,7 +7,7 @@ public interface IBookAppService
     List<BookDto>  GetAll();
     BookDto GetById(int id);
     void Insert(BookCreateDto book);
-    void Update(BookEditDto book);
+    void Update(int id, BookEditDto book);
     void Delete(int id);
     List<BookDto> GetAvailableBooks();
     List<BookDto> GetBooksByCategory(int categoryId);

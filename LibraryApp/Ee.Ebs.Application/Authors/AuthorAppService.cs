@@ -43,9 +43,10 @@ public class AuthorAppService : IAuthorAppService
         _authorRepository.Insert(authorEntity);
     }
 
-    public void Update(AuthorEditDto dto)
+    public void Update(int id, AuthorEditDto dto)
     {
-        var authorEntity = _mapper.Map<Author>(dto);
+        var authorEntity = _authorRepository.GetById(id);
+        _mapper.Map(dto, authorEntity);
         _authorRepository.Update(authorEntity);
     }
 

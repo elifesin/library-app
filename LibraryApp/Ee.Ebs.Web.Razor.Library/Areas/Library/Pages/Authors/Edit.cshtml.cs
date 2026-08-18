@@ -43,10 +43,10 @@ public class EditModel : PageModel
             return Page();
         }
 
-        var updateAuthorDto = _mapper.Map<AuthorEditDto>(Vm);
-        updateAuthorDto.Id = id;
+        var dto = _mapper.Map<AuthorEditDto>(Vm);
+        dto.Id = id;
         
-        _authorAppService.Update(updateAuthorDto);
+        _authorAppService.Update(id, dto);
 
         return RedirectToPage("./Index");
     }

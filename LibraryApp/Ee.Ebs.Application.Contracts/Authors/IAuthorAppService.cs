@@ -7,6 +7,6 @@ public interface IAuthorAppService
     List<AuthorDto> GetAll();
     AuthorDto GetById(int id);
     void Insert(AuthorCreateDto dto);
-    void Update(AuthorEditDto dto);
+    void Update(int id, AuthorEditDto dto);
     void Delete(int id);
 }
