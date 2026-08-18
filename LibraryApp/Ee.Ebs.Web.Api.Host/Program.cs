@@ -1,30 +1,18 @@
 using Ee.Ebs.Application;
 using Ee.Ebs.Data.EfCore;
 using Ee.Ebs.Data.EfCore.Contexts;
-using Ee.Ebs.Web.Razor.Laboratory;
-using Ee.Ebs.Web.Razor.Library;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddApplicationModuleServices()
-    .AddLibraryModuleServices();
-
-builder.Services.AddAutoMapper(cfg => { }, 
-    typeof(LibraryModule),
-    typeof(LaboratoryModuleAutoMapperProfile)
-);
+    .AddApplicationModuleServices();
 
 //builder.Services.AddDataLayerServices();
 builder.Services.AddDataEFLayerServices();
 
 builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddRazorPages()
-    .AddRazorRuntimeCompilation()
-    .AddApplicationPart(typeof(LibraryModule).Assembly);
 
 builder.Services.AddControllers();
 
@@ -49,6 +37,5 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapControllers();
-app.MapRazorPages();
 
 app.Run();

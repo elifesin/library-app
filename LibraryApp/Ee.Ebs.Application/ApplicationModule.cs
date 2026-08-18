@@ -28,6 +28,10 @@ public static class ApplicationModule
         services.AddScoped<ILoanAppService, LoanAppService>();
         
         services.AddValidatorsFromAssemblyContaining<AuthorEditValidator>();
+        
+        services.AddAutoMapper(cfg => { }, 
+            typeof(ApplicationModule)  
+        );
 
         
         return services;
