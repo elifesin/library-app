@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Kayıtlı Yazar Listesi</h3>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th style="width: 100px">İşlemler</th>
+          <th>Ad</th>
+          <th>Soyad</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (author of authors(); track author.id) {
+          <tr>
+            <td>
+              <div class="fancy-action-container">                
+                <button type="button" class="fancy-action-btn" (click)="toggleDropdown(author.id)">
+                  İşlemler
+                  <i class="fas fa-caret-down float-right mt-1"></i>
+                </button>
+
+                <div class="fancy-action-list" [class.show]="activeDropdownId === author.id">
+                  
+                  <a class="fancy-action-item text-primary" [routerLink]="['/authors/edit', author.id]">
+                    <i class="fas fa-edit mr-2"></i> Güncelle
+                  </a>
+                  
+                  <button type="button" class="fancy-action-item item-btn text-danger" (click)="openDeleteModal(author.id)">
+                    <i class="fas fa-trash mr-2"></i> Sil
+                  </button>
+                  
+                </div>
+                
+              </div>
+            </td>
+            <td>{{ author.firstName}}</td>
+            <td>{{ author.lastName }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="text-center text-muted">Henüz kayıtlı yazar bulunmuyor.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@if (showDeleteModal) {
+  <div class="modal-backdrop fade show"></div>
+  
+  <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i> Silme Onayı</h5>
+          <button type="button" class="close text-white" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="mb-0">Bu yazarı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">İptal</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Evet, Sil</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+}

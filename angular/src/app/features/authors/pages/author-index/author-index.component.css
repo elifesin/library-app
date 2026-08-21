@@ -1,0 +1,69 @@
+.fancy-action-container {
+  position: relative;
+  width: 120px; /* Buton genişliği */
+  font-family: sans-serif;
+}
+
+/* İşlemler Butonu */
+.fancy-action-btn {
+  width: 100%;
+  text-align: left;
+  background: rgb(67, 144, 244);
+  border: 1px solid #ced4da; /* AdminLTE gri kenarlık */
+  color: #fbfbfb;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.fancy-action-btn:hover {
+  border-color: #80bdff; /* Üzerine gelince hafif mavi parlama */
+}
+
+.fancy-action-btn:focus {
+  outline: none;
+}
+
+/* Açılır Menü Gövdesi */
+.fancy-action-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0; /* Tablodan sağa taşmasını engeller */
+  width: 140px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 4px 0;
+  z-index: 1050; /* Tablo çizgilerinin üstünde kalması için */
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.fancy-action-list.show {
+  display: block;
+}
+
+/* Link ve Buton için ortak satır tasarımı */
+.fancy-action-item {
+  display: block;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Sil butonu bir <button> olduğu için standart tarayıcı stillerini sıfırlıyoruz */
+.fancy-action-item.item-btn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+}
+
+.fancy-action-item:hover {
+  background-color: #f8f9fa;
+  text-decoration: none;
+}

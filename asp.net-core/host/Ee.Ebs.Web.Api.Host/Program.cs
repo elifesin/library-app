@@ -22,6 +22,17 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // Angular'ın adresi
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 
@@ -39,7 +50,7 @@ else
 
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseCors("AllowAngularApp");
 app.MapControllers();
 
 app.Run();

@@ -1,16 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './shared/layout/header/header.component';
+import { SidebarComponent } from './shared/layout/sidebar/sidebar.component';
+import { FooterComponent } from './shared/layout/footer/footer.component';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  template: `
-    <h1>Hello, {{ title() }}</h1>
-
-    <router-outlet />
-  `,
-  styles: [],
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent], 
+  templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('ng-ebs-ui');
+export class AppComponent {
+  
+  title = 'angular';
 }

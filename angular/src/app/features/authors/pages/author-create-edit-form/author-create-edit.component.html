@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">{{ isEditMode ? 'Yazar Güncelle' : 'Yeni Yazar Ekle' }}</h3>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label class="form-label">Yazar Adı</label>
+            <input formControlName="firstName" class="form-control" />
+            @if (form.get('firstName')?.invalid && form.get('firstName')?.touched) {
+              <span class="text-danger">Yazar adı zorunludur.</span>
+            }
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="mb-3">
+            <label class="form-label">Yazar Soyadı</label>
+            <input formControlName="lastName" class="form-control" />
+            @if (form.get('lastName')?.invalid && form.get('lastName')?.touched) {
+              <span class="text-danger">Yazar soyadı zorunludur.</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary">
+          {{ isEditMode ? 'Güncelle' : 'Kaydet' }}
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="cancel()">
+          İptal
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

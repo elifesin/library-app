@@ -1,0 +1,205 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a routerLink="/" class="brand-link">
+        <i class="fas fa-university ml-3 mr-2"></i>
+        <span class="brand-text font-weight-light" style="font-size: 16px;"><b>EBS - Eğitim Bilgi Sistemi</b></span>
+    </a>
+
+    <div class="sidebar">
+
+        <div class="form-inline mt-3">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-book-reader"></i>
+                        <p>
+                            Kütüphane Sistemi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item" [class.menu-open]="menuStates['authors']">
+                            <a (click)="toggleMenu('authors')" class="nav-link" style="cursor: pointer;">
+                                <i class="nav-icon fas fa-pen"></i>
+                                <p>Yazar İşlemleri <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview" [style.display]="menuStates['authors'] ? 'block' : 'none'">
+                                <li class="nav-item">
+                                    <a routerLink="/authors" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yazarları Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/authors/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Yazar Ekle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Kitap İşlemleri
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-book-open"></i>
+                                <p>
+                                    Kitap İşlemleri
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a routerLink="/books" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kitapları Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/books/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Kitap Ekle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <!-- Üye İşlemleri -->
+                        <!-- <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Üye İşlemleri
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a routerLink="/members" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Üyeleri Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/members/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Üye Ekle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <!-- Kategori İşlemleri -->
+                        <!-- <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-table"></i>
+                                <p>
+                                    Kategori İşlemleri
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategorileri Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/categories/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Kategori Ekle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <!-- Yayınevi İşlemleri -->
+                        <!-- <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Yayınevi İşlemleri
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a routerLink="/publishers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yayınevlerini Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/publishers/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Yayınevi Ekle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <!-- Ödünç İşlemleri -->
+                        <!-- <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-exchange-alt"></i>
+                                <p>
+                                    Ödünç İşlemleri
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a routerLink="/loans/create" routerLinkActive="active" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Kitap Ödünç Al</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ödünçleri Listele/İade Al</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                    </ul>
+                </li>
+
+                <!-- LABORATUVAR SİSTEMİ
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-laptop-code"></i>
+                        <p>
+                            Laboratuvar Sistemi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a routerLink="/laboratory/books" routerLinkActive="active" class="nav-link">
+                                <i class="nav-icon fas fa-book-open"></i>
+                                <p>Kaynak Kitaplar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+
+            </ul>
+        </nav>
+    </div>
+</aside>

@@ -1,0 +1,24 @@
+<div class="wrapper">
+  
+  <!-- Üst Menü -->
+  <app-header></app-header>
+
+  <!-- Sol Menü -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Dinamik İçerik (Features) Buraya Gelecek -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="container-fluid pt-3">
+        
+        <!-- Yönlendirilen sayfalar burada render edilecek -->
+        <router-outlet></router-outlet>
+        
+      </div>
+    </section>
+  </div>
+
+  <!-- Alt Bilgi -->
+  <app-footer></app-footer>
+
+</div>
