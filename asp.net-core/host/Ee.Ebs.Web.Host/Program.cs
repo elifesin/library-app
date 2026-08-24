@@ -30,6 +30,17 @@ builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation()
     .AddApplicationPart(typeof(LibraryModule).Assembly);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMyFrontend", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200") 
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
@@ -52,7 +63,11 @@ else
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors("AllowMyFrontend");
+
+
 app.MapControllers();
 app.MapRazorPages();
+
 
 app.Run();

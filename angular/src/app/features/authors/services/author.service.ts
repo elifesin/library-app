@@ -16,7 +16,7 @@ export class AuthorService {
   getAll(): Observable<AuthorDto[]> {
     return this.http.get<AuthorDto[]>(this.apiUrl);
   }
-
+ 
   getById(id: number): Observable<AuthorDto> {
     return this.http.get<AuthorDto>(`${this.apiUrl}/${id}`);
   }

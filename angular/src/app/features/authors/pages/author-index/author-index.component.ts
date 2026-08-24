@@ -28,9 +28,9 @@ export class AuthorListComponent implements OnInit {
 
   toggleDropdown(id: number): void {
     if (this.activeDropdownId === id) {
-      this.activeDropdownId = null; // Zaten açıksa kapat
+      this.activeDropdownId = null; 
     } else {
-      this.activeDropdownId = id; // Değilse sadece bunu aç
+      this.activeDropdownId = id;
     }
   }
 
@@ -63,7 +63,7 @@ export class AuthorListComponent implements OnInit {
   loadAuthors(): void {
     this.authorService.getAll().subscribe({
       next: (data: AuthorDto[]) => {
-        this.authors.set(data); // atama yerine .set() kullanıyoruz
+        this.authors.set(data);
       },
       error: (err) => {
         console.error('Yazarlar çekilirken bir hata oluştu:', err);

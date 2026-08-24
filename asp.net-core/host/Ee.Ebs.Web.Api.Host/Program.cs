@@ -24,13 +24,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200") // Angular'ın adresi
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowMyFrontend", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200",  // Angular
+                "http://localhost:5173"   // Vue
+            ) 
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
@@ -50,7 +52,7 @@ else
 
 app.UseStaticFiles();
 app.UseRouting();
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowMyFrontend");
 app.MapControllers();
 
 app.Run();
