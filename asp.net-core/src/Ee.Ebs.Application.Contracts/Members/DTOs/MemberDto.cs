@@ -6,7 +6,7 @@ public class MemberDto
     public string FirstName { get; set; }
     public string LastName { get; set; }
         
-    public string FullName => $"{FirstName} {LastName}";
+    public string MemberFullName => $"{FirstName} {LastName}";
 
     public bool IsActive { get; set; }
 }

@@ -34,7 +34,7 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Loans
             {
                 Id = loanDto.Id,
                 BookName = loanDto.BookName, 
-                FullName = loanDto.FullName, 
+                FullName = loanDto.MemberFullName, 
                 DueDate = loanDto.DueDate
             };
 

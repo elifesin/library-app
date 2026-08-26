@@ -29,7 +29,10 @@ namespace Ee.Ebs.Data.EfCore.Loans
 
         public Loan GetById(int id)
         {
-            return _context.Loans.FirstOrDefault(l => l.Id == id);
+            return _context.Loans
+                .Include(b => b.Book)
+                .Include(b => b.Member)
+                .FirstOrDefault(l => l.Id == id);;
         }
 
         public void Insert(Loan loan)
@@ -44,7 +47,7 @@ namespace Ee.Ebs.Data.EfCore.Loans
             // INNER JOIN ve WHERE l.MemberID = @MemberID 
             return _context.Loans
                 .Include(l => l.Book)
-                .ThenInclude(b => b.Author)
+                .Include(l => l.Member)
                 .Where(l => l.MemberID == memberId)
                 .ToList();
         }

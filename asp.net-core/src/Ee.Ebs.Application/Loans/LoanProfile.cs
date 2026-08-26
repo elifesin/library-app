@@ -17,7 +17,7 @@ public class LoanProfile : Profile
             .ForMember(dest => dest.BookName, opt => opt.MapFrom(src => src.Book.Title)) // veya src.Book.Title
             
             // LoanVm içerisindeki FullName için Member nesnesinden ilgili proplar birleştirilir
-            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Member.FirstName + " " + src.Member.LastName)).ReverseMap();
+            .ForMember(dest => dest.MemberFullName, opt => opt.MapFrom(src => src.Member.FirstName + " " + src.Member.LastName)).ReverseMap();
         
     }
 }
