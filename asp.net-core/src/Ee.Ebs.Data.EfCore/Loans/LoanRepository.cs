@@ -39,13 +39,13 @@ namespace Ee.Ebs.Data.EfCore.Loans
             _context.SaveChanges();
         }
 
-        public List<Loan> GetLoansByMemberId(int id)
+        public List<Loan> GetLoansByMemberId(int memberId)
         {
             // INNER JOIN ve WHERE l.MemberID = @MemberID 
             return _context.Loans
                 .Include(l => l.Book)
                 .ThenInclude(b => b.Author)
-                .Where(l => l.MemberID == id)
+                .Where(l => l.MemberID == memberId)
                 .ToList();
         }
 

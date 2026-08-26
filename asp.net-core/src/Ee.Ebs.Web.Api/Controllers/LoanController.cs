@@ -28,16 +28,16 @@ public class LoanController : ControllerBase, ILoanAppService
         _loanAppService.Insert(dto);
     }
 
-    [HttpPost("{loanId}")]
+    [HttpPost("return/{loanId}")]
     public void ReturnBook(int loanId)
     {
         _loanAppService.ReturnBook(loanId);
     }
 
-    [HttpGet("{id}")]
-    public List<LoanDto> GetLoansByMemberId(int id)
+    [HttpGet("member/{memberId}")]
+    public List<LoanDto> GetLoansByMemberId(int memberId)
     {
-        return  _loanAppService.GetLoansByMemberId(id);
+        return  _loanAppService.GetLoansByMemberId(memberId);
     }
 
     [HttpGet("{id}")]

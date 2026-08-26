@@ -8,6 +8,6 @@ public interface ILoanAppService
     List<LoanDto> GetAll();
     void Insert(LoanCreateDto dto);
     void ReturnBook(int loanId);
-    List<LoanDto> GetLoansByMemberId(int id);
+    List<LoanDto> GetLoansByMemberId(int memberId);
     public LoanDto GetById(int id); 
 }

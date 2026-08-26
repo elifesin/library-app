@@ -29,12 +29,12 @@ namespace Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members
 
         public MemberBorrowedBooksVm Vm { get; set; } = new();
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int id, int memberId)
         {
             var memberDto = _memberAppService.GetById(id);
             if (memberDto == null) return NotFound();
 
-            var loanDtos = _loanAppService.GetLoansByMemberId(id); 
+            var loanDtos = _loanAppService.GetLoansByMemberId(memberId); 
 
             Vm = new MemberBorrowedBooksVm
             {

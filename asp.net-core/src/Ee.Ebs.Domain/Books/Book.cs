@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Ee.Ebs.Domain.Authors;
 using Ee.Ebs.Domain.Categories;
 using Ee.Ebs.Domain.Publishers;
+using Ee.Ebs.Domain.Shared.Books;
 
 namespace Ee.Ebs.Domain.Books;
 
@@ -11,6 +13,7 @@ public class Book
     public int Id { get; set; }
     public bool IsActive { get; set; }
     [Required] // Required keyword isn't enough just by itself. It should be initialized with constructor. Also be private set.
+    [MaxLength(BookConsts.TitleMaxLength)]
     public string Title { get; set; }
     public int PublishYear { get; set; }
     [NotMapped]
