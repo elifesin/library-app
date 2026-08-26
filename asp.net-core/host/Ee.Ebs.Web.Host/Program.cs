@@ -1,6 +1,7 @@
 using Ee.Ebs.Application;
 using Ee.Ebs.Data.EfCore;
 using Ee.Ebs.Data.EfCore.Contexts;
+using Ee.Ebs.Domain;
 using Ee.Ebs.Web.Razor.Laboratory;
 using Ee.Ebs.Web.Razor.Library;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplicationModuleServices()
-    .AddLibraryModuleServices();
+    .AddLibraryModuleServices()
+    .AddDomainModuleServices();
 
 builder.Services.AddAutoMapper(cfg => { }, 
     typeof(LibraryModule),

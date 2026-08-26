@@ -18,8 +18,12 @@ public class Loan
     public Member Member { get; set; }
     public bool IsReturned => ReturnDate.HasValue;
 
-    
-    private Loan() { }
+
+    private Loan()
+    {
+
+        var foo = new Book();
+    }
     
     public Loan(int bookId, int memberId, DateTime loanDate, DateTime dueDate)
     {

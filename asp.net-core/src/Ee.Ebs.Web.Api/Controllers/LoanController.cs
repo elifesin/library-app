@@ -34,7 +34,7 @@ public class LoanController : ControllerBase, ILoanAppService
         _loanAppService.ReturnBook(loanId);
     }
 
-    [HttpPost("{id}")]
+    [HttpGet("{id}")]
     public List<LoanDto> GetLoansByMemberId(int id)
     {
         return  _loanAppService.GetLoansByMemberId(id);

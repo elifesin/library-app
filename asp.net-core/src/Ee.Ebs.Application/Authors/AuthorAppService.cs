@@ -12,19 +12,22 @@ public class AuthorAppService : IAuthorAppService
 {
     private readonly IAuthorRepository _authorRepository;
     private readonly IMapper _mapper;
-    
-    public AuthorAppService(IAuthorRepository authorRepository, IMapper mapper)
+    private readonly AuthorDomainService _authorDomainService;
+
+    public AuthorAppService(IAuthorRepository authorRepository, IMapper mapper,
+        AuthorDomainService authorDomainService)
     {
         _authorRepository = authorRepository;
         _mapper = mapper;
+        _authorDomainService = authorDomainService;
     }
-    
+
     public List<AuthorDto> GetAll()
     {
         var authors = _authorRepository.GetAll();
         return _mapper.Map<List<AuthorDto>>(authors);
     }
-    
+
     public AuthorDto GetById(int id)
     {
         var author = _authorRepository.GetById(id);
@@ -33,16 +36,9 @@ public class AuthorAppService : IAuthorAppService
 
     public void Insert(AuthorCreateDto dto)
     {
-        bool ifExists = _authorRepository.GetAll().Any(a =>
-            a.FirstName.ToLower() == dto.FirstName.ToLower() &&
-            a.LastName.ToLower() == dto.LastName.ToLower());
+        var authorEntity = _authorDomainService.Create(dto.FirstName, dto.LastName);
+        // authorEntity.Gender = dto.Gender;
 
-        if (ifExists)
-        {
-            throw new InvalidOperationException("Yazar kayıtlı! ");
-        }
-        
-        var authorEntity = _mapper.Map<Author>(dto);
         _authorRepository.Insert(authorEntity);
     }
 
@@ -54,7 +50,7 @@ public class AuthorAppService : IAuthorAppService
     }
 
     public void Delete(int id)
-    { 
+    {
         _authorRepository.Delete(id);
     }
 }

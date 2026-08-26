@@ -8,6 +8,7 @@
     <Project Path="src/Ee.Ebs.Application/Ee.Ebs.Application.csproj" />
     <Project Path="src/Ee.Ebs.Data.Dapper/Ee.Ebs.Data.Dapper.csproj" />
     <Project Path="src/Ee.Ebs.Data.EfCore/Ee.Ebs.Data.EfCore.csproj" />
+    <Project Path="src/Ee.Ebs.Domain.Shared/Ee.Ebs.Domain.Shared.csproj" />
     <Project Path="src/Ee.Ebs.Domain/Ee.Ebs.Domain.csproj" />
     <Project Path="src/Ee.Ebs.Web.Api/Ee.Ebs.Web.Api.csproj" />
     <Project Path="src/Ee.Ebs.Web.Razor.Laboratory/Ee.Ebs.Web.Razor.Laboratory.csproj" />

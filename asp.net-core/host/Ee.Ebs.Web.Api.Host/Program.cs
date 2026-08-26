@@ -1,6 +1,8 @@
 using Ee.Ebs.Application;
 using Ee.Ebs.Data.EfCore;
 using Ee.Ebs.Data.EfCore.Contexts;
+using Ee.Ebs.Domain;
+using Ee.Ebs.Web.Api.ExceptionHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +12,8 @@ using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddApplicationModuleServices();
+    .AddApplicationModuleServices()
+    .AddDomainModuleServices();
 
 //builder.Services.AddDataLayerServices();
 builder.Services.AddDataEFLayerServices();
@@ -21,7 +24,8 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyFrontend", policy =>
@@ -54,5 +58,5 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("AllowMyFrontend");
 app.MapControllers();
-
+app.UseExceptionHandler();
 app.Run();

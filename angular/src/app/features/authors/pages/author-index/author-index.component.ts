@@ -17,7 +17,6 @@ export class AuthorListComponent implements OnInit {
 
   showDeleteModal: boolean = false;
   authorIdToDelete: number | null = null;
-
   activeDropdownId: number | null = null;
 
   constructor(private authorService: AuthorService) {}

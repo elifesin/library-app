@@ -52,7 +52,7 @@
                             </ul>
                         </li>
 
-                        <!-- Kitap İşlemleri
+                        <!-- Kitap İşlemleri -->
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book-open"></i>
@@ -75,20 +75,17 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li> -->
+                        </li>
 
                         <!-- Üye İşlemleri -->
-                        <!-- <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Üye İşlemleri
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                        <li class="nav-item" [class.menu-open]="menuStates['members']">
+                            <a (click)="toggleMenu('members')" class="nav-link" style="cursor: pointer;">
+                                    <i class="nav-icon fas fa-users"></i>
+                                <p>Üye İşlemleri <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" [style.display]="menuStates['members'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/members" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                    <a routerLink="/members" routerLinkActive="active" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Üyeleri Listele</p>
                                     </a>
@@ -100,20 +97,17 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li> -->
+                        </li>
 
                         <!-- Kategori İşlemleri -->
-                        <!-- <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item" [class.menu-open]="menuStates['categories']">
+                            <a (click)="toggleMenu('categories')" class="nav-link" style="cursor: pointer;">
                                 <i class="nav-icon fas fa-table"></i>
-                                <p>
-                                    Kategori İşlemleri
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p>Kategori İşlemleri <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" [style.display]="menuStates['categories'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                    <a routerLink="/categories" routerLinkActive="active" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Kategorileri Listele</p>
                                     </a>
@@ -125,20 +119,17 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li> -->
+                        </li>
 
                         <!-- Yayınevi İşlemleri -->
-                        <!-- <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item" [class.menu-open]="menuStates['publishers']">
+                            <a (click)="toggleMenu('publishers')" class="nav-link" style="cursor: pointer;">
                                 <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    Yayınevi İşlemleri
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p>Yayınevi İşlemleri <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" [style.display]="menuStates['publishers'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/publishers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                    <a routerLink="/publishers" routerLinkActive="active" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yayınevlerini Listele</p>
                                     </a>
@@ -150,10 +141,10 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li> -->
+                        </li>
 
                         <!-- Ödünç İşlemleri -->
-                        <!-- <li class="nav-item menu-open">
+                        <li class="nav-item menu-open">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-exchange-alt"></i>
                                 <p>
@@ -175,13 +166,13 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li> -->
+                        </li> 
 
                     </ul>
                 </li>
 
-                <!-- LABORATUVAR SİSTEMİ
-                <li class="nav-item">
+                
+                <li class="nav-item menu-open">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-laptop-code"></i>
                         <p>
@@ -197,7 +188,7 @@
                             </a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
 
             </ul>
         </nav>

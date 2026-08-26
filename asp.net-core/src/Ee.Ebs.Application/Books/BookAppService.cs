@@ -5,6 +5,7 @@ using System.Linq;
 using AutoMapper;
 using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
+using Ee.Ebs.Domain.Authors;
 using Ee.Ebs.Domain.Books;
 
 namespace Ee.Ebs.Application.Books;
@@ -13,6 +14,7 @@ public class BookAppService : IBookAppService
 {
     private readonly IBookRepository _bookRepository;
     private readonly IMapper _mapper;
+    private readonly AuthorDomainService _authorDomainService;
 
     public BookAppService(IBookRepository bookRepository, IMapper mapper)
     {
@@ -44,6 +46,12 @@ public class BookAppService : IBookAppService
         {
             throw new InvalidOperationException("Kayıtlı bir kitabı tekrar kaydedemezsiniz!");
         }
+        //  var firstName = dto.AuthorFullName.Split(' ').FirstOrDefault();
+        //  var lastName = dto.AuthorFullName.Split(' ').LastOrDefault();
+        //  
+        // var author =  _authorDomainService.Create(firstName, lastName);
+        // author.SetFirstName(firstName);
+        // author.SetLastName(lastName);
         
         var bookEntity = _mapper.Map<Book>(dto);
         bookEntity.IsActive = true; 

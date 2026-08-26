@@ -7,4 +7,6 @@ public class BookCreateDto
     public int PublishYear { get; set; }
     public int CategoryID { get; set; } 
     public int PublisherId { get; set; }
+
+    public string AuthorFullName { get; set; } // John Skeet
 }
