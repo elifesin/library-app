@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Ee.Ebs.Application.Contracts.Members;
+﻿using Ee.Ebs.Application.Contracts.Members;
 using Ee.Ebs.Application.Contracts.Members.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Members.Controller;
 
 [ApiController]
 [Route("api/members")]

@@ -1,1 +1,98 @@
-<p>book.create-edit.component works!</p>
+<div class="">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="m-0 font-weight-bold text-dark">{{ isEditMode ? 'Kitap Güncelle' : 'Yeni Kitap Ekle' }}</h3>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      
+      <div class="row">
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label">Kitap Adı</label>
+            <input formControlName="title" class="form-control" placeholder="Örn: 1984" />
+            @if (form.get('title')?.invalid && form.get('title')?.touched) {
+              <span class="text-danger"><small>Kitap adı zorunludur.</small></span>
+            }
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Basım Yılı</label>
+            <input formControlName="publishYear" type="number" class="form-control" />
+            @if (form.get('publishYear')?.invalid && form.get('publishYear')?.touched) {
+              <span class="text-danger"><small>Geçerli bir basım yılı giriniz.</small></span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Yazar</label>
+            <select formControlName="authorID" class="form-control custom-select">
+              <option [ngValue]="null" disabled>Lütfen yazar seçin</option>
+              @for (author of authors; track author.id) {
+                <option [value]="author.id">{{ author.firstName }} {{ author.lastName }}</option>
+              }
+            </select>
+            @if (form.get('authorID')?.invalid && form.get('authorID')?.touched) {
+              <span class="text-danger"><small>Yazar seçimi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Kategori</label>
+            <select formControlName="categoryID" class="form-control custom-select">
+              <option [ngValue]="null" disabled>Lütfen kategori seçin</option>
+              @for (category of categories; track category.id) {
+                <option [value]="category.id">{{ category.categoryName }}</option>
+              }
+            </select>
+            @if (form.get('categoryID')?.invalid && form.get('categoryID')?.touched) {
+              <span class="text-danger"><small>Kategori seçimi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Yayınevi</label>
+            <select formControlName="publisherId" class="form-control custom-select">
+              <option [ngValue]="null" disabled>Lütfen yayınevi seçin</option>
+              @for (publisher of publishers; track publisher.id) {
+                <option [value]="publisher.id">{{ publisher.publisherName }}</option>
+              }
+            </select>
+            @if (form.get('publisherId')?.invalid && form.get('publisherId')?.touched) {
+              <span class="text-danger"><small>Yayınevi seçimi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if (isEditMode) {
+        <div class="mb-3">
+          <div class="custom-control custom-checkbox">
+            <input formControlName="isBorrowed" type="checkbox" class="custom-control-input" id="isBorrowedCheck">
+            <label class="custom-control-label" for="isBorrowedCheck">Kitap Ödünç Verildi mi?</label>
+          </div>
+        </div>
+      }
+
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary bg-olive">
+          <i class="fas fa-save mr-2"></i> {{ isEditMode ? 'Güncelle' : 'Kaydet' }}
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="cancel()">
+          <i class="fas fa-times mr-2"></i> İptal
+        </button>
+      </div>
+      
+    </form>
+  </div>
+</div>

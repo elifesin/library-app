@@ -1,10 +1,14 @@
-<div class="card">
-  <div class="card-header">
-    <h3 class="card-title">Kayıtlı Yazar Listesi</h3>
+<div class="">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="m-0 font-weight-bold text-dark">Kayıtlı Yazar Listesi</h2>
+    
+    <a [routerLink]="['/authors/create']" class="btn bg-maroon text-white">
+      <i class="fas fa-plus mr-1"></i> Yeni Yazar Ekle
+    </a>
   </div>
 
   <div class="card-body">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
           <th style="width: 100px">İşlemler</th>
@@ -17,7 +21,7 @@
           <tr>
             <td>
               <div class="fancy-action-container">                
-                <button type="button" class="fancy-action-btn" (click)="toggleDropdown(author.id)">
+                <button type="button" class="fancy-action-btn bg-secondary" (click)="toggleDropdown(author.id)">
                   İşlemler
                   <i class="fas fa-caret-down float-right mt-1"></i>
                 </button>
@@ -71,7 +75,7 @@
           <button type="button" class="btn btn-secondary" (click)="closeModal()">İptal</button>
           <button type="button" class="btn btn-danger" (click)="confirmDelete()">Evet, Sil</button>
         </div>
-        
+          
       </div>
     </div>
   </div>

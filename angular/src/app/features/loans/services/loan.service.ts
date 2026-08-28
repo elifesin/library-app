@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoanCreateDto, LoanDto } from '../models/loan.dto';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoanService {
-    private api_url = 'http://localhost:5147/api/loans';
+    private api_url = `${environment.apiUrl}/api/loans`;
 
     constructor(private http: HttpClient){}
 
@@ -23,11 +24,11 @@ export class LoanService {
         return this.http.post<LoanDto>(this.api_url, loan);
     }
 
-    getLoansByMemberId(memberId: number): Observable<LoanDto>{
-        return this.http.get<LoanDto>(`${this.api_url}/${memberId}`);
+    getLoansByMemberId(memberId: number): Observable<LoanDto[]>{
+        return this.http.get<LoanDto[]>(`${this.api_url}/member/${memberId}`);
     }
 
-    returnBook(loanId: number): Observable<LoanDto>{
-        return this.http.post<LoanDto>(`${this.api_url}/${loanId}`);
+    returnBook(loanId: number): Observable<any>{
+        return this.http.post<any>(`${this.api_url}/return/${loanId}`, {});
     }
 }

@@ -20,8 +20,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                <li class="nav-item" [class.menu-open]="menuStates['library']">
+                    <a (click)="toggleMenu('library')" class="nav-link active bg-olive" style="cursor: pointer;">
                         <i class="nav-icon fas fa-book-reader"></i>
                         <p>
                             Kütüphane Sistemi
@@ -38,13 +38,13 @@
                             </a>
                             <ul class="nav nav-treeview" [style.display]="menuStates['authors'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/authors" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/authors" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yazarları Listele</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a routerLink="/authors/create" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/authors/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yeni Yazar Ekle</p>
                                     </a>
@@ -53,29 +53,27 @@
                         </li>
 
                         <!-- Kitap İşlemleri -->
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item" [class.menu-open]="menuStates['books']">
+                            <a (click)="toggleMenu('books')" class="nav-link" style="cursor: pointer;">
                                 <i class="nav-icon fas fa-book-open"></i>
-                                <p>
-                                    Kitap İşlemleri
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p>Kitap İşlemleri <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" [style.display]="menuStates['books'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/books" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                    <a routerLink="/books" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Kitapları Listele</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a routerLink="/books/create" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/books/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yeni Kitap Ekle</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+
 
                         <!-- Üye İşlemleri -->
                         <li class="nav-item" [class.menu-open]="menuStates['members']">
@@ -85,13 +83,13 @@
                             </a>
                             <ul class="nav nav-treeview" [style.display]="menuStates['members'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/members" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/members" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Üyeleri Listele</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a routerLink="/members/create" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/members/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yeni Üye Ekle</p>
                                     </a>
@@ -107,13 +105,13 @@
                             </a>
                             <ul class="nav nav-treeview" [style.display]="menuStates['categories'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/categories" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Kategorileri Listele</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a routerLink="/categories/create" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/categories/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yeni Kategori Ekle</p>
                                     </a>
@@ -129,13 +127,13 @@
                             </a>
                             <ul class="nav nav-treeview" [style.display]="menuStates['publishers'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/publishers" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/publishers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yayınevlerini Listele</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a routerLink="/publishers/create" routerLinkActive="active" class="nav-link">
+                                    <a routerLink="/publishers/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yeni Yayınevi Ekle</p>
                                     </a>
@@ -144,37 +142,34 @@
                         </li>
 
                         <!-- Ödünç İşlemleri -->
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item" [class.menu-open]="menuStates['loans']">
+                            <a (click)="toggleMenu('loans')" class="nav-link" style="cursor: pointer;">
                                 <i class="nav-icon fas fa-exchange-alt"></i>
-                                <p>
-                                    Ödünç İşlemleri
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p>Ödünç İşlemleri <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" [style.display]="menuStates['loans'] ? 'block' : 'none'">
                                 <li class="nav-item">
-                                    <a routerLink="/loans/create" routerLinkActive="active" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Yeni Kitap Ödünç Al</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                    <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Ödünçleri Listele/İade Al</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a routerLink="/loans/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Yeni Ödünç Al</p>
+                                    </a>
+                                </li>
                             </ul>
-                        </li> 
+                        </li>
 
                     </ul>
                 </li>
 
                 
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-laptop-code"></i>
+                <li class="nav-item" [class.menu-open]="menuStates['lab']">
+                    <a (click)="toggleMenu('lab')" class="nav-link active bg-olive" style="cursor: pointer;">
+                        <i class="nav-icon fas fa-book-reader"></i>
                         <p>
                             Laboratuvar Sistemi
                             <i class="right fas fa-angle-left"></i>
@@ -182,7 +177,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a routerLink="/laboratory/books" routerLinkActive="active" class="nav-link">
+                            <a routerLink="/books/book-category/:categoryId" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
                                 <i class="nav-icon fas fa-book-open"></i>
                                 <p>Kaynak Kitaplar</p>
                             </a>

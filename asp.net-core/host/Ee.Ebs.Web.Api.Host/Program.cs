@@ -2,7 +2,7 @@ using Ee.Ebs.Application;
 using Ee.Ebs.Data.EfCore;
 using Ee.Ebs.Data.EfCore.Contexts;
 using Ee.Ebs.Domain;
-using Ee.Ebs.Web.Api.ExceptionHandlers;
+using Ee.Ebs.Web.Api.Shared.ExceptionHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +22,6 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
-
 builder.Services.AddSwaggerGen();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -59,4 +58,5 @@ app.UseRouting();
 app.UseCors("AllowMyFrontend");
 app.MapControllers();
 app.UseExceptionHandler();
+
 app.Run();

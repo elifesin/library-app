@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PublisherCreateDto, PublisherDto } from '../models/publisher.dto';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PublisherService {
-    private api_url = `http://localhost:5147/api/publishers`;
+    private api_url = `${environment.apiUrl}/api/publishers`;
 
     constructor(private http: HttpClient){}
 

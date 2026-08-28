@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Ee.Ebs.Application.Contracts.Loans;
+﻿using Ee.Ebs.Application.Contracts.Loans;
 using Ee.Ebs.Application.Contracts.Loans.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Loans.Controllers;
 
 [ApiController]
 [Route("api/loans")]

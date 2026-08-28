@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Categories;
 using Ee.Ebs.Application.Contracts.Categories.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Categories.Controllers;
 
 [ApiController]
 [Route("api/categories")]
 public class CategoryController : ControllerBase, ICategoryAppService
 {
     private readonly ICategoryAppService _categoryAppService;
+    private readonly IBookAppService _bookAppService;
 
-    public CategoryController(ICategoryAppService categoryAppService)
+    public CategoryController(ICategoryAppService categoryAppService, IBookAppService bookAppService)
     {
         _categoryAppService = categoryAppService;
+        _bookAppService = bookAppService;
     }
 
     [HttpGet]
@@ -27,7 +29,7 @@ public class CategoryController : ControllerBase, ICategoryAppService
     {
         return _categoryAppService.GetById(id);
     }
-
+    
     [HttpPost]
     public void Insert(CategoryDto category)
     {

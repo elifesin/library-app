@@ -1,0 +1,81 @@
+<div class="m-3">
+  
+  <div class="mb-3">
+    <h2 class="m-0 font-weight-bold text-dark">Yeni Ödünç İşlemi Oluştur</h2>
+  </div>
+
+<div class="card shadow-sm"> 
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      
+      <div class="row">
+        <!-- Üye Seçimi -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Üye Seçin</label>
+            <select formControlName="memberID" class="form-control custom-select">
+              <option [ngValue]="null" disabled>Lütfen bir üye seçin</option>
+              @for (member of members; track member.id) {
+                <option [value]="member.id">{{ member.firstName }} {{ member.lastName }}</option>
+              }
+            </select>
+            @if (form.get('memberID')?.invalid && form.get('memberID')?.touched) {
+              <span class="text-danger"><small>Üye seçimi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+
+        <!-- Kitap Seçimi -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Kitap Seçin</label>
+            <select formControlName="bookID" class="form-control custom-select">
+              <option [ngValue]="null" disabled>Lütfen bir kitap seçin</option>
+              @for (book of books; track book.id) {
+                <option [value]="book.id">{{ book.title }}</option>
+              }
+            </select>
+            @if (form.get('bookID')?.invalid && form.get('bookID')?.touched) {
+              <span class="text-danger"><small>Kitap seçimi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <!-- Veriliş Tarihi -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Veriliş Tarihi</label>
+            <input type="date" formControlName="loanDate" class="form-control" />
+            @if (form.get('loanDate')?.invalid && form.get('loanDate')?.touched) {
+              <span class="text-danger"><small>Veriliş tarihi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+
+        <!-- Son Teslim Tarihi -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Son Teslim Tarihi</label>
+            <input type="date" formControlName="dueDate" class="form-control" />
+            @if (form.get('dueDate')?.invalid && form.get('dueDate')?.touched) {
+              <span class="text-danger"><small>Son teslim tarihi zorunludur.</small></span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary bg-olive">
+          <i class="fas fa-save mr-2"></i> Ödünç Ver
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="cancel()">
+          <i class="fas fa-times mr-2"></i> İptal
+        </button>
+      </div>
+      
+    </form>
+    </div> 
+  </div>
+</div>

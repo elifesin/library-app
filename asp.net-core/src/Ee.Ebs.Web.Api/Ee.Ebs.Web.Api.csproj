@@ -8,7 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Ee.Ebs.Application.Contracts\Ee.Ebs.Application.Contracts.csproj" />
+        <ProjectReference Include="..\Ee.Ebs.Application.Contracts\Ee.Ebs.Web.Api.Shared.csproj" />
+        <ProjectReference Include="..\Ee.Ebs.Application.Contracts\Ee.Ebs.Application.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\" />
     </ItemGroup>
 
 </Project>

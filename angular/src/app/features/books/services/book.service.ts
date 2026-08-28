@@ -2,13 +2,14 @@ import { Injectable, Service } from '@angular/core';
 import { BookCreateDto, BookDto, BookEditDto} from '../../books/models/book.dto'
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment.development';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class BookService {
-    private api_url = `http://localhost:5147/api/books`;
+    private api_url = `${environment.apiUrl}/api/books`;
 
     constructor(private http: HttpClient){}
 
@@ -20,7 +21,15 @@ export class BookService {
         return this.http.get<BookDto>(`${this.api_url}/${id}`);
     }
 
-    Insert(id: number, book: BookCreateDto): Observable<BookDto>{
+    getAvailableBooks(): Observable<BookDto[]>{
+        return this.http.get<BookDto[]>(`${this.api_url}/available`);
+    }
+
+    getBooksByCategory(categoryId: number): Observable<BookDto[]> {
+        return this.http.get<BookDto[]>(`${this.api_url}/book-category/${categoryId}`);
+  }
+
+    Insert(book: BookCreateDto): Observable<BookDto>{
         return this.http.post<BookDto>(this.api_url, book);
     }
 

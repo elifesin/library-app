@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class AuthorService {
   
-  private apiUrl = `http://localhost:5147/api/authors`; 
+  private apiUrl = `${environment.apiUrl}/api/authors`; 
 
   constructor(private http: HttpClient) { }
 

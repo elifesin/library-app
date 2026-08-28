@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Ee.Ebs.Application.Contracts.Publishers;
+﻿using Ee.Ebs.Application.Contracts.Publishers;
 using Ee.Ebs.Application.Contracts.Publishers.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Publishers.Controllers;
 
 [ApiController]
 [Route("api/publishers")]

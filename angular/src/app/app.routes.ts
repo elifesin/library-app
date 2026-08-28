@@ -8,6 +8,11 @@ import { CategoryListComponent } from './features/categories/pages/category-inde
 import { CategoryEditCreateComponent } from './features/categories/pages/category.create-edit/category.create-edit.component';
 import { PublisherIndexComponent } from './features/publishers/pages/publisher-index/publisher-index.component';
 import { PublisherEditCreateComponent } from './features/publishers/pages/publisher.create-edit/publisher.create-edit.component';
+import { BookIndexComponent } from './features/books/pages/book-index/book-index.component'
+import { BookCreateEditComponent } from './features/books/pages/book.create-edit/book.create-edit.component';
+import { LoanIndexComponent } from './features/loans/pages/loan-index/loan-index.component'
+import { LoanCreateEditComponent } from './features/loans/pages/loan.create-edit/loan.create-edit.component';
+import { ReferenceBookIndexComponent } from './features/books/pages/reference-book-index/reference-book-index.component'
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,4 +34,12 @@ export const routes: Routes = [
   { path: 'publishers/create', component: PublisherEditCreateComponent},
   { path: 'publishers/edit/:id', component: PublisherEditCreateComponent},
 
+  { path: 'books', component: BookIndexComponent},
+  { path: 'books/create', component: BookCreateEditComponent},
+  { path: 'books/edit/:id', component: BookCreateEditComponent},
+  { path: 'books/book-category/:id', component: ReferenceBookIndexComponent},
+
+
+  { path: 'loans', component: LoanIndexComponent},
+  { path: 'loans/create', component: LoanCreateEditComponent },
 ];

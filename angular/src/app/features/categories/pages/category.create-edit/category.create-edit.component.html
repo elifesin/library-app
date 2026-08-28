@@ -1,9 +1,13 @@
-<div class="card">
-  <div class="card-header">
-    <h3 class="card-title">{{ isEditMode ? 'Kategori Güncelle' : 'Yeni Kategori Ekle' }}</h3>
+<div class="m-3">
+
+  <div class="mb-3">
+    <h2 class="m-0 font-weight-bold text-dark">
+      {{ isEditMode ? 'Kategori Güncelle' : 'Yeni Kategori Ekle' }}
+    </h2>
   </div>
 
-  <div class="card-body">
+  <div class="card shadow-sm">
+    <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="save()">
       <div class="row">
         <div class="col-6">
@@ -12,15 +16,15 @@
             @if (form.get('categoryName')?.invalid && form.get('categoryName')?.touched) {
               <span class="text-danger">Kategori adı zorunludur.</span>
             }
-          </div>
+        </div>
       </div>
-
       <div class="mt-3">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn bg-olive text-white mr-2">
           {{ isEditMode ? 'Güncelle' : 'Kaydet' }}
         </button>
         <button type="button" class="btn btn-secondary ml-2" (click)="cancel()">İptal</button>
       </div>
     </form>
+    </div>
   </div>
 </div>

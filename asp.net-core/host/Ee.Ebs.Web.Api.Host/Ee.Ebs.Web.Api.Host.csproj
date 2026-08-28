@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Ee.Ebs.Application\Ee.Ebs.Application.csproj" />
       <ProjectReference Include="..\..\src\Ee.Ebs.Data.EfCore\Ee.Ebs.Data.EfCore.csproj" />
+      <ProjectReference Include="..\..\src\Ee.Ebs.Web.Api.Shared\Ee.Ebs.Web.Api.Shared.csproj" />
       <ProjectReference Include="..\..\src\Ee.Ebs.Web.Api\Ee.Ebs.Web.Api.csproj" />
     </ItemGroup>
 

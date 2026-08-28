@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
-using Ee.Ebs.Application.Contracts.Authors;
+﻿using Ee.Ebs.Application.Contracts.Authors;
 using Ee.Ebs.Application.Contracts.Authors.DTOs;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Authors.Controllers;
 
+//Ee.Ebs.Books.Web.Api
+//Ee.Ebs.Books.Web.Api.Host
+//Ee.Ebs.Web.Api.Host.Books
 [ApiController]
 [Route("api/authors")]
 public class AuthorController : ControllerBase, IAuthorAppService

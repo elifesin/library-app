@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Ee.Ebs.Web.Api.ExceptionHandlers;
+namespace Ee.Ebs.Web.Api.Shared.ExceptionHandlers;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {

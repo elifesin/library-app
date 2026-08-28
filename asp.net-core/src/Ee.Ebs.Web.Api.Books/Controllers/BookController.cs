@@ -3,7 +3,7 @@ using Ee.Ebs.Application.Contracts.Books;
 using Ee.Ebs.Application.Contracts.Books.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ee.Ebs.Web.Api.Controllers;
+namespace Ee.Ebs.Web.Api.Books.Controllers;
 
 [ApiController]
 [Route("api/books")]
@@ -46,13 +46,13 @@ public class BookController : ControllerBase, IBookAppService
         _bookAppService.Delete(id);
     }
 
-    [HttpGet("avaliable")]
+    [HttpGet("available")]
     public List<BookDto> GetAvailableBooks()
     {
         return _bookAppService.GetAvailableBooks();
     }
 
-    [HttpGet("{categoryId}/books")]
+    [HttpGet("book-category/{categoryId}")]
     public List<BookDto> GetBooksByCategory(int categoryId)
     {
         return  _bookAppService.GetBooksByCategory(categoryId);
