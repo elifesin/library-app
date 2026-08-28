@@ -2,7 +2,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
-// builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyFrontend", policy =>
@@ -17,18 +16,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseExceptionHandler("/Error");
-// }
-// else
-// {
-//     app.UseDeveloperExceptionPage();
-//
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
 
 app.UseCors("AllowMyFrontend");
 app.MapReverseProxy();

@@ -65,7 +65,7 @@
             <select formControlName="publisherId" class="form-control custom-select">
               <option [ngValue]="null" disabled>Lütfen yayınevi seçin</option>
               @for (publisher of publishers; track publisher.id) {
-                <option [value]="publisher.id">{{ publisher.publisherName }}</option>
+                <option [value]="publisher.id">{{ publisher.name }}</option>
               }
             </select>
             @if (form.get('publisherId')?.invalid && form.get('publisherId')?.touched) {
