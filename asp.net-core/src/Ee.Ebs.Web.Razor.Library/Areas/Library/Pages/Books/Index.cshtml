@@ -1,0 +1,73 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books.IndexModel
+
+@{
+    ViewBag.CurrentPage = LibraryPageNames.BooksIndex;
+}
+
+<div class="container mt-4">
+    <h2>Kitap Listesi</h2>
+
+    @if (Model.Books != null && Model.Books.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>İşlemler</th>
+                <th>Kitap Adı</th>
+                <th>Yayınlanma Yılı</th>
+                <th>Yazarı</th>
+                <th>Ödünç Alındı Mı?</th>
+                <th>Kategori</th>
+                <th>Yayınevi</th>
+            </tr>
+            </thead>
+        <tbody>
+                @foreach (var item in Model.Books)
+                 {
+                     <tr>
+                         <td>
+                             <div class="btn-group">
+                                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                     İşlemler
+                                 </button>
+                                 <div class="dropdown-menu">
+                                     <a class="dropdown-item" asp-page="/Books/Edit" asp-route-id="@item.Id">Güncelle</a>
+    
+                                     <a  class="dropdown-item"
+                                         data-toggle="modal"
+                                         data-target="#deleteModal"
+                                         data-url="@Url.Page("Index", "Delete",new { id = item.Id })"
+                                         data-message="&quot;@item.Title&quot; silinsin mi?">
+                                         Sil
+                                     </a>
+                                 </div>
+                             </div>
+                         </td>
+                         <td>@item.Title</td>
+                         <td>@item.PublishYear</td>
+                         <td>@item.AuthorName</td>
+                         <td>
+                             @if(item.IsBorrowed)
+                             {
+                                 <span class="badge bg-warning text-dark">Evet</span>
+                             }
+                             else
+                             {
+                                 <span class="badge bg-success">Hayır</span>
+                             }
+                         </td>
+                         <td>@item.CategoryName</td>
+                         <td>@item.PublisherName</td>
+                     </tr>
+                 }
+        </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir kitap bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

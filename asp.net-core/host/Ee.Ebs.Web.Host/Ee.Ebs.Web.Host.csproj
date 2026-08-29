@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        
+        
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Ee.Ebs.Application\Ee.Ebs.Application.csproj" />
+      <ProjectReference Include="..\..\src\Ee.Ebs.Data.EfCore\Ee.Ebs.Data.EfCore.csproj" />
+      <ProjectReference Include="..\..\src\Ee.Ebs.Web.Api\Ee.Ebs.Web.Api.csproj" />
+      <ProjectReference Include="..\..\src\Ee.Ebs.Web.Razor.Laboratory\Ee.Ebs.Web.Razor.Laboratory.csproj" />
+      <ProjectReference Include="..\..\src\Ee.Ebs.Web.Razor.Library\Ee.Ebs.Web.Razor.Library.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+    </ItemGroup>
+
+</Project>

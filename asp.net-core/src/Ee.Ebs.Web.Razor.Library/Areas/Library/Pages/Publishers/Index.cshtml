@@ -1,0 +1,56 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Publishers.IndexModel
+
+<div class="container mt-4">
+    <div class="content-header d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">Yayınevi Listesi</h1>
+        <a asp-page="Create" class="btn btn-primary">
+            Yeni Yayınevi Ekle
+        </a>
+    </div>
+
+    @if (Model.Vm != null && Model.Vm.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>İşlemler</th>
+                <th>Yayınevi</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Vm)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                İşlemler
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-page="/Publishers/Edit"
+                                   asp-route-id="@item.Id">Güncelle</a>
+
+                                <a class="dropdown-item"
+                                   data-toggle="modal"
+                                   data-target="#deleteModal"
+                                   data-url="@Url.Page("Index","Delete", new { id = item.Id })"
+                                   data-message="&quot;@item.Name&quot; silinsin mi?">
+                                    Sil
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

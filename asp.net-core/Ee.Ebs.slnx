@@ -1,0 +1,35 @@
+<Solution>
+  <Folder Name="/host/">
+    <Project Path="host/Ee.Ebs.ApiGateway.Host/Ee.Ebs.ApiGateway.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Authors.Web.Api.Host/Ee.Ebs.Authors.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Books.Web.Api.Host/Ee.Ebs.Books.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Categories.Web.Api.Host/Ee.Ebs.Categories.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Loans.Web.Api.Host/Ee.Ebs.Loans.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Members.Web.Api.Host/Ee.Ebs.Members.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Publishers.Web.Api.Host/Ee.Ebs.Publishers.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Web.Api.Host/Ee.Ebs.Web.Api.Host.csproj" />
+    <Project Path="host/Ee.Ebs.Web.Host/Ee.Ebs.Web.Host.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Ee.Ebs.Application.Contracts/Ee.Ebs.Application.Contracts.csproj" />
+    <Project Path="src/Ee.Ebs.Application/Ee.Ebs.Application.csproj" />
+    <Project Path="src/Ee.Ebs.Data.Dapper/Ee.Ebs.Data.Dapper.csproj" />
+    <Project Path="src/Ee.Ebs.Data.EfCore/Ee.Ebs.Data.EfCore.csproj" />
+    <Project Path="src/Ee.Ebs.Domain.Shared/Ee.Ebs.Domain.Shared.csproj" />
+    <Project Path="src/Ee.Ebs.Domain/Ee.Ebs.Domain.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Authors/Ee.Ebs.Web.Api.Authors.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Books/Ee.Ebs.Web.Api.Books.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Categories/Ee.Ebs.Web.Api.Categories.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Loans/Ee.Ebs.Web.Api.Loans.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Members/Ee.Ebs.Web.Api.Members.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Publishers/Ee.Ebs.Web.Api.Publishers.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api.Shared/Ee.Ebs.Web.Api.Shared.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Api/Ee.Ebs.Web.Api.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Razor.Laboratory/Ee.Ebs.Web.Razor.Laboratory.csproj" />
+    <Project Path="src/Ee.Ebs.Web.Razor.Library/Ee.Ebs.Web.Razor.Library.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Ee.Ebs.Appliacation.Tests/Ee.Ebs.Appliacation.Tests.csproj" />
+    <Project Path="test/Ee.Ebs.Domain.Tests/Ee.Ebs.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

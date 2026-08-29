@@ -1,0 +1,50 @@
+﻿@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Books.BookCreateOrEditVm
+
+<div class="mb-3">
+    <label asp-for="Title" class="form-label">Kitap Adı</label>
+    <input asp-for="Title" class="form-control" placeholder="Kitap adını giriniz..."/>
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+     <label asp-for="AuthorID" class="form-label">Yazar</label>
+     <select asp-for="AuthorID" class="form-select" asp-items="@(new SelectList(Model.Authors, "Id", "FullName"))">
+        <option value="">-- Yazar Seçiniz --</option>
+    </select>
+    <span asp-validation-for="AuthorID" class="text-danger"></span>
+</div>
+                
+<div class="mb-3">
+     <label asp-for="PublishYear" class="form-label">Yayınlanma Yılı</label>
+    <input asp-for="PublishYear" class="form-control" placeholder="Yayın yılını giriniz..."/>
+    <span asp-validation-for="PublishYear" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+     <label asp-for="CategoryID" class="form-label">Kategori</label>
+    <select asp-for="CategoryID" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "CategoryName"))">
+        <option value="">-- Kategori Seçiniz --</option>
+    </select>
+    <span asp-validation-for="CategoryID" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="PublisherId" class="form-label">Yayınevi</label>
+    <select asp-for="PublisherId" class="form-select" asp-items="@(new SelectList(Model.Publishers, "Id", "Name"))">
+        <option value="">-- Yayınevi Seçiniz --</option>
+    </select>
+    <span asp-validation-for="PublisherId" class="text-danger"></span>
+</div>
+
+<div class="mb-3 form-check">
+    <input asp-for="IsBorrowed" class="form-check-input"/>
+    <label asp-for="IsBorrowed" class="form-check-label">Ödünç Alındı Mı?</label>
+</div>
+
+@* <div class="mt-4"> *@
+@*      *@
+@*     <button type="submit" class="btn btn-primary"> *@
+@*         <i class="bi bi-save"></i> Değişiklikleri Kaydet *@
+@*     </button> *@
+@*     <a asp-page="./Index" class="btn btn-secondary ms-2">İptal ve Listeye Dön</a> *@
+@* </div> *@

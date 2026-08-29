@@ -1,0 +1,65 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors.IndexModel
+
+<div class="content-header">
+    <div class="content-header d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">Yazar Listesi</h1>
+        <a asp-page="Create" class="btn btn-primary">
+            Yeni Yazar Ekle
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                @if (Model.Authors != null && Model.Authors.Any())
+                {
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>İşlemler</th>
+                            <th>Yazar Adı Soyadı</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Authors)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                            İşlemler
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" asp-page="/Authors/Edit"
+                                               asp-route-id="@item.Id">Güncelle</a>
+                                            
+                                            <a  class="dropdown-item"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteModal"
+                                                    data-url="@Url.Page("Index", "Delete", new {id = item.Id})"
+                                                    data-message="&quot;@item.FullName&quot; silinsin mi?">
+                                                Sil
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@item.FirstName @item.LastName</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        Veritabanında henüz kayıtlı bir yazar bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı
+                        ekleyebilirsiniz.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

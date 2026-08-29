@@ -1,0 +1,52 @@
+<div class="m-3">
+  
+  <div class="mb-3">
+    <h2 class="m-0 font-weight-bold text-dark">
+      {{ isEditMode ? 'Yazar Güncelle' : 'Yeni Yazar Ekle' }}
+    </h2>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="row">
+          
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Yazar Adı</label>
+              <input formControlName="firstName" class="form-control" />
+              @if (form.get('firstName')?.invalid && form.get('firstName')?.touched) {
+                <span class="text-danger mt-1 d-block"><small>Yazar adı zorunludur.</small></span>
+              }
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Yazar Soyadı</label>
+              <input formControlName="lastName" class="form-control" />
+              @if (form.get('lastName')?.invalid && form.get('lastName')?.touched) {
+                <span class="text-danger mt-1 d-block"><small>Yazar soyadı zorunludur.</small></span>
+              }
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="mt-3">
+          <button type="submit" class="btn bg-olive text-white mr-2">
+            <i class="fas mr-1" [ngClass]="isEditMode ? 'fa-edit' : 'fa-save'"></i>
+            {{ isEditMode ? 'Güncelle' : 'Kaydet' }}
+          </button>
+          
+          <button type="button" class="btn btn-secondary" (click)="cancel()">
+            <i class="fas fa-times mr-1"></i> İptal
+          </button>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+
+</div>

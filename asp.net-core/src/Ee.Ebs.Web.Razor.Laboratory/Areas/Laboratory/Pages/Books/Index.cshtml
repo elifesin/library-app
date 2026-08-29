@@ -1,0 +1,50 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Laboratory.Areas.Laboratory.Pages.Books.IndexModel
+    
+<div class="container mt-4">
+    <h2>Kitap Listesi</h2>
+
+    @if (Model.Books != null && Model.Books.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Kitap Adı</th>
+                <th>Yayınlanma Yılı</th>
+                <th>Yazarı</th>
+                <th>Ödünç Alındı Mı?</th>
+                <th>Kategori</th>
+                <th>Yayınevi</th>
+            </tr>
+            </thead>
+        <tbody>
+                @foreach (var item in Model.Books)
+                 {
+                     <tr>
+                         <td>@item.Title</td>
+                         <td>@item.PublishYear</td>
+                         <td>@item.FullName</td>
+                         <td>
+                             @if(item.IsBorrowed)
+                             {
+                                 <span class="badge bg-warning text-dark">Evet</span>
+                             }
+                             else
+                             {
+                                 <span class="badge bg-success">Hayır</span>
+                             }
+                         </td>
+                         <td>@item.CategoryName</td>
+                         <td>@item.PublisherName</td>
+                     </tr>
+                 }
+        </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir kitap bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

@@ -1,0 +1,18 @@
+﻿@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Authors.AuthorCreateOrEditVm
+
+<div class="row">
+    <div class="col-6">
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label">Yazar Adı</label>
+            <input asp-for="FirstName" class="form-control" required=""/>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label">Yazar Soyadı</label>
+            <input asp-for="LastName" class="form-control" required/>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+</div>

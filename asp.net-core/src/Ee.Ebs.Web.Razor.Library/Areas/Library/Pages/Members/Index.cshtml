@@ -1,0 +1,55 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members.IndexModel
+
+<div class="container mt-4">
+    <div class="content-header d-flex justify-content-between align-items-center">
+        <h1 class="mb-1">Üye Listesi</h1>
+        <a asp-page="Create" class="btn btn-primary">
+            Yeni Üye Ekle
+        </a>
+    </div>
+
+    @if (Model.Members != null && Model.Members.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>İşlemler</th>
+                    <th>Ad Soyad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Members)
+                {
+                    <tr>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    İşlemler
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-page="/Members/Edit" asp-route-id="@item.ID">Güncelle</a>
+                                    <a class="dropdown-item" asp-page="/Members/BorrowedBooks" asp-route-id="@item.ID">Kitapları Gör</a>
+                                    <a  class="dropdown-item"
+                                        data-toggle="modal"
+                                        data-target="#deleteModal"
+                                        data-url="@Url.Page("Index", "Delete", new { id = item.ID })"
+                                        data-message="&quot;@item.FullName&quot; silinsin mi?">
+                                        Sil
+                                    </a>
+                                    </div>
+                            </div>
+                        </td>
+                        <td>@item.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Veritabanında henüz kayıtlı bir üye bulunmuyor. Yukarıdaki butonu kullanarak ilk kaydı ekleyebilirsiniz.
+        </div>
+    }
+</div>

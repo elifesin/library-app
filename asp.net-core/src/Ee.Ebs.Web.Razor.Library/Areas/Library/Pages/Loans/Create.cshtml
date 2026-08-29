@@ -1,0 +1,50 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Loans.CreateModel
+
+<div class="container mt-4">
+    <h2>Yeni Ödünç Verme İşlemi</h2>
+    <hr />
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Vm.MemberID" class="form-label">Üye</label>
+                    <select asp-for="Vm.MemberID" class="form-select" asp-items="@(new SelectList(Model.Members, "ID", "FullName"))" required>
+                        <option value="">-- Üye Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="Vm.MemberID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Vm.BookID" class="form-label">Ödünç Alınabilecek Kitaplar</label>
+                    <select asp-for="Vm.BookID" class="form-select" asp-items="@(new SelectList(Model.Books, "Id", "Title"))" required>
+                        <option value="">-- Kitap Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="Vm.BookID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Vm.LoanDate" class="form-label">Ödünç Veriliş Tarihi</label>
+                    <input asp-for="Vm.LoanDate" type="date" class="form-control" required/>
+                    <span asp-validation-for="Vm.LoanDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Vm.DueDate" class="form-label">Son Teslim Tarihi</label>
+                    <input asp-for="Vm.DueDate" type="date" class="form-control" required/>
+                    <span asp-validation-for="Vm.DueDate" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> İşlemi Kaydet
+                    </button>
+                    <a asp-page="./Index" class="btn btn-secondary ms-2">Listeye Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

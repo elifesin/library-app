@@ -1,0 +1,29 @@
+﻿@page
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Loans.ReturnBookModel
+
+<div class="container mt-4">
+    <h2 class="text-success">Kitabı İade Al</h2>
+
+    <div class="alert alert-info mt-3">
+        <h4 class="alert-heading">İade Onayı</h4>
+        <p>Kitabı teslim aldığınızı onaylamak üzeresiniz.</p>
+        <hr>
+        <p class="mb-0">
+            Kitabın son teslim tarihi: <strong>@Model.Vm.DueDate.ToShortDateString()</strong> 
+            
+            @if(Model.Vm.DueDate < DateTime.Today)
+            {
+                <span class="badge bg-danger ms-2">Gecikmeli Teslim</span>
+            }
+        </p>
+    </div>
+
+    <form method="post" class="mt-4">
+        <input type="hidden" asp-for="Vm.Id" />
+        
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle"></i> Evet, İadeyi Onayla
+        </button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">İptal ve Listeye Dön</a>
+    </form>
+</div>

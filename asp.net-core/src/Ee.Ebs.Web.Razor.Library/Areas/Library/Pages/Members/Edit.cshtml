@@ -1,0 +1,25 @@
+﻿@page "{id:int}"
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members.EditModel
+
+<form method="post">
+    <div class="content-header">
+        <div class="content-header d-flex justify-content-between align-items-center">
+            <h1 class="mb-1">Üye Güncelle</h1>
+            <button type="submit" class="btn btn-primary">
+                Kaydet
+            </button>
+        </div>
+        <a asp-page="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Listeye Dön
+        </a>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    @await Html.PartialAsync("_CreateOrEdit", Model.Vm)
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

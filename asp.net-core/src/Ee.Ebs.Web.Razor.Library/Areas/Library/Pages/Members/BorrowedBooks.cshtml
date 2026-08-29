@@ -1,0 +1,74 @@
+﻿@page "{id:int}"
+@model Ee.Ebs.Web.Razor.Library.Areas.Library.Pages.Members.BorrowedBooksModel
+
+<div class="container mt-4">
+    <h2>Üye Ödünç Geçmişi</h2>
+    <div class="mt-4">
+        <a asp-page="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Listeye Dön
+        </a>
+    </div>
+    <br>
+    
+    <div class="card mb-4">
+        <div class="card-body bg-light">
+            <h5 class="card-title mb-0 text-primary">
+                <i class="bi bi-person-circle"></i> @Model.Vm.FullName Adlı Üyenin Ödünç Aldığı Kitaplar
+            </h5>
+            
+        </div>
+    </div>
+
+    @if (Model.Vm.BorrowedBooks != null && Model.Vm.BorrowedBooks.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Kitap Adı</th>
+                    <th>Veriliş Tarihi</th>
+                    <th>Son Teslim Tarihi</th>
+                    <th>Teslim Durumu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Vm.BorrowedBooks)
+                {
+                    <tr>
+                        <td>@item.BookName</td>
+                        
+                        <td>@item.LoanDate.ToShortDateString()</td>
+                        <td>@item.DueDate.ToShortDateString()</td>
+                        
+                        <td>
+                            @if (item.ReturnDate.HasValue)
+                            {
+                                <span class="badge bg-success">
+                                    Teslim Edildi (@item.ReturnDate.Value.ToShortDateString())
+                                </span>
+                            }
+                            else
+                            {
+                                @if (item.DueDate < DateTime.Now)
+                                {
+                                    <span class="badge bg-danger">Gecikti</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Okunuyor</span>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Bu üyenin henüz ödünç aldığı bir kitap bulunmuyor.
+        </div>
+    }
+
+   
+</div>

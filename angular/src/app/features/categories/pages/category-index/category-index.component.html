@@ -1,0 +1,79 @@
+<div class="">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="m-0 font-weight-bold text-dark">Kategoriler</h3>
+    <a [routerLink]="['/categories/create']" class="btn bg-maroon text-white">
+      <i class="fas fa-plus mr-1"></i> Yeni Kategori Ekle
+    </a>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th style="width: 100px">İşlemler</th>
+          <th>Kategori Adı</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (category of categories(); track category.id) {
+          <tr>
+            <td>
+              <div class="fancy-action-container">                
+                <button type="button" class="fancy-action-btn bg-secondary" (click)="toggleDropdown(category.id)">
+                  İşlemler
+                  <i class="fas fa-caret-down float-right mt-1"></i>
+                </button>
+
+                <div class="fancy-action-list" [class.show]="activeDropdownId === category.id">
+                  
+                  <a class="fancy-action-item text-primary" [routerLink]="['/categories/edit', category.id]">
+                    <i class="fas fa-edit mr-2"></i> Güncelle
+                  </a>
+                  
+                  <button type="button" class="fancy-action-item item-btn text-danger" (click)="openDeleteModal(category.id)">
+                    <i class="fas fa-trash mr-2"></i> Sil
+                  </button>
+                  
+                </div>
+                
+              </div>
+            </td>
+            <td>{{ category.categoryName}}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="text-center text-muted">Henüz kayıtlı kategori bulunmuyor.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@if (showDeleteModal) {
+  <div class="modal-backdrop fade show"></div>
+  
+  <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i> Silme Onayı</h5>
+          <button type="button" class="close text-white" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="mb-0">Bu kategoriyi silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">İptal</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Evet, Sil</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+}

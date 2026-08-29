@@ -1,0 +1,96 @@
+<div class="">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="m-0 font-weight-bold text-dark">Kayıtlı Kitap Listesi</h2> 
+    <a [routerLink]="['/authors/create']" class="btn bg-maroon text-white">
+      <i class="fas fa-plus mr-1"></i> Yeni Kitap Ekle
+    </a>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th style="width: 120px" class="text-center">İşlemler</th>
+          <th>Kitap Adı</th>
+          <th>Yazar</th>
+          <th>Kategori</th>
+          <th>Yayınevi</th>
+          <th>Basım Yılı</th>
+          <th>Durum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Signals kullanımına uygun for döngüsü -->
+        @for (book of books(); track book.id) {
+          <tr>
+            <td class="text-center">
+                            <div class="dropdown">
+                <button type="button" class="btn bg-secondary btn-sm dropdown-toggle" (click)="toggleDropdown(book.id)">
+                  İşlemler
+                </button>
+
+                <div class="dropdown-menu shadow" [class.show]="activeDropdownId === book.id">
+                  <a class="dropdown-item" [routerLink]="['/books/edit', book.id]">
+                    <i class="fas fa-edit text-primary mr-2"></i> Güncelle
+                  </a>
+                  
+                  <div class="dropdown-divider"></div>
+                  
+                  <button type="button" class="dropdown-item" (click)="openDeleteModal(book.id)">
+                    <i class="fas fa-trash text-danger mr-2"></i> Sil
+                  </button>
+                </div>
+              </div>
+
+            </td>
+            <td class="align-middle">{{ book.title }}</td>
+            <td class="align-middle">{{ book.authorName }}</td>
+            <td class="align-middle">{{ book.categoryName }}</td>
+            <td class="align-middle">{{ book.publisherName }}</td>
+            <td class="align-middle">{{ book.publishYear }}</td>
+            <td class="align-middle">
+              <span class="badge" [ngClass]="book.isBorrowed ? 'badge-warning' : 'badge-success'">
+                {{ book.isBorrowed ? 'Ödünç Verildi' : 'Rafta' }}
+              </span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="text-center py-4 text-muted">
+             Henüz kayıtlı kitap bulunmuyor.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Tasarımı (Değişiklik yapılmadı) -->
+@if (showDeleteModal) {
+  <div class="modal-backdrop fade show"></div>
+  
+  <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i> Silme Onayı</h5>
+          <button type="button" class="close text-white" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="mb-0">Bu kitabı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">İptal</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Evet, Sil</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+}
